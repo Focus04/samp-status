@@ -1,10 +1,10 @@
 const Keyv = require('keyv');
 const prefixes = new Keyv(process.env.prefixes);
-const { defaultPrefix, deletionTimeout, reactionError } = require('../../config.json');
+const { defaultPrefix, deletionTimeout, reactionError } = require('../config.json');
 
 module.exports = async (client, message) => {
   if (message.author.bot || !message.channel.type === 'text') return;
-  
+
   const prefix = await prefixes.get(message.guild.id) || customPrefix;
   if (!message.content.startsWith(prefix)) return;
 
