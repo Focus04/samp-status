@@ -20,7 +20,7 @@ module.exports = {
     const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
     const data = await response.json();
     if (!data.online) {
-      let msg = await message.channel.send(`${server.ip}:${Server.port} is currenty down.`);
+      let msg = await message.channel.send(`${server.ip}:${server.port} is currenty down.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
