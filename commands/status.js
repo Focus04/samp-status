@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
-const { deletionTimeout, reactionError, reactionSuccess } = require('../../config.json');
+const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   name: 'status',
@@ -38,7 +38,7 @@ module.exports = {
         { name: 'Server IP', value: `${data.ip}:${data.port}`, inline: true },
         { name: 'Map', value: `${data.mapname}`, inline: true },
         { name: 'Time', value: `${data.worldtime}`, inline: true },
-        { name: 'Forums', value: 'https://' + data.weburl, inline: true },
+        { name: 'Forums', value: 'http://' + data.weburl, inline: true },
         { name: 'Version', value: `${data.version}`, inline: true },
         { name: 'Players', value: `${data.num_players}/${data.max_players}`, inline: true },
         { name: 'Name(ID) - Score - Ping', value: `${players}` }
