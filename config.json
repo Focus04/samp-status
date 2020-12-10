@@ -1,0 +1,6 @@
+{
+  "defaultPrefix": "!",
+  "reactionError": "❌",
+  "reactionSuccess": "✔️",
+  "deletionTimeout": 10000
+}
