@@ -10,9 +10,10 @@ module.exports = {
   usage: 'status',
   guildOnly: true,
   async execute(message, args, prefix) {
+    let loading = await message.channel.send('Fetching server info...');
     const server = await servers.get(message.guild.id);
     if (!server) {
-      let msg = await message.channel.send(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
+      let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
@@ -20,7 +21,7 @@ module.exports = {
     const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
     const data = await response.json();
     if (!data.online) {
-      let msg = await message.channel.send(`${server.ip}:${server.port} is currenty down.`);
+      let msg = await loading.edit(`${server.ip}:${server.port} is currenty down.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
@@ -44,7 +45,7 @@ module.exports = {
         { name: 'Name(ID) - Score - Ping', value: `${players}` }
       )
       .setTimestamp();
-    await message.channel.send(serverEmbed);
+    await loading.edit(serverEmbed);
     message.react(reactionSuccess);
   }
 }
