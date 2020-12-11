@@ -9,7 +9,7 @@ module.exports = {
   async execute (message, args, prefix) {
     if (!args.length) {
       let cmds = '';
-      fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]}`);
+      fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]}, `);
       const helpEmbed = new MessageEmbed()
         .setColor('#00ffbb')
         .addField('Commands', '```' + cmds + '```')
