@@ -10,8 +10,9 @@ module.exports = {
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(message, args, prefix) {
+    let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
-      let msg = await message.channel.send(`Proper command usage: ${prefix}setguildserver [ip] [port]`);
+      let msg = await loading.edit(`Proper command usage: ${prefix}setguildserver [ip] [port]`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
@@ -19,7 +20,7 @@ module.exports = {
     const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${args[0]}/${args[1]}/`);
     const data = await response.json();
     if (data.error_code === 2) {
-      let msg = await message.channel.send(`Couldn't find ${args[0]}:${args[1]}`);
+      let msg = await loading.edit(`Couldn't find ${args[0]}:${args[1]}`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
@@ -28,7 +29,7 @@ module.exports = {
     Server.ip = args[0];
     Server.port = args[1];
     await servers.set(message.guild.id, Server);
-    message.channel.send(`You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`);
+    await loading.edit(`You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`);
     message.react(reactionSuccess);
   }
 }
