@@ -17,7 +17,7 @@ module.exports = {
       await message.channel.send(helpEmbed);
       message.react(reactionSuccess);
     } else {
-      const command = message.client.get(args[0].toLowerCase());
+      const command = message.client.commands.get(args[0].toLowerCase());
       if (!command) {
         let msg = await message.channel.send(`Couldn't find ${args[0]} in my commands list.`);
         msg.delete({ timeout: deletionTimeout });
