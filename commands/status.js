@@ -45,7 +45,8 @@ module.exports = {
         { name: 'Name(ID) - Score - Ping', value: `${players}` }
       )
       .setTimestamp();
-    await loading.edit(serverEmbed);
+    await loading.delete();
+    await message.channel.send(serverEmbed);
     message.react(reactionSuccess);
   }
 }
