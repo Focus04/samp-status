@@ -7,7 +7,7 @@ module.exports = {
   description: 'Displays a list of all available commands along with their usage.',
   usage: 'help (`command`)',
   async execute (message, args, prefix) {
-    if (args.length) {
+    if (!args.length) {
       let cmds = '';
       fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]}`);
       const helpEmbed = new MessageEmbed()
