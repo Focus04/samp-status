@@ -10,7 +10,7 @@ module.exports = (client) => {
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
-      if (time && Date.now() <= time.next) {
+      if (time && time.next <= Date.now()) {
         time.next += time.time;
         await intervals.set(guild.id, time);
         const server = await servers.get(guild.id);
