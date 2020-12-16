@@ -24,11 +24,11 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    /* if (args[1] < 5) {
+    if (args[1] < 5) {
       let msg = await loading.edit(`Minutes can't be lower than 5.`);
       msg.delete({timeout: deletionTimeout });
       return message.react(reactionError);
-    } */
+    }
 
     const server = await servers.get(message.guild.id);
     if (!server) {
