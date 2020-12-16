@@ -6,6 +6,8 @@ module.exports = {
   name: 'setprefix',
   description: 'Changes the default `!` prefix to a custom one.',
   usage: 'setprefix `prefix`',
+  requiredPerms: 'MANAGE_GUILD',
+  permError: 'You require the Manage Server permission in order to run this command.',
   async execute(message, args, prefix) {
     if (!args[0]) {
       let msg = await message.channel.send(`Proper command usage: ${prefix}setprefix [prefix]`);
