@@ -27,8 +27,8 @@ module.exports = {
         .setColor('#00ffbb')
         .setTitle(`${prefix}${command.name}`)
         .addFields(
-          { name: 'Description', value: '```' + command.description + '```'},
-          { name: 'Usage', value: '```' + command.usage + '```'}
+          { name: 'Description', value: command.description},
+          { name: 'Usage', value: command.usage}
         )
         .setTimestamp();
       await message.channel.send(cmdEmbed);
