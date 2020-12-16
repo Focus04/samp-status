@@ -13,7 +13,7 @@ module.exports = (client) => {
       if (time && Date.now() <= time.next) {
         time.next += time.time;
         await intervals.set(guild.id, time);
-        const server = await servers.get(message.guild.id);
+        const server = await servers.get(guild.id);
         const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
         const data = await response.json();
         let players = '```';
