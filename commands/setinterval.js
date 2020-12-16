@@ -40,7 +40,7 @@ module.exports = {
     let Interval = {};
     Interval.channel = channel.id;
     Interval.time = args[1] * 60000;
-    Interval.next = Date.now() + args[1] * 60000;
+    Interval.next = Date.now();
     await intervals.set(message.guild.id, Interval);
     await loading.edit(`Successfully set an interval.`);
     message.react(reactionSuccess);
