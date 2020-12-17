@@ -12,7 +12,6 @@ module.exports = (client) => {
       const time = await intervals.get(guild.id);
       if (time && time.next <= Date.now()) {
         time.next += time.time;
-        await intervals.set(guild.id, time);
         const server = await servers.get(guild.id);
         const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
         const data = await response.json();
@@ -36,7 +35,11 @@ module.exports = (client) => {
           )
           .setTimestamp();
         const channel = guild.channels.cache.get(time.channel);
-        channel.send(serverEmbed);
+        const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
+        oldMsg.delete();
+        let msg = await channel.send(serverEmbed);
+        time.message = msg.id;
+        await intervals.set(guild.id, time);
       }
     });
   }, 60000);
