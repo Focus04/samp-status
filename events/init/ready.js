@@ -36,7 +36,7 @@ module.exports = (client) => {
           .setTimestamp();
         const channel = guild.channels.cache.get(time.channel);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
-        oldMsg.delete();
+        if (oldMsg) oldMsg.delete();
         let msg = await channel.send(serverEmbed);
         time.message = msg.id;
         await intervals.set(guild.id, time);
