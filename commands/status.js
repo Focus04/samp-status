@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
@@ -18,31 +18,29 @@ module.exports = {
       return message.react(reactionError);
     }
     
-    const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
-    const data = await response.json();
-    if (!data.online) {
+    const data = await gamedig.query({
+      type: 'samp',
+      host: server.ip,
+      port: server.port
+    }).catch((err) => {
       let msg = await loading.edit(`${server.ip}:${server.port} is currenty down.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
-    }
-
+    });
     let players = '```';
     data.players.map(player => {
-      players = players + `${player.name}(${player.id}) - ${player.score} - ${player.ping}` + `\n`;
+      players = players + `${player.name} - ${player.score} - ${player.ping}` + `\n`;
     });
     if (players === '```') players = '```None```';
     else players = players + '```';
     let serverEmbed = new Discord.MessageEmbed()
       .setColor('#00ffbb')
-      .setTitle(`${data.servername}`)
+      .setTitle(`${data.name}`)
       .addFields(
-        { name: 'Server IP', value: `${data.ip}:${data.port}`, inline: true },
-        { name: 'Map', value: `${data.mapname}`, inline: true },
-        { name: 'Time', value: `${data.worldtime}`, inline: true },
-        { name: 'Forums', value: 'http://' + data.weburl, inline: true },
-        { name: 'Version', value: `${data.version}`, inline: true },
+        { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
+        { name: 'Map', value: `${data.map}`, inline: true },
         { name: 'Players', value: `${data.num_players}/${data.max_players}`, inline: true },
-        { name: 'Name(ID) - Score - Ping', value: `${players}` }
+        { name: 'Name - Score - Ping', value: `${players}` }
       )
       .setTimestamp();
     await loading.delete();

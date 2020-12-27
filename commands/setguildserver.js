@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
@@ -17,14 +17,15 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${args[0]}/${args[1]}/`);
-    const data = await response.json();
-    if (data.error_code === 2) {
+    await gamedig.query({
+      type: 'samp',
+      host: args[0],
+      port: args[1]
+    }).catch((error) => {
       let msg = await loading.edit(`Couldn't find ${args[0]}:${args[1]}`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
-    }
-
+    });
     let Server = {};
     Server.ip = args[0];
     Server.port = args[1];
