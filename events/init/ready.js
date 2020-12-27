@@ -26,7 +26,7 @@ module.exports = (client) => {
         else players = players + '```';
         let serverEmbed = new MessageEmbed()
           .setColor('#00ffbb')
-          .setTitle(`${data.servername}`)
+          .setTitle(`${data.name}`)
           .addFields(
             { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
             { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
