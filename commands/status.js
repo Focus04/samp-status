@@ -22,7 +22,7 @@ module.exports = {
       type: 'samp',
       host: server.ip,
       port: server.port
-    }).catch((err) => {
+    }).catch(async (err) => {
       let msg = await loading.edit(`${server.ip}:${server.port} is currenty down.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);

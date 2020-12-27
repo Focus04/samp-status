@@ -21,7 +21,7 @@ module.exports = {
       type: 'samp',
       host: args[0],
       port: args[1]
-    }).catch((error) => {
+    }).catch(async (error) => {
       let msg = await loading.edit(`Couldn't find ${args[0]}:${args[1]}`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
