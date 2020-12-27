@@ -27,10 +27,9 @@ module.exports = {
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     });
-    console.log(data);
     let players = '```';
     data.players.map(player => {
-      players = players + `${player.name} - ${player.score} - ${player.ping}` + `\n`;
+      players = players + `${player.name}(${player.id}) - ${player.score} - ${player.ping}` + `\n`;
     });
     if (players === '```') players = '```None```';
     else players = players + '```';
@@ -39,9 +38,12 @@ module.exports = {
       .setTitle(`${data.name}`)
       .addFields(
         { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
-        { name: 'Map', value: `${data.map}`, inline: true },
-        { name: 'Players', value: `${data.num_players}/${data.max_players}`, inline: true },
-        { name: 'Name - Score - Ping', value: `${players}` }
+        { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
+        { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
+        { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
+        { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
+        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
+        { name: 'Name(ID) - Score - Ping', value: `${players}` }
       )
       .setTimestamp();
     await loading.delete();
