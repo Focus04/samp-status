@@ -17,6 +17,7 @@ module.exports = {
       return message.react(reactionError);
     }
 
+    let err = 0;
     await gamedig.query({
       type: 'samp',
       host: args[0],
@@ -24,8 +25,10 @@ module.exports = {
     }).catch(async (error) => {
       let msg = await loading.edit(`Couldn't find ${args[0]}:${args[1]}`);
       msg.delete({ timeout: deletionTimeout });
-      return message.react(reactionError);
+      message.react(reactionError);
+      err = 1;
     });
+    if (err === 1) return;
     let Server = {};
     Server.ip = args[0];
     Server.port = args[1];

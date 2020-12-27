@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
@@ -13,8 +13,11 @@ module.exports = (client) => {
       if (time && time.next <= Date.now()) {
         time.next += time.time;
         const server = await servers.get(guild.id);
-        const response = await fetch(`https://monitor.teamshrimp.com/api/fetch/all/${server.ip}/${server.port}/`);
-        const data = await response.json();
+        const data = await gamedig.query({
+          type: 'samp',
+          host: server.ip,
+          port: server.port
+        });
         let players = '```';
         data.players.map(player => {
           players = players + `${player.name}(${player.id}) - ${player.score} - ${player.ping}` + `\n`;
@@ -25,12 +28,12 @@ module.exports = (client) => {
           .setColor('#00ffbb')
           .setTitle(`${data.servername}`)
           .addFields(
-            { name: 'Server IP', value: `${data.ip}:${data.port}`, inline: true },
-            { name: 'Map', value: `${data.mapname}`, inline: true },
-            { name: 'Time', value: `${data.worldtime}`, inline: true },
-            { name: 'Forums', value: 'http://' + data.weburl, inline: true },
-            { name: 'Version', value: `${data.version}`, inline: true },
-            { name: 'Players', value: `${data.num_players}/${data.max_players}`, inline: true },
+            { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
+            { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
+            { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
+            { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
+            { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
+            { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
             { name: 'Name(ID) - Score - Ping', value: `${players}` }
           )
           .setTimestamp();
