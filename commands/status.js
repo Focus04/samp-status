@@ -27,6 +27,7 @@ module.exports = {
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     });
+    console.log(data);
     let players = '```';
     data.players.map(player => {
       players = players + `${player.name} - ${player.score} - ${player.ping}` + `\n`;
