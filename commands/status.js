@@ -29,7 +29,7 @@ module.exports = {
       return message.react(reactionError);
     });
     const config = {
-      border: getBorderCharacters('void'),
+      border: getBorderCharacters(`void`),
       columnDefault: {
         paddingLeft: 0,
         paddingRight: 1

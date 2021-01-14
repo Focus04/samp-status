@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { table } = require('table');
+const { table, getBorderCharacters } = require('table');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
