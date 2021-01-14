@@ -39,7 +39,6 @@ module.exports = {
       p[3] = player.ping;
       players.push(p);
     });
-    console.log(players);
     let output;
     if (players.length === 1) output = 'None';
     else output = table(players); 
