@@ -29,7 +29,7 @@ module.exports = {
       return message.react(reactionError);
     });
     let players = [
-      ['Name', 'ID', 'Score', 'Ping']
+      ['ID', 'Name', 'Score', 'Ping']
     ];
     data.players.forEach(player => {
       let p = [];
@@ -53,7 +53,7 @@ module.exports = {
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: 'Name(ID) - Score - Ping', value: '```' + output + '```' }
+        { name: '\u200B', value: '```' + output + '```' }
       )
       .setTimestamp();
     await loading.delete();
