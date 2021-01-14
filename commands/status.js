@@ -38,10 +38,9 @@ module.exports = {
       player[3] = player.ping;
       players.push(player);
     });
-    if (players.length === 1) players = 'None';
-    else {
-      const output = table(players);
-    }
+    let output;
+    if (players.length === 1) output = 'None';
+    else output = table(players); 
     let serverEmbed = new Discord.MessageEmbed()
       .setColor('#00ffbb')
       .setTitle(`${data.name}`)
@@ -52,7 +51,7 @@ module.exports = {
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: 'Name(ID) - Score - Ping', value: '```' + players + '```' }
+        { name: 'Name(ID) - Score - Ping', value: '```' + output + '```' }
       )
       .setTimestamp();
     await loading.delete();
