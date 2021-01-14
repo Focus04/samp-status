@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const table = require('table');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -27,12 +28,20 @@ module.exports = {
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     });
-    let players = '```';
-    data.players.map(player => {
-      players = players + `${player.name}(${player.id}) - ${player.score} - ${player.ping}` + `\n`;
+    let players = [
+      ['Name', 'ID', 'Score', 'Ping']
+    ];
+    data.players.forEach(player => {
+      player[0] = player.id;
+      player[1] = player.name;
+      player[2] = player.score;
+      player[3] = player.ping;
+      players.push(player);
     });
-    if (players === '```') players = '```None```';
-    else players = players + '```';
+    if (players.length === 1) players = 'None';
+    else {
+      const output = table(players);
+    }
     let serverEmbed = new Discord.MessageEmbed()
       .setColor('#00ffbb')
       .setTitle(`${data.name}`)
@@ -43,7 +52,7 @@ module.exports = {
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: 'Name(ID) - Score - Ping', value: `${players}` }
+        { name: 'Name(ID) - Score - Ping', value: '```' + players + '```' }
       )
       .setTimestamp();
     await loading.delete();
