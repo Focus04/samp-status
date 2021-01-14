@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const table = require('table');
+import table from 'table';
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
