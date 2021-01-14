@@ -38,9 +38,7 @@ module.exports = {
         return false
       }
     }
-    let players = [
-      ['ID', 'Name', 'Score', 'Ping']
-    ];
+    let players = [];
     data.players.forEach(player => {
       let p = [];
       p[0] = player.id;
@@ -50,7 +48,7 @@ module.exports = {
       players.push(p);
     });
     let output;
-    if (players.length === 1) output = 'None';
+    if (!players.length) output = 'None';
     else output = table(players, config); 
     let serverEmbed = new MessageEmbed()
       .setColor('#00ffbb')
@@ -62,7 +60,7 @@ module.exports = {
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: '\u200B', value: '```' + output + '```' }
+        { name: 'ID Name Score Ping', value: '```' + output + '```' }
       )
       .setTimestamp();
     await loading.delete();
