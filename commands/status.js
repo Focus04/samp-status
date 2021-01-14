@@ -1,4 +1,4 @@
-const { table } = require('table');
+const { table, getBorderCharacters } = require('table');
 const { MessageEmbed } = require('discord.js');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
@@ -28,6 +28,16 @@ module.exports = {
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     });
+    const config = {
+      border: getBorderCharacters('void'),
+      columnDefault: {
+        paddingLeft: 0,
+        paddingRight: 1
+      },
+      drawHorizontalLine: () => {
+        return false
+      }
+    }
     let players = [
       ['ID', 'Name', 'Score', 'Ping']
     ];
@@ -41,7 +51,7 @@ module.exports = {
     });
     let output;
     if (players.length === 1) output = 'None';
-    else output = table(players); 
+    else output = table(players, config); 
     let serverEmbed = new MessageEmbed()
       .setColor('#00ffbb')
       .setTitle(`${data.name}`)
