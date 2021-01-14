@@ -1,5 +1,5 @@
-const Discord = require('discord.js');
-const table = require('table');
+const { table } = require('table');
+const { MessageEmbed } = require('discord.js');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -43,7 +43,7 @@ module.exports = {
     let output;
     if (players.length === 1) output = 'None';
     else output = table(players); 
-    let serverEmbed = new Discord.MessageEmbed()
+    let serverEmbed = new MessageEmbed()
       .setColor('#00ffbb')
       .setTitle(`${data.name}`)
       .addFields(
