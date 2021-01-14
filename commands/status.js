@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-import table from 'table';
+const table = require('table');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -38,6 +38,7 @@ module.exports = {
       player[3] = player.ping;
       players.push(player);
     });
+    console.log(players);
     let output;
     if (players.length === 1) output = 'None';
     else output = table(players); 
