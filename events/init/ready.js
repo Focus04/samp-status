@@ -19,12 +19,20 @@ module.exports = (client) => {
           host: server.ip,
           port: server.port
         });
-        let players = '```';
-        data.players.map(player => {
-          players = players + `${player.name}(${player.id}) - ${player.score} - ${player.ping}` + `\n`;
+        let players = [
+          ['ID', 'Name', 'Score', 'Ping']
+        ];
+        data.players.forEach(player => {
+          let p = [];
+          p[0] = player.id;
+          p[1] = player.name;
+          p[2] = player.score;
+          p[3] = player.ping;
+          players.push(p);
         });
-        if (players === '```') players = '```None```';
-        else players = players + '```';
+        let output;
+        if (players.length === 1) output = 'None';
+        else output = table(players); 
         let serverEmbed = new MessageEmbed()
           .setColor('#00ffbb')
           .setTitle(`${data.name}`)
@@ -35,7 +43,7 @@ module.exports = (client) => {
             { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
             { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
             { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-            { name: 'Name(ID) - Score - Ping', value: `${players}` }
+            { name: '\u200B', value: '```'  + output + '```' }
           )
           .setTimestamp();
         const channel = guild.channels.cache.get(time.channel);
