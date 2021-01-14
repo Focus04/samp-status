@@ -32,11 +32,12 @@ module.exports = {
       ['Name', 'ID', 'Score', 'Ping']
     ];
     data.players.forEach(player => {
-      player[0] = player.id;
-      player[1] = player.name;
-      player[2] = player.score;
-      player[3] = player.ping;
-      players.push(player);
+      let p = [];
+      p[0] = player.id;
+      p[1] = player.name;
+      p[2] = player.score;
+      p[3] = player.ping;
+      players.push(p);
     });
     console.log(players);
     let output;
