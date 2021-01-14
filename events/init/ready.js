@@ -19,6 +19,16 @@ module.exports = (client) => {
           host: server.ip,
           port: server.port
         });
+        const config = {
+          border: getBorderCharacters('void'),
+          columnDefault: {
+            paddingLeft: 0,
+            paddingRight: 1
+          },
+          drawHorizontalLine: () => {
+            return false
+          }
+        }
         let players = [
           ['ID', 'Name', 'Score', 'Ping']
         ];
@@ -32,7 +42,7 @@ module.exports = (client) => {
         });
         let output;
         if (players.length === 1) output = 'None';
-        else output = table(players); 
+        else output = table(players, config); 
         let serverEmbed = new MessageEmbed()
           .setColor('#00ffbb')
           .setTitle(`${data.name}`)
