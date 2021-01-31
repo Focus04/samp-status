@@ -49,9 +49,12 @@ module.exports = {
     });
     let output;
     if (!players.length) output = 'None';
-    else output = table(players, config); 
+    else output = table(players, config);
+    let color;
+    if (newmsg.guild.me.roles.highest.color === 0) color = '#b9bbbe';
+    else color = newmsg.guild.me.roles.highest.color;
     let serverEmbed = new MessageEmbed()
-      .setColor('#00ffbb')
+      .setColor(color)
       .setTitle(`${data.name}`)
       .addFields(
         { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },

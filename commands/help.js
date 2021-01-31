@@ -6,12 +6,15 @@ module.exports = {
   name: 'help',
   description: 'Displays a list of all available commands along with their usage.',
   usage: 'help (`command`)',
-  async execute (message, args, prefix) {
+  async execute(message, args, prefix) {
+    let color;
+    if (newmsg.guild.me.roles.highest.color === 0) color = '#b9bbbe';
+    else color = newmsg.guild.me.roles.highest.color;
     if (!args.length) {
       let cmds = '';
       fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]}, `);
       const helpEmbed = new MessageEmbed()
-        .setColor('#00ffbb')
+        .setColor(color)
         .addField('Commands', '```' + cmds + '```')
         .setTimestamp();
       await message.channel.send(helpEmbed);
@@ -24,7 +27,7 @@ module.exports = {
         return message.react(reactionError);
       }
       const cmdEmbed = new MessageEmbed()
-        .setColor('#00ffbb')
+        .setColor(color)
         .setTitle(`${prefix}${command.name}`)
         .addFields(
           { name: 'Description', value: command.description},
