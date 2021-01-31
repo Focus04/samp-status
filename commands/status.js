@@ -51,8 +51,8 @@ module.exports = {
     if (!players.length) output = 'None';
     else output = table(players, config);
     let color;
-    if (newmsg.guild.me.roles.highest.color === 0) color = '#b9bbbe';
-    else color = newmsg.guild.me.roles.highest.color;
+    if (message.guild.me.roles.highest.color === 0) color = '#b9bbbe';
+    else color = message.guild.me.roles.highest.color;
     let serverEmbed = new MessageEmbed()
       .setColor(color)
       .setTitle(`${data.name}`)
