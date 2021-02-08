@@ -56,13 +56,14 @@ module.exports = {
     let serverEmbed = new MessageEmbed()
       .setColor(color)
       .setTitle(`${data.name}`)
+      .setDescription(data.raw.gamemode)
       .addFields(
         { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
         { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
         { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
+        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
       )
       .setTimestamp();
     if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');

@@ -47,6 +47,7 @@ module.exports = (client) => {
         let serverEmbed = new MessageEmbed()
           .setColor(color)
           .setTitle(`${data.name}`)
+          .setDescription(data.raw.gamemode)
           .addFields(
             { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
             { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
