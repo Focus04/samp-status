@@ -63,9 +63,10 @@ module.exports = {
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: 'ID Name Score Ping', value: '```' + output + '```' }
       )
       .setTimestamp();
+    if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
+    console.log(data);
     await loading.delete();
     await message.channel.send(serverEmbed);
     message.react(reactionSuccess);

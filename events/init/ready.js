@@ -53,10 +53,10 @@ module.exports = (client) => {
             { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
             { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
             { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-            { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-            { name: 'ID Name Score Ping', value: '```'  + output + '```' }
+            { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
           )
           .setTimestamp();
+        if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
         const channel = guild.channels.cache.get(time.channel);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
