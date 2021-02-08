@@ -67,7 +67,6 @@ module.exports = {
       )
       .setTimestamp();
     if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
-    console.log(data);
     await loading.delete();
     await message.channel.send(serverEmbed);
     message.react(reactionSuccess);
