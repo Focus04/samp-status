@@ -1,15 +1,20 @@
-const fs = require('fs');
+const { readdirSync } = require('fs');
 const { Client, Collection } = require('discord.js');
-const client = new Client();
+const intents = {
+  ws: {
+    intents: ['GUILDS', 'GUILD_MESSAGES']
+  }
+};
+const client = new Client(intents);
 
 client.commands = new Collection();
-fs.readdirSync('./commands').forEach((file) => {
+readdirSync('./commands').forEach((file) => {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 });
 
-fs.readdirSync('./events').forEach((folder) => {
-  fs.readdirSync(`./events/${folder}`).forEach((file) => {
+readdirSync('./events').forEach((folder) => {
+  readdirSync(`./events/${folder}`).forEach((file) => {
     const event = require(`./events/${folder}/${file}`);
     client.on(file.split('.')[0], event.bind(null, client));
   });
