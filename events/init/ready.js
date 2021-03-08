@@ -64,7 +64,6 @@ module.exports = (client) => {
           )
           .setTimestamp();
         if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
-        const channel = guild.channels.cache.get(time.channel);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         let msg = await channel.send(serverEmbed);
