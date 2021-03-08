@@ -21,9 +21,7 @@ module.exports = (client) => {
           port: server.port,
           maxAttempts: 10
         }).catch(async (err) => {
-          let msg = await channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
-          msg.delete({ timeout: deletionTimeout });
-          return message.react(reactionError);
+          channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
         });
         const config = {
           border: getBorderCharacters('void'),
