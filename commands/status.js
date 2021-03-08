@@ -19,16 +19,19 @@ module.exports = {
       return message.react(reactionError);
     }
     
+    let err = 0;
     const data = await gamedig.query({
       type: 'samp',
       host: server.ip,
       port: server.port,
       maxAttempts: 10
-    }).catch(async (err) => {
+    }).catch(async (error) => err = 0);
+    if (err === 1 || !data) {
       let msg = await loading.edit(`${server.ip}:${server.port} did not respond after 10 attempts.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
-    });
+    }
+
     const config = {
       border: getBorderCharacters(`void`),
       columnDefault: {
