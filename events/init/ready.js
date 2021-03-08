@@ -13,6 +13,7 @@ module.exports = (client) => {
       const time = await intervals.get(guild.id);
       if (time && time.next <= Date.now()) {
         time.next += time.time;
+        const channel = guild.channels.cache.get(time.channel);
         const server = await servers.get(guild.id);
         const data = await gamedig.query({
           type: 'samp',
