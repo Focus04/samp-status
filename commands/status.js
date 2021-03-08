@@ -22,9 +22,10 @@ module.exports = {
     const data = await gamedig.query({
       type: 'samp',
       host: server.ip,
-      port: server.port
+      port: server.port,
+      maxAttempts: 10
     }).catch(async (err) => {
-      let msg = await loading.edit(`${server.ip}:${server.port} is currenty down.`);
+      let msg = await loading.edit(`${server.ip}:${server.port} did not respond after 10 attempts.`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     });
