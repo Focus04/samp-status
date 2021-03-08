@@ -12,6 +12,7 @@ module.exports = (client) => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
       if (time && time.next <= Date.now()) {
+        let err = 0;
         time.next += time.time;
         const server = await servers.get(guild.id);
         const channel = guild.channels.cache.get(time.channel);
@@ -20,9 +21,11 @@ module.exports = (client) => {
           host: server.ip,
           port: server.port,
           maxAttempts: 10
-        }).throw(async (err) => {
+        }).catch(async (err) => {
           channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
+          err = 1;
         });
+        if (err === 1) return;
         const config = {
           border: getBorderCharacters('void'),
           columnDefault: {
