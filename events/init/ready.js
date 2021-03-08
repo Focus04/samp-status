@@ -21,11 +21,10 @@ module.exports = (client) => {
           host: server.ip,
           port: server.port,
           maxAttempts: 10
-        }).catch(async (err) => {
-          channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
-          err = 1;
-        });
-        if (err === 1) return;
+        }).catch(async (error) => err = 1);
+        if (err === 1 || !data) {
+          return channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
+        }
         const config = {
           border: getBorderCharacters('void'),
           columnDefault: {
