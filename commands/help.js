@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
-const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
+const { reactionError, reactionSuccess, deletionTimeout, botInviteLink, githubRepo } = require('../config.json');
 
 module.exports = {
   name: 'help',
@@ -12,10 +12,13 @@ module.exports = {
     else color = message.guild.me.roles.highest.color;
     if (!args.length) {
       let cmds = '';
-      fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]}, `);
+      fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]} `);
       const helpEmbed = new MessageEmbed()
         .setColor(color)
-        .addField('Commands', '```' + cmds + '```')
+        .addFields(
+          { name: 'Commands', value: '```' + cmds + '```' },
+          { name: 'Useful Links', value: `[Add me on your server!](${botInviteLink}) [Code](${githubRepo})` }
+        )
         .setTimestamp();
       await message.channel.send(helpEmbed);
       message.react(reactionSuccess);
@@ -30,8 +33,8 @@ module.exports = {
         .setColor(color)
         .setTitle(`${prefix}${command.name}`)
         .addFields(
-          { name: 'Description', value: command.description},
-          { name: 'Usage', value: command.usage}
+          { name: 'Description', value: command.description },
+          { name: 'Usage', value: command.usage }
         )
         .setTimestamp();
       await message.channel.send(cmdEmbed);
