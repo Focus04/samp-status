@@ -5,7 +5,7 @@ const { reactionError, reactionSuccess, deletionTimeout } = require('../config.j
 
 module.exports = {
   name: 'setguildserver',
-  description: `Displays the bot's current latency in ms.`,
+  description: `Sets a per guild SA:MP server to receive updates on.`,
   usage: 'setguildserver `ip` `port`',
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',

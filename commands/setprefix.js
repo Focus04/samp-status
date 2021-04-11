@@ -4,7 +4,7 @@ const { deletionTimeout, reactionError, reactionSuccess } = require('../config.j
 
 module.exports = {
   name: 'setprefix',
-  description: 'Changes the default `!` prefix to a custom one.',
+  description: 'Changes the default prefix to a custom one.',
   usage: 'setprefix `prefix`',
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
