@@ -6,9 +6,10 @@ const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-module.exports = (client) => {
+module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  await maxPlayers.set('next', 123);
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -76,10 +77,8 @@ module.exports = (client) => {
     });
   }, 60000);
   setInterval(async () => {
-    console.log('Check started')
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
-      console.log('Adding data to the db...')
       await maxPlayers.set('next', nextCheck + 1);
       client.guilds.cache.forEach(async (guild) => {
         const time = await intervals.get(guild.id);
