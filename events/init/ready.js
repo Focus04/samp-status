@@ -4,10 +4,12 @@ const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
+const maxPlayers = new Keyv(process.env.maxPlayers);
 
 module.exports = (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  await maxPlayers.set('next', 1618185600);
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -73,4 +75,7 @@ module.exports = (client) => {
       }
     });
   }, 60000);
+  setInterval(async () => {
+    const nextCheck = await maxPlayers.get('next');
+  }, 3600000);
 }
