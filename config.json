@@ -4,5 +4,7 @@
   "reactionSuccess": "✔️",
   "deletionTimeout": 10000,
   "botInviteLink": "https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands",
-  "githubRepo": "https://github.com/Focus04/samp-status"
+  "githubRepo": "https://github.com/Focus04/samp-status",
+  "chartWidth": 3840,
+  "chartHeight": 2160
 }

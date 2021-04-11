@@ -1,9 +1,11 @@
+const { MessageAttachment } = require('discord.js');
+const { CanvasRenderService } = require('chartjs-node-canvas');
 const moment = require('moment');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
+const { reactionError, reactionSuccess, deletionTimeout, chartWidth, chartHeight } = require('../config.json');
 
 module.exports = {
   name: 'serverchart',
@@ -21,6 +23,27 @@ module.exports = {
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
     let dates = [];
-    
+    data.forEach((day) => {
+      players.push(day.value);
+      dates.push(moment(day.date).format('LL'));
+    });
+    let chartCallback = (chartJS) => { };
+    const canvas = new CanvasRenderService(chartWidth, chartHeight, chartCallback);
+    const config = {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [
+          {
+            label: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
+            data: players
+          }
+        ]
+      }
+    };
+    const image = await canvas.renderToBuffer(config);
+    const attachment = new MessageAttachment(image);
+    await message.channel.send(attachment);
+    message.react(reactionSuccess);
   }
 }
