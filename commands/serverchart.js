@@ -27,7 +27,10 @@ module.exports = {
       players.push(day.value);
       dates.push(moment(day.date).format('LL'));
     });
-    const canvas = new ChartJSNodeCanvas({ chartWidth, chartHeight });
+    const canvas = new ChartJSNodeCanvas({
+      width: chartWidth,
+      height: chartHeight
+    });
     const config = {
       type: 'line',
       data: {
