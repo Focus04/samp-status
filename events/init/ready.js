@@ -9,13 +9,6 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  client.guilds.cache.forEach(async (guild) => {
-    const interval = await intervals.get(guild.id);
-    if (!interval) return;
-    const serverAddress = await servers.get(guild.id);
-    maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, []);
-    console.log(`Created db object for guild ${guild.id}`);
-  })
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -85,7 +78,7 @@ module.exports = (client) => {
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
-      await maxPlayers.set('next', nextCheck + 86400000);
+      await maxPlayers.set('next', nextCheck + 1);
       client.guilds.cache.forEach(async (guild) => {
         const time = await intervals.get(guild.id);
         if (!time) return;
@@ -100,5 +93,5 @@ module.exports = (client) => {
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, arr);
       });
     }
-  }, 86400000);
+  }, 60000);
 }
