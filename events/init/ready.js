@@ -8,12 +8,6 @@ const servers = new Keyv(process.env.servers);
 module.exports = (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  client.guilds.cache.forEach(async (guild) => {
-    const obj = await intervals.get(guild.id);
-    obj.maxMembersToday = -1;
-    await intervals.set(guild.id, obj);
-    console.log(`Added property to ${guild.id}`);
-  });
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -31,6 +25,7 @@ module.exports = (client) => {
         if (err === 1 || !data) {
           return channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
         }
+        if (data.players.length > time.maxMembersToday) time.maxMembersToday = data.players.length;
         const config = {
           border: getBorderCharacters('void'),
           columnDefault: {
