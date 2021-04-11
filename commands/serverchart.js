@@ -19,6 +19,9 @@ module.exports = {
       return message.react(reactionError);
     }
 
+    let roleColor;
+    if (message.guild.me.roles.highest.color === 0) roleColor = '#b9bbbe';
+    else roleColor = message.guild.me.roles.highest.color;
     const serverAddress = await servers.get(message.guild.id);
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
@@ -48,7 +51,8 @@ module.exports = {
         datasets: [
           {
             label: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
-            data: players
+            data: players,
+            backgroundColor: roleColor
           }
         ]
       }
