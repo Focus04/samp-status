@@ -12,7 +12,8 @@ module.exports = (client) => {
   client.guilds.cache.forEach(async (guild) => {
     const interval = await intervals.get(guild.id);
     if (!interval) return;
-    maxPlayers.set(guild.id, []);
+    const serverAddress = await servers.get(guild.id);
+    maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, []);
     console.log(`Created db object for guild ${guild.id}`);
   })
   setInterval(() => {
