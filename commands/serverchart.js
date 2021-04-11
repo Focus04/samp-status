@@ -32,8 +32,8 @@ module.exports = {
     });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
-      height: chartHeight,
-      chartCallback: (chartJS) => {
+      height: chartHeight
+      /* chartCallback: (chartJS) => {
         chartJS.plugins.register(
           {
             beforeDraw: (chartInstance) => {
@@ -42,7 +42,7 @@ module.exports = {
             }
           }
         )
-      }
+      } */
     });
     const config = {
       type: 'bar',
