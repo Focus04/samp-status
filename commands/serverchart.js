@@ -29,7 +29,17 @@ module.exports = {
     });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
-      height: chartHeight
+      height: chartHeight,
+      chartCallback: (chartJS) => {
+        chartJS.plugins.register(
+          {
+            beforeDraw: (chartInstance) => {
+              chartInstance.chart.ctx.fillStyle = '#ffffff',
+              chartInstance.chart.ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+            }
+          }
+        )
+      }
     });
     const config = {
       type: 'line',
