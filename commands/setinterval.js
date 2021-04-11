@@ -1,6 +1,7 @@
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
+const maxPlayers = new Keyv(processe.env.maxPlayers);
 const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
 
 module.exports = {
@@ -44,6 +45,8 @@ module.exports = {
     Interval.message = loading.id;
     Interval.maxMembersToday = -1;
     await intervals.set(message.guild.id, Interval);
+    const chartData = await maxPlayers.get(message.guild.id);
+    if (!chartData) await maxPlayers.set(`${server.ip}:${server.port}`, []);
     await loading.edit(`Successfully set an interval.`);
     message.react(reactionSuccess);
   }

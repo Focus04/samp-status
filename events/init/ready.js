@@ -85,7 +85,12 @@ module.exports = (client) => {
         let ChartData = {};
         ChartData.date = Date.now();
         ChartData.value = time.maxMembersToday;
-        await maxPlayers.set(guild.id, ChartData);
+        time.maxMembersToday = -1;
+        await intervals.set(guild.id, time);
+        const serverAddress = await servers.get(guild.id);
+        const arr = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
+        arr.push(ChartData);
+        await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, arr);
       });
     }
   }, 86400000);

@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "@keyv/mongo": "^1.1.0",
+    "chart.js": "^3.1.0",
+    "chartjs-node-canvas": "^3.1.0",
     "discord.js": "^12.5.1",
     "gamedig": "^2.0.23",
     "keyv": "^4.0.3",
+    "moment": "^2.29.1",
     "table": "^6.0.7"
   }
 }
