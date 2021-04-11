@@ -1,5 +1,5 @@
 const { MessageAttachment } = require('discord.js');
-const { CanvasRenderService } = require('chartjs-node-canvas');
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const moment = require('moment');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -27,8 +27,7 @@ module.exports = {
       players.push(day.value);
       dates.push(moment(day.date).format('LL'));
     });
-    let chartCallback = (chartJS) => { };
-    const canvas = new CanvasRenderService(chartWidth, chartHeight, chartCallback);
+    const canvas = new ChartJSNodeCanvas({ chartWidth, chartHeight });
     const config = {
       type: 'line',
       data: {
