@@ -37,7 +37,7 @@ module.exports = {
         chartJS.plugins.register(
           {
             beforeDraw: (chartInstance) => {
-              chartInstance.chart.ctx.fillStyle = '#ffffff';
+              chartInstance.chart.ctx.fillStyle = 'white';
               chartInstance.chart.ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
             }
           }
