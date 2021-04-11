@@ -30,9 +30,20 @@ module.exports = {
       players.push(day.value);
       dates.push(moment(day.date).format('LL'));
     });
+    let chartCallback = (ChartJS) => {
+      ChartJS.plugins.register({
+        beforeDraw: (chartInstance) => {
+          const { chart } = chartInstance
+          const { ctx } = chart
+          ctx.fillStyle = 'white'
+          ctx.fillRect(0, 0, chart.width, chart.height)
+        },
+      })
+    }
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
-      height: chartHeight
+      height: chartHeight,
+      chartCallback
       /* chartCallback: (chartJS) => {
         chartJS.plugins.register(
           {
