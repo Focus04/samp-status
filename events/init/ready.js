@@ -17,6 +17,7 @@ module.exports = (client) => {
         time.next += time.time;
         const server = await servers.get(guild.id);
         const channel = guild.channels.cache.get(time.channel);
+        if (!channel) return;
         const data = await gamedig.query({
           type: 'samp',
           host: server.ip,
@@ -87,5 +88,5 @@ module.exports = (client) => {
         await maxPlayers.set(guild.id, ChartData);
       });
     }
-  }, 60000);
+  }, 86400000);
 }
