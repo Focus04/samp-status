@@ -81,10 +81,10 @@ module.exports = (client) => {
       client.guilds.cache.forEach(async (guild) => {
         const time = await intervals.get(guild.id);
         if (!time) return;
-        let maxPlayers = {};
-        maxPlayers.date = Date.now();
-        maxPlayers.value = time.maxMembersToday;
-        await maxPlayers.set(guild.id, maxPlayers);
+        let ChartData = {};
+        ChartData.date = Date.now();
+        ChartData.value = time.maxMembersToday;
+        await maxPlayers.set(guild.id, ChartData);
       });
     }
   }, 60000);
