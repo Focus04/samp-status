@@ -42,7 +42,7 @@ module.exports = {
       }
     });
     const config = {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: dates,
         datasets: [
