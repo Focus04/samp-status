@@ -9,6 +9,12 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  client.guilds.forEach((guild) => {
+    const interval = await intervals.get(guild.id);
+    if (!interval) return;
+    maxPlayers.set(guild.id, []);
+    console.log(`Created db object for guild ${guild.id}`);
+  })
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
