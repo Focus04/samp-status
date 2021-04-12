@@ -15,7 +15,7 @@ module.exports = async (client) => {
     const data = {};
     data.maxPlayersToday = -1;
     data.days = [];
-    await maxPlayers.set(`${info.ip}:${info.port}`, );
+    await maxPlayers.set(`${info.ip}:${info.port}`, data);
   });
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
