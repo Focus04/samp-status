@@ -9,16 +9,13 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  let maxPlayersToday = new Object();
   await client.guilds.cache.forEach(async (guild) => {
     let info = await servers.get(guild.id);
-    if (info) {
-      let address = `${info.ip}_${info.port}`;
-      maxPlayersToday['123'] = -1;
-    }
-  })
-  console.log(maxPlayersToday);
-  await maxPlayers.set('maxPlayersToday', maxPlayersToday);
+    const data = {};
+    data.maxPlayersToday = -1;
+    data.days = [];
+    await maxPlayers.set(`${info.ip}:${info.port}`, );
+  });
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
