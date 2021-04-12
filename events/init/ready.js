@@ -12,6 +12,7 @@ module.exports = async (client) => {
   let maxPlayersToday = {};
   client.guilds.cache.forEach(async(guild) => {
     let info = await servers.get(guild.id);
+    if (!info) return;
     let address = `${info.ip}:${info.port}`;
     maxPlayersToday[address] = -1;
   })
