@@ -9,7 +9,7 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  let maxPlayersToday = {};
+  let maxPlayersToday = new Object();
   await client.guilds.cache.forEach(async (guild) => {
     let info = await servers.get(guild.id);
     if (!info) return;
