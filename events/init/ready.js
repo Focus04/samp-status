@@ -12,9 +12,10 @@ module.exports = async (client) => {
   let maxPlayersToday = new Object();
   await client.guilds.cache.forEach(async (guild) => {
     let info = await servers.get(guild.id);
-    if (!info) return;
-    let address = `${info.ip}_${info.port}`;
-    maxPlayersToday['123'] = -1;
+    if (info) {
+      let address = `${info.ip}_${info.port}`;
+      maxPlayersToday['123'] = -1;
+    }
   })
   console.log(maxPlayersToday);
   await maxPlayers.set('maxPlayersToday', maxPlayersToday);
