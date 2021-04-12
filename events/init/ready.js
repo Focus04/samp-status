@@ -14,6 +14,7 @@ module.exports = async (client) => {
     let info = await servers.get(guild.id);
     if (!info) return;
     let address = `${info.ip}:${info.port}`;
+    console.log(address);
     maxPlayersToday[address] = -1;
   })
   console.log(maxPlayersToday);
