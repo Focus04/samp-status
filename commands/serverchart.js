@@ -26,7 +26,7 @@ module.exports = {
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
     let dates = [];
-    data.forEach((day) => {
+    data.days.forEach((day) => {
       players.push(day.value);
       dates.push(moment(day.date).format('D.M.YYYY'));
     });

@@ -80,7 +80,7 @@ module.exports = async (client) => {
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
-      await maxPlayers.set('next', nextCheck + 1);
+      await maxPlayers.set('next', nextCheck + 86400000);
       client.guilds.cache.forEach(async (guild) => {
         const time = await intervals.get(guild.id);
         if (!time) return;
@@ -94,5 +94,5 @@ module.exports = async (client) => {
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
-  }, 120000);
+  }, 3600000);
 }
