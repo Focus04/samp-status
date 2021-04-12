@@ -9,7 +9,14 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  await maxPlayers.set('next', 123);
+  let maxPlayersToday = {};
+  client.guilds.cache.forEach(async(guild) => {
+    let info = await servers.get(guild.id);
+    let address = `${info.ip}:${info.port}`;
+    maxPlayersToday[address] = -1;
+  })
+  console.log(maxPlayersToday);
+  await maxPlayers.set('maxPlayersToday', maxPlayersToday);
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -75,6 +82,7 @@ module.exports = async (client) => {
       }
     });
   }, 60000);
+  /*
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
@@ -84,8 +92,6 @@ module.exports = async (client) => {
         if (!time) return;
         let ChartData = {};
         ChartData.date = Date.now();
-        ChartData.value = time.maxMembersToday;
-        time.maxMembersToday = -1;
         await intervals.set(guild.id, time);
         const serverAddress = await servers.get(guild.id);
         const arr = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
@@ -94,4 +100,5 @@ module.exports = async (client) => {
       });
     }
   }, 60000);
+  */
 }
