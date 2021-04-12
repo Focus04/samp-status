@@ -35,6 +35,9 @@ module.exports = async (client) => {
         if (err === 1 || !data) {
           return channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
         }
+        const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
+        if (data.players.length > chartData.maxPlayersToday) chartData.maxPlayersToday = data.players.length;
+        await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const config = {
           border: getBorderCharacters('void'),
           columnDefault: {
