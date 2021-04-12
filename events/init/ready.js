@@ -90,7 +90,7 @@ module.exports = async (client) => {
         ChartData.value = data.maxPlayersToday;
         ChartData.date = Date.now();
         data.maxPlayersToday = -1;
-        data.push(ChartData);
+        data.days.push(ChartData);
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
