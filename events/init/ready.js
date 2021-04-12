@@ -11,6 +11,7 @@ module.exports = async (client) => {
   client.user.setActivity('SA:MP');
   await client.guilds.cache.forEach(async (guild) => {
     let info = await servers.get(guild.id);
+    if (!info) return;
     const data = {};
     data.maxPlayersToday = -1;
     data.days = [];
