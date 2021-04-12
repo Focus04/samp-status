@@ -77,7 +77,6 @@ module.exports = async (client) => {
       }
     });
   }, 60000);
-  /*
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
@@ -85,15 +84,15 @@ module.exports = async (client) => {
       client.guilds.cache.forEach(async (guild) => {
         const time = await intervals.get(guild.id);
         if (!time) return;
-        let ChartData = {};
-        ChartData.date = Date.now();
-        await intervals.set(guild.id, time);
         const serverAddress = await servers.get(guild.id);
-        const arr = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
-        arr.push(ChartData);
-        await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, arr);
+        const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
+        let ChartData = {};
+        ChartData.value = data.maxPlayersToday;
+        ChartData.date = Date.now();
+        data.maxPlayersToday = -1;
+        data.push(ChartData);
+        await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
-  }, 60000);
-  */
+  }, 120000);
 }
