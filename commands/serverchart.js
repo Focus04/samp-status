@@ -28,7 +28,7 @@ module.exports = {
     let dates = [];
     data.forEach((day) => {
       players.push(day.value);
-      dates.push(moment(day.date).format('LL'));
+      dates.push(moment(day.date).format('D.M.YYYY'));
     });
     let chartCallback = (ChartJS) => {
       ChartJS.plugins.register({

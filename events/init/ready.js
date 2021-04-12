@@ -28,7 +28,6 @@ module.exports = async (client) => {
         if (err === 1 || !data) {
           return channel.send(`${server.ip}:${server.port} did not respond after 10 attempts.`);
         }
-        if (data.players.length > time.maxMembersToday) time.maxMembersToday = data.players.length;
         const config = {
           border: getBorderCharacters('void'),
           columnDefault: {
