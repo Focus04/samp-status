@@ -44,7 +44,7 @@ module.exports = {
     Interval.next = Date.now();
     Interval.message = loading.id;
     await intervals.set(message.guild.id, Interval);
-    const serverData = await maxPlayers.get(message.guild.id);
+    const serverData = await maxPlayers.get(`${server.ip}:${server.port}`);
     if (!serverData) {
       const data = {};
       data.maxPlayersToday = -1;
