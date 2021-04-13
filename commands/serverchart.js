@@ -50,7 +50,10 @@ module.exports = {
             backgroundColor: roleColor,
             borderWidth: 1,
             borderColor: '#777777',
-            line: { backgroundColor: roleColor }
+            fill: {
+              target: 'origin',
+              below: roleColor
+            }
           }
         ]
       },
@@ -64,10 +67,7 @@ module.exports = {
           legend: { display: false }
         },
         elements: {
-          line: {
-            tension: 2,
-            backgroundColor: roleColor
-          }
+          line: { tension: 0.5 }
         },
         layout: { padding: 20 }
       },
