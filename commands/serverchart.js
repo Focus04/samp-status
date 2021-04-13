@@ -64,10 +64,7 @@ module.exports = {
           text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
           fontSize: 25
         },
-        legend: { display: false },
-        layout: {
-          
-        }
+        legend: { display: false }
       }
     };
     const image = await canvas.renderToBuffer(config);
