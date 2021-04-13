@@ -34,7 +34,7 @@ module.exports = {
       width: chartWidth,
       height: chartHeight,
       defaults: {
-        font: { size: 25 }
+        font: { size: 50 }
       }
     });
     const config = {
