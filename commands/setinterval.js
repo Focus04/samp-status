@@ -18,7 +18,7 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    const channel = message.guild.channels.cache.find((ch) => ch.name === args[0]);
+    let channel = message.mentions.channels.first() || message.guild.channels.cache.find((ch) => ch.name === args[0]);
     if (!channel) {
       let msg = await loading.edit(`Couldn't find ${args[0]}`);
       msg.delete({ timeout: deletionTimeout });
