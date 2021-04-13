@@ -68,8 +68,7 @@ module.exports = {
             display: true,
             text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
             padding: { bottom: 10 }
-          },
-          legend: { display: false }
+          }
         },
         elements: {
           line: { tension: 0.5 }
@@ -83,7 +82,7 @@ module.exports = {
             const ctx = chart.canvas.getContext('2d');
             ctx.save();
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = '#cccccc';
+            ctx.fillStyle = '#eeeeee';
             ctx.fillRect(0, 0, chart.width, chart.height);
             ctx.restore();
           }
