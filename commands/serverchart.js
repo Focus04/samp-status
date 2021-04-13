@@ -10,12 +10,13 @@ const testData = require('./testData.json');
 
 module.exports = {
   name: 'serverchart',
-  description: 'Sends a chart displaying maximum players for each day.',
+  description: 'Sends a chart displaying server statistics for each day.',
   usage: 'serverchart',
   async execute(message, prefix) {
+    let loadingMsg = await message.channel.send('Fetching server info...');
     const interval = await intervals.get(message.guild.id);
     if (!interval) {
-      let msg = await message.channel.send(`You must set an interval to view this. Set one using ${prefix}setinterval`);
+      let msg = await loadingMsg.edit(`You must set an interval to view statistics. Set one using ${prefix}setinterval`);
       msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
@@ -32,14 +33,14 @@ module.exports = {
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
     let dates = [];
-    testData.forEach((i) => {
+    /* testData.forEach((i) => {
       players.push(i.members);
       dates.push(i.date);
-    });
-    /*data.days.forEach((day) => {
+    }); */
+    data.days.forEach((day) => {
       players.push(day.value);
       dates.push(moment(day.date - 40000000).format('D.M'));
-    });*/
+    });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
       height: chartHeight
@@ -91,6 +92,7 @@ module.exports = {
     };
     const image = await canvas.renderToBuffer(config);
     const attachment = new MessageAttachment(image);
+    await loadingMsg.delete();
     await message.channel.send(attachment);
     message.react(reactionSuccess);
   }
