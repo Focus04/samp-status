@@ -61,11 +61,14 @@ module.exports = {
             text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
             padding: { bottom: 10 }
           },
-          legend: {
-            display: true,
-            labels: { color: roleColor }
-          }
+          legend: { display: false }
         },
+        elements: {
+          line: {
+            tension: 2,
+            backgroundColor: roleColor
+          }
+        }
         layout: { padding: 20 }
       },
       plugins: [
