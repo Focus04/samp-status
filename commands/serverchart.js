@@ -45,7 +45,7 @@ module.exports = {
         labels: dates,
         datasets: [
           {
-            label: 'player count',
+            label: 'players',
             data: players,
             backgroundColor: roleColor,
             borderWidth: 1,
@@ -62,7 +62,7 @@ module.exports = {
             padding: { bottom: 10 }
           },
           legend: {
-            display: false,
+            display: true,
             labels: { color: roleColor }
           }
         },
