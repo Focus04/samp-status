@@ -48,8 +48,9 @@ module.exports = {
             label: 'player count',
             data: players,
             backgroundColor: roleColor,
-            borderWidth: 2,
-            borderColor: '#777777'
+            borderWidth: 1,
+            borderColor: '#777777',
+            line: { backgroundColor: roleColor }
           }
         ]
       },
