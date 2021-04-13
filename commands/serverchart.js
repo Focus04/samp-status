@@ -32,9 +32,11 @@ module.exports = {
     });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
-      height: chartHeight
+      height: chartHeight,
+      defaults: {
+        font: { size: 25 }
+      }
     });
-    canvas.defaults.font.size = 25;
     const config = {
       type: 'bar',
       data: {
