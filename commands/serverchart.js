@@ -59,7 +59,8 @@ module.exports = {
             }
           },
           legend: { display: false }
-        }
+        },
+        layout: { padding: 20 }
       },
       plugins: [
         {
