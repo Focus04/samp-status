@@ -68,7 +68,7 @@ module.exports = {
             tension: 2,
             backgroundColor: roleColor
           }
-        }
+        },
         layout: { padding: 20 }
       },
       plugins: [
