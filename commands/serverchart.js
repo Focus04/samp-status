@@ -33,16 +33,6 @@ module.exports = {
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
       height: chartHeight
-      /* chartCallback: (chartJS) => {
-        chartJS.plugins.register(
-          {
-            beforeDraw: (chartInstance) => {
-              chartInstance.chart.ctx.fillStyle = 'white';
-              chartInstance.chart.ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-            }
-          }
-        )
-      } */
     });
     const config = {
       type: 'bar',
@@ -53,7 +43,7 @@ module.exports = {
             label: 'player count',
             data: players,
             backgroundColor: roleColor,
-            borerWidth: 2,
+            borderWidth: 2,
             borderColor: '#777777'
           }
         ]
@@ -65,7 +55,20 @@ module.exports = {
           fontSize: 25
         },
         legend: { display: false }
-      }
+      },
+      plugins: [
+        {
+          id: 'background-color',
+          beforeDraw: (chart) => {
+            const ctx = chart.canvas.getContext('2d');
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = '#cccccc';
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          }
+        }
+      ]
     };
     const image = await canvas.renderToBuffer(config);
     const attachment = new MessageAttachment(image);
