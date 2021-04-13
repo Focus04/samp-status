@@ -53,7 +53,7 @@ module.exports = {
           {
             label: `Most players per day on ${serverAddress.ip}:${serverAddress.port} (last 30 days)`,
             data: players,
-            backgroundColor: roleColor
+            backgroundColor: roleColor.toString(16)
           }
         ]
       }
