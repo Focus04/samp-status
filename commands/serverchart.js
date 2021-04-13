@@ -49,7 +49,6 @@ module.exports = {
             label: 'players',
             data: players,
             backgroundColor: roleRgbaColor,
-            borderWidth: 1,
             borderColor: roleRgbColor,
             fill: {
               target: 'origin',
