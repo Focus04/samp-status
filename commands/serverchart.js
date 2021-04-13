@@ -62,6 +62,13 @@ module.exports = {
             }
           },
           legend: { display: false }
+        },
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            bottom: 30
+          }
         }
       },
       plugins: [
