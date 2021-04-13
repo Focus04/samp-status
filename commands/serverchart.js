@@ -63,7 +63,7 @@ module.exports = {
           },
           legend: {
             display: false,
-            color: backgroundColor
+            labels: { color: roleColor }
           }
         },
         layout: { padding: 20 }
