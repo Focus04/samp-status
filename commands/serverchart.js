@@ -58,14 +58,7 @@ module.exports = {
               bottom: 30
             }
           },
-          legend: { display: false },
-          layout: {
-            padding: {
-              left: 30,
-              right: 30,
-              bottom: 30
-            }
-          }
+          legend: { display: false }
         }
       },
       plugins: [
@@ -76,7 +69,7 @@ module.exports = {
             ctx.save();
             ctx.globalCompositeOperation = 'destination-over';
             ctx.fillStyle = '#cccccc';
-            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.fillRect(0, 0, chart.width + 30, chart.height + 30);
             ctx.restore();
           }
         }
