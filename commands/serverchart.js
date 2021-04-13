@@ -11,7 +11,7 @@ module.exports = {
   name: 'serverchart',
   description: 'Sends a chart displaying maximum players for each day.',
   usage: 'serverchart',
-  async execute(message, args, prefix) {
+  async execute(message, prefix) {
     const interval = await intervals.get(message.guild.id);
     if (!interval) {
       let msg = await message.channel.send(`You must set an interval to view this. Set one using ${prefix}setinterval`);
@@ -32,10 +32,7 @@ module.exports = {
     });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
-      height: chartHeight,
-      defaults: {
-        font: { size: 50 }
-      }
+      height: chartHeight
     });
     const config = {
       type: 'bar',
@@ -61,13 +58,13 @@ module.exports = {
               bottom: 30
             }
           },
-          legend: { display: false }
-        },
-        layout: {
-          padding: {
-            left: 30,
-            right: 30,
-            bottom: 30
+          legend: { display: false },
+          layout: {
+            padding: {
+              left: 30,
+              right: 30,
+              bottom: 30
+            }
           }
         }
       },
