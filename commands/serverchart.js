@@ -28,7 +28,7 @@ module.exports = {
     let dates = [];
     data.days.forEach((day) => {
       players.push(day.value);
-      dates.push(moment(day.date).format('D.M.YYYY'));
+      dates.push(moment(day.date - 40000000).format('D.M.YYYY'));
     });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
@@ -49,12 +49,14 @@ module.exports = {
         ]
       },
       options: {
-        title: {
-          display: true,
-          text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
-          fontSize: 25
-        },
-        legend: { display: false }
+        plugins: {
+          title: {
+            display: true,
+            text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
+            fontSize: 25
+          },
+          legend: { display: false }
+        }
       },
       plugins: [
         {
