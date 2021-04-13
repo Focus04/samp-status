@@ -1,5 +1,5 @@
 const { MessageAttachment } = require('discord.js');
-const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
+const { ChartJSNodeCanvas, defaults } = require('chartjs-node-canvas');
 const moment = require('moment');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -34,6 +34,7 @@ module.exports = {
       width: chartWidth,
       height: chartHeight
     });
+    defaults.font.size = 25;
     const config = {
       type: 'bar',
       data: {
@@ -53,7 +54,10 @@ module.exports = {
           title: {
             display: true,
             text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
-            fontSize: 25
+            padding: {
+              top: 30,
+              bottom: 30
+            }
           },
           legend: { display: false }
         }
