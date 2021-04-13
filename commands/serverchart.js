@@ -1,5 +1,5 @@
 const { MessageAttachment } = require('discord.js');
-const { ChartJSNodeCanvas, defaults } = require('chartjs-node-canvas');
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const moment = require('moment');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
@@ -34,7 +34,7 @@ module.exports = {
       width: chartWidth,
       height: chartHeight
     });
-    defaults.font.size = 25;
+    canvas.defaults.font.size = 25;
     const config = {
       type: 'bar',
       data: {
