@@ -20,9 +20,14 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    let roleColor;
-    if (message.guild.me.roles.highest.color === 0) roleColor = '#b9bbbe';
-    else roleColor = '#' + message.guild.me.roles.highest.color.toString(16);
+    let roleHexColor;
+    if (message.guild.me.roles.highest.color === 0) roleHexColor = '#b9bbbe';
+    else roleHexColor = '#' + message.guild.me.roles.highest.color.toString(16);
+    let r = parseInt(roleHexColor.slice(1, 3), 16);
+    let g = parseInt(roleHexColor.slice(3, 5), 16);
+    let g = parseInt(roleHexColor.slice(5, 7), 16);
+    let roleRgbColor = `rgb(${r}, ${g}, ${b})`;
+    let roleRgbaColor = `rgba(${r}, ${g}, ${b}, 0.1)`
     const serverAddress = await servers.get(message.guild.id);
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
@@ -47,12 +52,12 @@ module.exports = {
           {
             label: 'players',
             data: players,
-            backgroundColor: roleColor,
+            backgroundColor: roleRgbaColor,
             borderWidth: 1,
-            borderColor: '#777777',
+            borderColor: roleRgbColor,
             fill: {
               target: 'origin',
-              below: roleColor
+              below: roleRgbaColor
             }
           }
         ]
