@@ -69,7 +69,7 @@ module.exports = {
             ctx.save();
             ctx.globalCompositeOperation = 'destination-over';
             ctx.fillStyle = '#cccccc';
-            ctx.fillRect(0, 0, chart.width + 30, chart.height + 30);
+            ctx.fillRect(0, 0, chart.width, chart.height);
             ctx.restore();
           }
         }
