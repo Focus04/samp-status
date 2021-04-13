@@ -53,10 +53,7 @@ module.exports = {
           title: {
             display: true,
             text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
-            padding: {
-              top: 30,
-              bottom: 30
-            }
+            padding: { bottom: 10 }
           },
           legend: { display: false }
         },
