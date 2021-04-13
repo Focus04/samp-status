@@ -40,7 +40,7 @@ module.exports = {
       height: chartHeight
     });
     const config = {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: dates,
         datasets: [
