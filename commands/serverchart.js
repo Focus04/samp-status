@@ -22,7 +22,6 @@ module.exports = {
     let roleColor;
     if (message.guild.me.roles.highest.color === 0) roleColor = '#b9bbbe';
     else roleColor = '#' + message.guild.me.roles.highest.color.toString(16);
-    console.log(roleColor);
     const serverAddress = await servers.get(message.guild.id);
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
@@ -51,11 +50,24 @@ module.exports = {
         labels: dates,
         datasets: [
           {
-            label: `Most players per day on ${serverAddress.ip}:${serverAddress.port} (last 30 days)`,
+            label: 'player count',
             data: players,
-            backgroundColor: roleColor
+            backgroundColor: roleColor,
+            borerWidth: 2,
+            borderColor: '#777777'
           }
         ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
+          fontSize: 25
+        },
+        legend: { display: false },
+        layout: {
+          
+        }
       }
     };
     const image = await canvas.renderToBuffer(config);
