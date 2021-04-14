@@ -69,35 +69,50 @@ module.exports = {
           title: {
             display: true,
             text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
+            font: { size: 20 },
             padding: { bottom: 10 }
           }
         },
         scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date',
+              color: roleRgbColor,
+              font: { size: 10 }
+            }
+          },
           y: {
             min: 0,
-            max: 100
+            max: 100,
+            title: {
+              display: true,
+              text: 'Players',
+              color: roleRgbColor,
+              font: { size: 10 }
+            }
           }
+          },
+          layout: { padding: 20 }
         },
-        layout: { padding: 20 }
-      },
-      plugins: [
-        {
-          id: 'background-color',
-          beforeDraw: (chart) => {
-            const ctx = chart.canvas.getContext('2d');
-            ctx.save();
-            ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = '#eeeeee';
-            ctx.fillRect(0, 0, chart.width, chart.height);
-            ctx.restore();
+        plugins: [
+          {
+            id: 'background-color',
+            beforeDraw: (chart) => {
+              const ctx = chart.canvas.getContext('2d');
+              ctx.save();
+              ctx.globalCompositeOperation = 'destination-over';
+              ctx.fillStyle = '#eeeeee';
+              ctx.fillRect(0, 0, chart.width, chart.height);
+              ctx.restore();
+            }
           }
-        }
-      ]
-    };
-    const image = await canvas.renderToBuffer(config);
-    const attachment = new MessageAttachment(image);
-    await loadingMsg.delete();
-    await message.channel.send(attachment);
-    message.react(reactionSuccess);
+        ]
+      };
+      const image = await canvas.renderToBuffer(config);
+      const attachment = new MessageAttachment(image);
+      await loadingMsg.delete();
+      await message.channel.send(attachment);
+      message.react(reactionSuccess);
+    }
   }
-}
