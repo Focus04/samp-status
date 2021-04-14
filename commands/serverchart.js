@@ -55,7 +55,6 @@ module.exports = {
             data: players,
             backgroundColor: roleRgbaColor,
             borderColor: roleRgbColor,
-            pointRadius: 5,
             tension: 0.5,
             fill: {
               target: 'origin',
@@ -78,8 +77,7 @@ module.exports = {
             title: {
               display: true,
               text: 'Date',
-              color: roleRgbColor,
-              font: { size: 10 }
+              font: { size: 15 }
             }
           },
           y: {
@@ -88,31 +86,37 @@ module.exports = {
             title: {
               display: true,
               text: 'Players',
-              color: roleRgbColor,
-              font: { size: 10 }
+              font: { size: 15 }
             }
           }
-          },
-          layout: { padding: 20 }
         },
-        plugins: [
-          {
-            id: 'background-color',
-            beforeDraw: (chart) => {
-              const ctx = chart.canvas.getContext('2d');
-              ctx.save();
-              ctx.globalCompositeOperation = 'destination-over';
-              ctx.fillStyle = '#eeeeee';
-              ctx.fillRect(0, 0, chart.width, chart.height);
-              ctx.restore();
+        elemnents: {
+          point: {
+            radius: adjustRadiusBasedOnData = (ctx) => {
+              return ctx.parsed.y / 3;
             }
           }
-        ]
-      };
-      const image = await canvas.renderToBuffer(config);
-      const attachment = new MessageAttachment(image);
-      await loadingMsg.delete();
-      await message.channel.send(attachment);
-      message.react(reactionSuccess);
-    }
+        },
+        layout: { padding: 20 }
+      },
+      plugins: [
+        {
+          id: 'background-color',
+          beforeDraw: (chart) => {
+            const ctx = chart.canvas.getContext('2d');
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = '#eeeeee';
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          }
+        }
+      ]
+    };
+    const image = await canvas.renderToBuffer(config);
+    const attachment = new MessageAttachment(image);
+    await loadingMsg.delete();
+    await message.channel.send(attachment);
+    message.react(reactionSuccess);
   }
+}
