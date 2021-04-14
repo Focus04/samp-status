@@ -6,6 +6,7 @@ const servers = new Keyv(process.env.servers);
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 const { reactionError, reactionSuccess, deletionTimeout, chartWidth, chartHeight } = require('../config.json');
+const testData = require('../testData.json');
 
 module.exports = {
   name: 'serverchart',
@@ -32,10 +33,14 @@ module.exports = {
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
     let dates = [];
-    data.days.forEach((day) => {
+    testData.forEach((i) => {
+      players.push(i.members)
+      dates.push(i.date)
+    })
+    /*data.days.forEach((day) => {
       players.push(day.value);
       dates.push(moment(day.date - 40000000).format('D.M'));
-    });
+    });*/
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
       height: chartHeight
@@ -49,8 +54,9 @@ module.exports = {
             label: 'players',
             data: players,
             backgroundColor: roleRgbaColor,
-            borderWidth: 1,
             borderColor: roleRgbColor,
+            pointRadius: 5,
+            tension: 0.5,
             fill: {
               target: 'origin',
               below: roleRgbaColor
@@ -66,8 +72,11 @@ module.exports = {
             padding: { bottom: 10 }
           }
         },
-        elements: {
-          line: { tension: 0.5 }
+        scales: {
+          y: {
+            min: 0,
+            max: 100
+          }
         },
         layout: { padding: 20 }
       },
