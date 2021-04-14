@@ -90,7 +90,7 @@ module.exports = {
             }
           }
         },
-        elemnents: {
+        elements: {
           point: { radius: (ctx) => ctx.parsed.y / 3 }
         },
         layout: { padding: 20 }
