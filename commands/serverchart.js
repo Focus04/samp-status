@@ -91,11 +91,7 @@ module.exports = {
           }
         },
         elemnents: {
-          point: {
-            radius: adjustRadiusBasedOnData = (ctx) => {
-              return ctx.parsed.y / 3;
-            }
-          }
+          point: { radius: (ctx) => ctx.parsed.y / 3 }
         },
         layout: { padding: 20 }
       },
