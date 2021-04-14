@@ -33,14 +33,10 @@ module.exports = {
     const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
     let players = [];
     let dates = [];
-    testData.forEach((i) => {
-      players.push(i.members)
-      dates.push(i.date)
-    })
-    /*data.days.forEach((day) => {
+    data.days.forEach((day) => {
       players.push(day.value);
       dates.push(moment(day.date - 40000000).format('D.M'));
-    });*/
+    });
     const canvas = new ChartJSNodeCanvas({
       width: chartWidth,
       height: chartHeight
