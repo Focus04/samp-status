@@ -1,4 +1,4 @@
-export default {
+module.exports =  {
   getChart: async (guild, data, ChartJSNodeCanvas, MessageAttachment, moment) => {
     let roleHexColor;
     if (guild.me.roles.highest.color === 0) roleHexColor = '#b9bbbe';
