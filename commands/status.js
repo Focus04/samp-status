@@ -20,7 +20,7 @@ module.exports = {
       return message.react(reactionError);
     }
     
-    const status = await getStatus(server, MessageEmbed, getBorderCharacters, gamedig, table);
+    const status = await getStatus(message.guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
     await loading.delete();
     await message.channel.send(status);
     message.react(reactionSuccess);

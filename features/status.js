@@ -1,5 +1,5 @@
 module.exports = {
-  getStatus: async (server, MessageEmbed, getBorderCharacters, gamedig, table) => {
+  getStatus: async (guild, server, MessageEmbed, getBorderCharacters, gamedig, table) => {
     let err = 0;
     const data = await gamedig.query({
       type: 'samp',
@@ -34,8 +34,8 @@ module.exports = {
     if (!players.length) output = 'None';
     else output = table(players, config);
     let color;
-    if (message.guild.me.roles.highest.color === 0) color = '#b9bbbe';
-    else color = message.guild.me.roles.highest.color;
+    if (guild.me.roles.highest.color === 0) color = '#b9bbbe';
+    else color = guild.me.roles.highest.color;
     let serverEmbed = new MessageEmbed()
       .setColor(color)
       .setTitle(`${data.name}`)
