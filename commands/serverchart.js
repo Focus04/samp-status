@@ -6,7 +6,7 @@ const servers = new Keyv(process.env.servers);
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
-import getChart from '../features/graph';
+const { getChart } = require('../features/graph');
 
 module.exports = {
   name: 'serverchart',

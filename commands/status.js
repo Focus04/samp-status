@@ -4,6 +4,7 @@ const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
+const { getStatus } = require('../features/status');
 
 module.exports = {
   name: 'status',
