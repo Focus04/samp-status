@@ -40,7 +40,7 @@ module.exports =  {
         plugins: {
           title: {
             display: true,
-            text: `Most players per day on ${serverAddress.ip}:${serverAddress.port}`,
+            text: `Most players per day on the server`,
             font: { size: 20 },
             padding: { bottom: 10 }
           }
