@@ -18,7 +18,7 @@ module.exports = async (client) => {
       const time = await intervals.get(guild.id);
       if (time && Date.now() >= time.next) {
         const server = await servers.get(guild.id);
-        const channel = guild.channels.cache.get(interval.channel);
+        const channel = guild.channels.cache.get(time.channel);
         const status = await getStatus(guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
