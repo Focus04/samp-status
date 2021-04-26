@@ -1,10 +1,14 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const { table, getBorderCharacters } = require('table');
 const gamedig = require('gamedig');
+const moment = require('moment');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
+import getChart from '../../features/graph';
+import sendStatus from '../../features/status';
 
 module.exports = async (client) => {
   console.log('I am live');
@@ -86,12 +90,17 @@ module.exports = async (client) => {
         if (!time) return;
         const serverAddress = await servers.get(guild.id);
         const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
+        const interval = await intervals.get(guild.id);
         let ChartData = {};
         ChartData.value = data.maxPlayersToday;
         ChartData.date = Date.now();
         data.maxPlayersToday = -1;
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
+        const channel = guild.channels.cache.get(interval.channel);
+        const chart = await getChart(data, guild, ChartJSNodeCanvas, MessageAttachment, moment);
+        const msg = channel.send(chart);
+        data.msg = msg;
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
