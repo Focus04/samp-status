@@ -7,8 +7,8 @@ const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-import getChart from '../../features/graph';
-import sendStatus from '../../features/status';
+const { getChart } = require('../../features/graph');
+const { getStatus } = require('../../features/status');
 
 module.exports = async (client) => {
   console.log('I am live');

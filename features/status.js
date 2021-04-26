@@ -1,5 +1,5 @@
 export default {
-  sendStatus: (guildID) => {
-    
+  getStatus: (guildID) => {
+
   }
 }
