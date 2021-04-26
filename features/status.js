@@ -1,5 +1,5 @@
 module.exports = {
-  getStatus: (server, MessageEmbed, getBorderCharacters, gamedig, table) => {
+  getStatus: async (server, MessageEmbed, getBorderCharacters, gamedig, table) => {
     let err = 0;
     const data = await gamedig.query({
       type: 'samp',
