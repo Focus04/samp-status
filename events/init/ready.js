@@ -45,7 +45,7 @@ module.exports = async (client) => {
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
         const channel = guild.channels.cache.get(interval.channel);
-        const chart = await getChart(data, guild, ChartJSNodeCanvas, MessageAttachment, moment);
+        const chart = await getChart(guild, data, ChartJSNodeCanvas, MessageAttachment, moment);
         const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         const msg = channel.send(chart);
