@@ -7,9 +7,7 @@ module.exports = {
       port: server.port,
       maxAttempts: 10
     }).catch(() => err = 0);
-    if (err === 1 || !data) {
-      return `${server.ip}:${server.port} did not respond after 10 attempts.`;
-    }
+    if (err === 1 || !data)  return `${server.ip}:${server.port} did not respond after 10 attempts.`;
 
     const config = {
       border: getBorderCharacters(`void`),
@@ -51,5 +49,16 @@ module.exports = {
       .setTimestamp();
     if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
     return serverEmbed;
+  },
+  getPlayerCount: (server, gamedig) => {
+    let err = 0;
+    const data = await gamedig.query({
+      type: 'samp',
+      host: server.ip,
+      port: server.port,
+      maxAttempts: 10
+    }).catch(() => err = 0);
+    if (err === 1 || !data) return -1;
+    else return data.players.length;
   }
 }

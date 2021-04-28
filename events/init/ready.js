@@ -8,7 +8,7 @@ const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 const { getChart } = require('../../features/graph');
-const { getStatus } = require('../../features/status');
+const { getStatus, getPlayerCount } = require('../../features/status');
 
 module.exports = async (client) => {
   console.log('I am live');
@@ -17,7 +17,11 @@ module.exports = async (client) => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
       if (time && Date.now() >= time.next) {
+        const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         const server = await servers.get(guild.id);
+        const playerCount = await getPlayerCount(server, gamedig);
+        if (playercount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
+        await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const channel = guild.channels.cache.get(time.channel);
         const status = await getStatus(guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
