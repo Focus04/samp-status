@@ -12,7 +12,7 @@ module.exports =  {
     let dates = [];
     data.days.forEach((day) => {
       players.push(day.value);
-      dates.push(moment(day.date - 10000000).format('D.M'));
+      dates.push(moment(day.date - 20000000).format('D.M'));
     });
     const canvas = new ChartJSNodeCanvas({
       width: 1280,
