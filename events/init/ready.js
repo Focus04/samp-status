@@ -20,7 +20,7 @@ module.exports = async (client) => {
         const server = await servers.get(guild.id);
         const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         const playerCount = await getPlayerCount(server, gamedig);
-        if (playercount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
+        if (playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const channel = guild.channels.cache.get(time.channel);
         const status = await getStatus(guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
