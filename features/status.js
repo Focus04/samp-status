@@ -50,7 +50,7 @@ module.exports = {
     if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
     return serverEmbed;
   },
-  getPlayerCount: (server, gamedig) => {
+  getPlayerCount: async (server, gamedig) => {
     let err = 0;
     const data = await gamedig.query({
       type: 'samp',
