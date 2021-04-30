@@ -52,7 +52,7 @@ module.exports = async (client) => {
         const chart = await getChart(guild, data, ChartJSNodeCanvas, MessageAttachment, moment);
         const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
-        const msg = channel.send(chart);
+        const msg = await channel.send(chart);
         data.msg = msg.id;
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
