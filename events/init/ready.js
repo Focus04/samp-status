@@ -13,9 +13,6 @@ const { getStatus, getPlayerCount } = require('../../features/getStatus');
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  const ch = await client.channels.fetch('788788515357196298');
-  const msg = await ch.messages.fetch('837849864992718918');
-  msg.delete();
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
@@ -51,7 +48,7 @@ module.exports = async (client) => {
         data.maxPlayersToday = -1;
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
-        const channel = guild.channels.cache.get(interval.channel);
+        const channel = await client.chanels.fetch(interval.channel).catch((err) => console.log(err));
         const chart = await getChart(guild, data, ChartJSNodeCanvas, MessageAttachment, moment);
         const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
