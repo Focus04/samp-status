@@ -13,6 +13,9 @@ const { getStatus, getPlayerCount } = require('../../features/getStatus');
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  const ch = await client.channels.fetch('788788515357196298');
+  const msg = await ch.messages.fetch('837849864992718918');
+  msg.delete();
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
