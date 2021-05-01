@@ -7,8 +7,9 @@ const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { getChart } = require('../../features/getChart');
-const { getStatus, getPlayerCount } = require('../../features/getStatus');
+const { getChart } = require('../../utils/getChart');
+const { getStatus, getPlayerCount } = require('../../utils/getStatus');
+const { getRoleColor } = require('../../utils/getRoleColor');
 
 module.exports = async (client) => {
   console.log('I am live');
@@ -23,7 +24,8 @@ module.exports = async (client) => {
         if (playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const channel = guild.channels.cache.get(time.channel);
-        const status = await getStatus(guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
+        const color = getRoleColor(guild);
+        const status = await getStatus(server, color, MessageEmbed, getBorderCharacters, gamedig, table);
         const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         let msg = await channel.send(status);
@@ -49,7 +51,8 @@ module.exports = async (client) => {
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
         const channel = await client.chanels.fetch(interval.channel).catch((err) => console.log(err));
-        const chart = await getChart(guild, data, ChartJSNodeCanvas, MessageAttachment, moment);
+        const color = getRoleColor(guild);
+        const chart = await getChart(data, color, ChartJSNodeCanvas, MessageAttachment, moment);
         const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         const msg = await channel.send(chart);

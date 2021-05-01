@@ -1,13 +1,5 @@
-module.exports =  {
-  getChart: async (guild, data, ChartJSNodeCanvas, MessageAttachment, moment) => {
-    let roleHexColor;
-    if (guild.me.roles.highest.color === 0) roleHexColor = '#b9bbbe';
-    else roleHexColor = '#' + guild.me.roles.highest.color.toString(16);
-    let r = parseInt(roleHexColor.slice(1, 3), 16);
-    let g = parseInt(roleHexColor.slice(3, 5), 16);
-    let b = parseInt(roleHexColor.slice(5, 7), 16);
-    let roleRgbColor = `rgb(${r}, ${g}, ${b})`;
-    let roleRgbaColor = `rgba(${r}, ${g}, ${b}, 0.1)`;
+module.exports = {
+  getChart: async (data, color, ChartJSNodeCanvas, MessageAttachment, moment) => {
     let players = [];
     let dates = [];
     data.days.forEach((day) => {
@@ -26,12 +18,12 @@ module.exports =  {
           {
             label: 'players',
             data: players,
-            backgroundColor: roleRgbaColor,
-            borderColor: roleRgbColor,
+            backgroundColor: color.rgba,
+            borderColor: color.rgb,
             tension: 0.5,
             fill: {
               target: 'origin',
-              below: roleRgbaColor
+              below: color.rgba
             }
           }
         ]

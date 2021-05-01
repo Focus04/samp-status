@@ -4,7 +4,8 @@ const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
-const { getStatus } = require('../features/getStatus');
+const { getStatus } = require('../utils/getStatus');
+const { getRoleColor } = require('../utils/getRoleColor');
 
 module.exports = {
   name: 'status',
@@ -20,7 +21,8 @@ module.exports = {
       return message.react(reactionError);
     }
     
-    const status = await getStatus(message.guild, server, MessageEmbed, getBorderCharacters, gamedig, table);
+    const color = getRoleColor(message.guild);
+    const status = await getStatus(server, color, MessageEmbed, getBorderCharacters, gamedig, table);
     await loading.delete();
     await message.channel.send(status);
     message.react(reactionSuccess);
