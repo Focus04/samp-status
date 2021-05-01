@@ -18,6 +18,7 @@ module.exports = async (client) => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);
       if (time && Date.now() >= time.next) {
+        time.next = Date.now() + time.time;
         const server = await servers.get(guild.id);
         const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         const playerCount = await getPlayerCount(server, gamedig);
