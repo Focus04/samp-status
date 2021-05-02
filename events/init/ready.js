@@ -51,7 +51,7 @@ module.exports = async (client) => {
         data.maxPlayersToday = -1;
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
-        const channel = await client.chanels.fetch(interval.channel).catch((err) => console.log(err));
+        const channel = await client.channels.fetch(interval.channel).catch((err) => console.log(err));
         const color = getRoleColor(guild);
         const chart = await getChart(data, color, ChartJSNodeCanvas, MessageAttachment, moment);
         const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
@@ -61,5 +61,5 @@ module.exports = async (client) => {
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
-  }, 60000);
+  }, 300000);
 }
