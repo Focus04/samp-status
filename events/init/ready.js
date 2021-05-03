@@ -61,5 +61,5 @@ module.exports = async (client) => {
         await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
       });
     }
-  }, 86400000);
+  }, 3600000);
 }
