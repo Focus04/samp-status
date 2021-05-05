@@ -1,9 +1,10 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { MessageEmbed, MessageAttachment, Collection } = require('discord.js');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const { table, getBorderCharacters } = require('table');
 const gamedig = require('gamedig');
 const moment = require('moment');
 const Keyv = require('keyv');
+const prefixes = new Keyv(process.env.prefixes);
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
@@ -14,6 +15,14 @@ const { getRoleColor } = require('../../utils/getRoleColor');
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  client.guildConfigs = new Collection();
+  client.guilds.cache.forEach(async (guild) => {
+    const guildPrefix = await prefixes.get(guild.id);
+    const config = {
+      prefix: guildPrefix,
+    }
+    client.guildConfigs.set(guild.id, config);
+  })
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const time = await intervals.get(guild.id);

@@ -5,7 +5,7 @@ const { defaultPrefix, deletionTimeout, reactionError } = require('../../config.
 module.exports = async (client, message) => {
   if (message.author.bot || !message.channel.type === 'text') return;
 
-  const prefix = await prefixes.get(message.guild.id) || defaultPrefix;
+  const { prefix } = client.guildConfigs.get(message.guild.id) || defaultPrefix;
   if (!message.content.startsWith(prefix)) return;
 
   const args = message.content.slice(prefix.length).split(/ +/);
