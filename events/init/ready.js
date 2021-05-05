@@ -17,13 +17,13 @@ module.exports = async (client) => {
   client.user.setActivity('SA:MP');
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
-    const guildPrefix = await prefixes.get(guild.id);
-    const guildServer = await servers.get(guild.id);
-    const guildInterval = await intervals.get(guild.id);
+    const prefix = await prefixes.get(guild.id);
+    const server = await servers.get(guild.id);
+    const interval = await intervals.get(guild.id);
     const config = {
-      prefix: guildPrefix,
-      server: guildServer,
-      interval: guildInterval
+      prefix,
+      server,
+      interval
     }
     client.guildConfigs.set(guild.id, config);
   });
@@ -51,6 +51,7 @@ module.exports = async (client) => {
       }
     });
   }, 60000);
+  
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {

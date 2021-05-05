@@ -1,8 +1,6 @@
 const { table, getBorderCharacters } = require('table');
 const { MessageEmbed } = require('discord.js');
 const gamedig = require('gamedig');
-const Keyv = require('keyv');
-const servers = new Keyv(process.env.servers);
 const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');

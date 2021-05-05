@@ -2,7 +2,6 @@ const { MessageAttachment } = require('discord.js');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const moment = require('moment');
 const Keyv = require('keyv');
-const servers = new Keyv(process.env.servers);
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');

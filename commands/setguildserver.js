@@ -35,7 +35,7 @@ module.exports = {
     await servers.set(message.guild.id, Server);
     const config = message.client.guildConfigs.get(message.guild.id);
     config.server = Server;
-    message.client.guildConfigs.set(message.guild.id, Server);
+    message.client.guildConfigs.set(message.guild.id, config);
     await loading.edit(`You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`);
     message.react(reactionSuccess);
   }
