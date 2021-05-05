@@ -18,29 +18,36 @@ module.exports = async (client) => {
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     const guildPrefix = await prefixes.get(guild.id);
+    const guildServer = await servers.get(guild.id);
+    const guildInterval = await intervals.get(guild.id);
     const config = {
       prefix: guildPrefix,
+      server: guildServer,
+      interval: guildInterval
     }
     client.guildConfigs.set(guild.id, config);
-  })
+  });
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
-      const time = await intervals.get(guild.id);
-      if (time && Date.now() >= time.next) {
-        time.next = Date.now() + time.time;
-        const server = await servers.get(guild.id);
+      const { interval, server } = client.guildConfigs.get(guild.id);
+      if (interval && Date.now() >= interval.next) {
+        interval.next = Date.now() + interval.time;
         const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         const playerCount = await getPlayerCount(server, gamedig);
         if (playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
-        const channel = guild.channels.cache.get(time.channel);
+        const channel = await client.channels
+          .fetch(interval.channel)
+          .catch((err) => console.log(err));
         const color = getRoleColor(guild);
         const status = await getStatus(server, color, MessageEmbed, getBorderCharacters, gamedig, table);
-        const oldMsg = await channel.messages.fetch(time.message).catch((err) => console.log(err));
+        const oldMsg = await channel.messages
+          .fetch(interval.message)
+          .catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         let msg = await channel.send(status);
-        time.message = msg.id;
-        await intervals.set(guild.id, time);
+        interval.message = msg.id;
+        await intervals.set(guild.id, interval);
       }
     });
   }, 60000);
@@ -49,25 +56,27 @@ module.exports = async (client) => {
     if (Date.now() >= nextCheck) {
       await maxPlayers.set('next', nextCheck + 86400000);
       client.guilds.cache.forEach(async (guild) => {
-        const time = await intervals.get(guild.id);
-        if (!time) return;
-        const serverAddress = await servers.get(guild.id);
-        const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
-        const interval = await intervals.get(guild.id);
+        const { interval, server } = client.guildConfigs.get(guild.id);
+        if (!interval) return;
+        const data = await maxPlayers.get(`${server.ip}:${server.port}`);
         let ChartData = {};
         ChartData.value = data.maxPlayersToday;
         ChartData.date = Date.now();
         data.maxPlayersToday = -1;
         if (ChartData.value >= 0) data.days.push(ChartData);
         if (data.days.length > 30) data.days.shift();
-        const channel = await client.channels.fetch(interval.channel).catch((err) => console.log(err));
+        const channel = await client.channels
+          .fetch(interval.channel)
+          .catch((err) => console.log(err));
         const color = getRoleColor(guild);
         const chart = await getChart(data, color, ChartJSNodeCanvas, MessageAttachment, moment);
-        const oldMsg = await channel.messages.fetch(data.msg).catch((err) => console.log(err));
+        const oldMsg = await channel.messages
+          .fetch(data.msg)
+          .catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
         const msg = await channel.send(chart);
         data.msg = msg.id;
-        await maxPlayers.set(`${serverAddress.ip}:${serverAddress.port}`, data);
+        await maxPlayers.set(`${server.ip}:${server.port}`, data);
       });
     }
   }, 3600000);

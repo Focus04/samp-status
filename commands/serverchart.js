@@ -22,8 +22,8 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    const serverAddress = await servers.get(message.guild.id);
-    const data = await maxPlayers.get(`${serverAddress.ip}:${serverAddress.port}`);
+    const { server } = message.client.guildConfigs.get(message.guild.id);
+    const data = await maxPlayers.get(`${server.ip}:${server.port}`);
     const color = getRoleColor(message.guild);
     const attachment = await getChart(data, color, ChartJSNodeCanvas, MessageAttachment, moment);
     await loadingMsg.delete();

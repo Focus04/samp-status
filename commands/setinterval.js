@@ -18,7 +18,8 @@ module.exports = {
       return message.react(reactionError);
     }
 
-    let channel = message.mentions.channels.first() || message.guild.channels.cache.find((ch) => ch.name === args[0]);
+    let channel = message.mentions.channels.first();
+    if (!channel) channel = message.guild.channels.cache.find((ch) => ch.name === args[0]);
     if (!channel) {
       let msg = await loading.edit(`Couldn't find ${args[0]}`);
       msg.delete({ timeout: deletionTimeout });
@@ -44,6 +45,9 @@ module.exports = {
     Interval.next = Date.now();
     Interval.message = loading.id;
     await intervals.set(message.guild.id, Interval);
+    const config = message.client.guildConfigs.get(message.guild.id);
+    config.interval = Interval;
+    message.client.guildConfigs.set(message.guild.id, config);
     const serverData = await maxPlayers.get(`${server.ip}:${server.port}`);
     if (!serverData) {
       const data = {};

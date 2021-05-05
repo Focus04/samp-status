@@ -8,7 +8,6 @@ module.exports = {
       maxAttempts: 10
     }).catch(() => err = 0);
     if (err === 1 || !data)  return `${server.ip}:${server.port} did not respond after 10 attempts.`;
-
     const config = {
       border: getBorderCharacters(`void`),
       columnDefault: {
@@ -47,6 +46,7 @@ module.exports = {
     if (data.players.length > 0) serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
     return serverEmbed;
   },
+
   getPlayerCount: async (server, gamedig) => {
     let err = 0;
     const data = await gamedig.query({

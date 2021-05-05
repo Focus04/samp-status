@@ -12,9 +12,9 @@ module.exports = {
   description: `Tells you live information about your favourite SA-MP community!`,
   usage: 'status',
   guildOnly: true,
-  async execute(message, args, prefix) {
+  async execute(message, prefix) {
     let loading = await message.channel.send('Fetching server info...');
-    const server = await servers.get(message.guild.id);
+    const { server } = message.client.guildConfigs.get(message.guild.id);
     if (!server) {
       let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
       msg.delete({ timeout: deletionTimeout });
