@@ -23,7 +23,7 @@ module.exports = {
       players.push([player.id, player.name, player.score, player.ping]);
     });
     let output;
-    if (!players.length) output = 'None';
+    if (players.length === 1) output = 'None';
     else output = table(players, config);
     if (output.length > 1024) {
       players = [['ID', 'Name', 'Score']];
