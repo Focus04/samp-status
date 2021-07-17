@@ -18,7 +18,7 @@ module.exports = {
         return false
       }
     }
-    let players = [['ID', 'Name', 'Score', 'Ping']];
+    let players = [['ID', 'Name    Test', 'Score', 'Ping']];
     data.players.forEach((player) => {
       players.push([player.id.toString(), player.name, player.score.toString(), player.ping.toString()]);
     });
