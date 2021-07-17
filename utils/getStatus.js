@@ -22,6 +22,7 @@ module.exports = {
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
+    console.log(players);
     let output;
     if (!data.players.length) output = 'None';
     else output = table(players, config);
