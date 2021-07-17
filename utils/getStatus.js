@@ -20,7 +20,7 @@ module.exports = {
     }
     let players = [['ID', 'Name', 'Score', 'Ping']];
     data.players.forEach((player) => {
-      players.push([player.id, player.name, player.score, player.ping]);
+      players.push([player.id.toString(), player.name, player.score.toString(), player.ping.toString()]);
     });
     console.log(players);
     let output;
