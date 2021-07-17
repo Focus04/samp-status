@@ -1,6 +1,12 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
-const { reactionError, reactionSuccess, deletionTimeout, botInviteLink, githubRepo } = require('../config.json');
+const {
+  reactionError,
+  reactionSuccess,
+  deletionTimeout,
+  botInviteLink,
+  githubRepo
+} = require('../config.json');
 const { getRoleColor } = require('../utils/getRoleColor');
 
 module.exports = {

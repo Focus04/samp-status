@@ -19,13 +19,8 @@ module.exports = {
       }
     }
     let players = [];
-    data.players.forEach(player => {
-      let p = [];
-      p[0] = player.id;
-      p[1] = player.name;
-      p[2] = player.score;
-      p[3] = player.ping;
-      players.push(p);
+    data.players.forEach((player) => {
+      players.push([player.id, player.name, player.score, player.ping]);
     });
     let output;
     if (!players.length) output = 'None';
