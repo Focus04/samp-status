@@ -18,27 +18,34 @@ module.exports = {
         return false
       }
     }
-    let players = [['ID', 'Name    Test', 'Score', 'Ping']];
+    let players = [['ID', 'Name', 'Score', 'Ping']];
     data.players.forEach((player) => {
-      players.push([player.id.toString(), player.name, player.score.toString(), player.ping.toString()]);
+      players.push([player.id, player.name, player.score, player.ping]);
     });
-    console.log(players);
     let output;
-    if (!data.players.length) output = 'None';
+    if (!players.length) output = 'None';
     else output = table(players, config);
+    if (output.length > 1024) {
+      players = [['ID', 'Name', 'Score']];
+      data.players.forEach((player) => {
+        players.push([player.id, player.name, player.score]);
+      });
+      output = table(players, config);
+    }
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
-      .setTitle(`${data.name} - Online Players`)
-      .setDescription(output)
+      .setTitle(`${data.name}`)
+      .setDescription(data.raw.gamemode)
       .addFields(
         { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
-        { name: 'Gamemode', value: `${data.raw.gamemode}`, inline: true },
+        { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
         { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
       )
       .setTimestamp();
+    if (data.players.length > 0) serverEmbed.addField('Player List', '```' + output + '```');
     return serverEmbed;
   },
 
