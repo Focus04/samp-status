@@ -11,15 +11,17 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 const { getChart } = require('../../utils/getChart');
 const { getStatus, getPlayerCount } = require('../../utils/getStatus');
 const { getRoleColor } = require('../../utils/getRoleColor');
+const { defaultPrefix } = require('../../config.json');
 
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
-    const prefix = await prefixes.get(guild.id);
-    const server = await servers.get(guild.id);
-    const interval = await intervals.get(guild.id);
+    let prefix = await prefixes.get(guild.id);
+    let server = await servers.get(guild.id);
+    let interval = await intervals.get(guild.id);
+    if (!prefix) prefix = defaultPrefix;
     const config = {
       prefix,
       server,
