@@ -42,10 +42,10 @@ module.exports = {
         { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
+        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
+        { name: 'Player List', value: '```' + output + '```' }
       )
       .setTimestamp();
-    if (data.players.length > 0) serverEmbed.addField('Player List', '```' + output + '```');
     return serverEmbed;
   },
 
