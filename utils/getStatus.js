@@ -33,14 +33,14 @@ module.exports = {
     if (players.length === 1) output = 'None';
     else output = table(players, config);
     if (output.length > 1024) {
-      players = [['ID', 'Name', 'Score']];
+      players = [['Name', 'Score']];
       data.players.forEach((player) => {
-        players.push([player.id, player.name, player.score]);
+        players.push([player.name, player.score]);
       });
       data.players.forEach((player) => {
-        players.push([player.id, player.name, player.score]);
+        players.push([player.name, player.score]);
       });
-      console.log(players);
+      console.log(output);
       output = table(players, config);
     }
     let serverEmbed = new MessageEmbed()
