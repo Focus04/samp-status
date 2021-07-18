@@ -26,6 +26,9 @@ module.exports = {
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
+    data.players.forEach((player) => {
+      players.push([player.id, player.name, player.score, player.ping]);
+    });
     let output;
     if (players.length === 1) output = 'None';
     else output = table(players, config);
@@ -34,6 +37,10 @@ module.exports = {
       data.players.forEach((player) => {
         players.push([player.id, player.name, player.score]);
       });
+      data.players.forEach((player) => {
+        players.push([player.id, player.name, player.score]);
+      });
+      console.log(players);
       output = table(players, config);
     }
     let serverEmbed = new MessageEmbed()
