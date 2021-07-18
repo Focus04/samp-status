@@ -23,6 +23,7 @@ module.exports = {
       }
     }
     let players = [['ID', 'Name', 'Score', 'Ping']];
+    let players2 = [];
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
@@ -34,10 +35,6 @@ module.exports = {
     else output = table(players, config);
     if (output.length > 1024) {
       players = [['ID', 'Name', 'Score', 'Ping']];
-      let players2 = [];
-      data.players.forEach((player) => {
-        players.push([player.id, player.name]);
-      });
       let i, j;
       for (i = 0; i < data.players.length / 2; i++) {
         players.push([data.players[i].id, data.players[i].name, data.players[i].score, data.players[i].ping]);
