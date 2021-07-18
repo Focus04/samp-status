@@ -33,12 +33,12 @@ module.exports = {
     if (players.length === 1) output = 'None';
     else output = table(players, config);
     if (output.length > 1024) {
-      players = [['Name', 'Score']];
+      players = [['ID', 'Name', 'Score']];
       data.players.forEach((player) => {
-        players.push([player.name, player.score]);
+        players.push([player.id, player.name, player.score]);
       });
       data.players.forEach((player) => {
-        players.push([player.name, player.score]);
+        players.push([player.id, player.name, player.score]);
       });
       console.log(output);
       output = table(players, config);
