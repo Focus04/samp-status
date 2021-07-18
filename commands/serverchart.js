@@ -1,6 +1,3 @@
-const { MessageAttachment } = require('discord.js');
-const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
-const moment = require('moment');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
@@ -24,7 +21,7 @@ module.exports = {
     const { server } = message.client.guildConfigs.get(message.guild.id);
     const data = await maxPlayers.get(`${server.ip}:${server.port}`);
     const color = getRoleColor(message.guild);
-    const attachment = await getChart(data, color, ChartJSNodeCanvas, MessageAttachment, moment);
+    const attachment = await getChart(data, color);
     await loadingMsg.delete();
     await message.channel.send(attachment);
     message.react(reactionSuccess);

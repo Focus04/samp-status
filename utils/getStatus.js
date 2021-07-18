@@ -1,5 +1,9 @@
+const { MessageEmbed } = require('discord.js');
+const { getBorderCharacters, table } = require('table');
+const gamedig = require('gamedig');
+
 module.exports = {
-  getStatus: async (server, color, MessageEmbed, getBorderCharacters, gamedig, table) => {
+  getStatus: async (server, color) => {
     let err = 0;
     const data = await gamedig.query({
       type: 'samp',

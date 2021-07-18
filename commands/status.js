@@ -1,6 +1,3 @@
-const { table, getBorderCharacters } = require('table');
-const { MessageEmbed } = require('discord.js');
-const gamedig = require('gamedig');
 const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');
@@ -20,7 +17,7 @@ module.exports = {
     }
     
     const color = getRoleColor(message.guild);
-    const status = await getStatus(server, color, MessageEmbed, getBorderCharacters, gamedig, table);
+    const status = await getStatus(server, color);
     await loading.delete();
     await message.channel.send(status);
     message.react(reactionSuccess);

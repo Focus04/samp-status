@@ -1,5 +1,9 @@
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
+const { MessageAttachment } = require('discord.js');
+const moment = require('moment');
+
 module.exports = {
-  getChart: async (data, color, ChartJSNodeCanvas, MessageAttachment, moment) => {
+  getChart: async (data, color) => {
     let players = [];
     let dates = [];
     data.days.forEach((day) => {
