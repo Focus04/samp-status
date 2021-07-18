@@ -40,8 +40,8 @@ module.exports = {
       data.players.forEach((player) => {
         players.push([player.id, player.name, player.score]);
       });
-      console.log(output);
       output = table(players, config);
+      console.log(output);
     }
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
