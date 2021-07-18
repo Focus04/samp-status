@@ -33,11 +33,11 @@ module.exports = {
     if (output.length > 1024) {
       players = [['ID', 'Name', 'Score', 'Ping']];
       let i, j;
-      for (i = 0; i <= data.players.length / 2; i++) {
+      for (i = 0; i < data.players.length / 2 - 1; i++) {
         players.push([data.players[i].id, data.players[i].name, data.players[i].score, data.players[i].ping]);
       }
       output = table(players, config);
-      for (j = i + 1; j < data.players.length; j++) {
+      for (j = i; j < data.players.length; j++) {
         players2.push([data.players[j].id, data.players[j].name, data.players[j].score, data.players[j].ping]);
       }
       output2 = table(players2, config);
