@@ -41,7 +41,7 @@ module.exports = {
         players.push([player.id, player.name, player.score]);
       });
       output = table(players, config);
-      console.log(output);
+      console.log(output.length);
     }
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
