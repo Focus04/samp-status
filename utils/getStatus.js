@@ -29,19 +29,24 @@ module.exports = {
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
-    let output;
+    let output, output2;
     if (players.length === 1) output = 'None';
     else output = table(players, config);
     if (output.length > 1024) {
-      players = [['ID', 'Name']];
+      players = [['ID', 'Name', 'Score', 'Ping']];
+      let players2 = [];
       data.players.forEach((player) => {
         players.push([player.id, player.name]);
       });
-      data.players.forEach((player) => {
-        players.push([player.id, player.name]);
-      });
+      let i, j;
+      for (i = 0; i < data.players.length / 2; i++) {
+        players.push([data.players[i].id, data.players[i].name, data.players[i].score, data.players[i].ping]);
+      }
       output = table(players, config);
-      console.log(output.length);
+      for (j = i + 1; j < data.players.length; j++) {
+        players2.push([data.players[j].id, data.players[j].name, data.players[j].score, data.players[j].ping]);
+      }
+      output2 = table(players2, config);
     }
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
@@ -57,6 +62,7 @@ module.exports = {
         { name: 'Player List', value: '```' + output + '```' }
       )
       .setTimestamp();
+    if (output2) serverEmbed.addField('\u200B', '```' + output2 + '```');
     return serverEmbed;
   },
 
