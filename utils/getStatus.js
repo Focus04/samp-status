@@ -22,36 +22,17 @@ module.exports = {
         return false
       }
     }
-    let players = [['ID', 'Name', 'Score', 'Ping']];
-    let players2 = [];
+    let players = [];
+    data.players.forEach((player) => {
+      players.push([player.id, player.name, player.score, player.ping]);
+    });
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
     let output, output2;
     if (players.length === 1) output = 'None';
     else output = table(players, config);
-    if (output.length > 1024) {
-      players = [['ID', 'Name', 'Score', 'Ping']];
-      let i, j;
-      for (i = 0; i < data.players.length / 2; i++) {
-        players.push([
-          data.players[i].id,
-          data.players[i].name,
-          data.players[i].score,
-          data.players[i].ping
-        ]);
-      }
-      output = table(players, config);
-      for (j = i; j < data.players.length; j++) {
-        players2.push([
-          data.players[j].id,
-          data.players[j].name,
-          data.players[j].score,
-          data.players[j].ping
-        ]);
-      }
-      output2 = table(players2, config);
-    }
+    if (output.length > 1024) output2 = data.players.map((player) => player.name).join(', ');
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
       .setTitle(`${data.name}`)
@@ -62,11 +43,11 @@ module.exports = {
         { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
         { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
         { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true },
-        { name: 'Player List', value: '```' + output + '```' }
+        { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
       )
       .setTimestamp();
-    if (output2) serverEmbed.addField('\u200B', '```' + output2 + '```');
+    if (output2) serverEmbed.addField('Online Players', '```' + output2 + '```');
+    else serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
     return serverEmbed;
   },
 
