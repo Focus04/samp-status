@@ -2,8 +2,7 @@ module.exports = {
   getRoleColor: async (guild) => {
     let roleHexColor;
     let highestRole = { position: -1 };
-    const member = await guild.members.fetch('786612528951197726');
-    member.roles.cache.forEach((role) => {
+    guild.me.roles.cache.forEach((role) => {
       if (role.position > highestRole.position && role.color != 0) highestRole = role;
     });
     if (highestRole.position === -1) roleHexColor = '#b9bbbe';
