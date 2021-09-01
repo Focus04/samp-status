@@ -1,5 +1,5 @@
 module.exports = {
-  getRoleColor: async (guild) => {
+  getRoleColor: (guild) => {
     let roleHexColor;
     let highestRole = { position: -1 };
     guild.me.roles.cache.forEach((role) => {

@@ -11,7 +11,14 @@ module.exports = {
       port: server.port,
       maxAttempts: 10
     }).catch(() => err = 0);
-    if (err === 1 || !data)  return `${server.ip}:${server.port} did not respond after 10 attempts.`;
+    if (err === 1 || !data) {
+      const errEmbed = new Embed()
+        .setColor('ff0000')
+        .setTitle('Error')
+        .setDescription(`${server.ip}:${server.port} did not respond after 10 attempts.`)
+        .setTimestamp();
+      return errEmbed;
+    }
     const config = {
       border: getBorderCharacters(`void`),
       columnDefault: {
