@@ -3,7 +3,6 @@ const fs = require('fs');
 const {
   reactionError,
   reactionSuccess,
-  deletionTimeout,
   botInviteLink,
   githubRepo
 } = require('../config.json');

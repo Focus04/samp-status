@@ -1,7 +1,7 @@
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
+const { reactionError, reactionSuccess } = require('../config.json');
 const { getChart } = require('../utils/getChart');
 const { getRoleColor } = require('../utils/getRoleColor')
 

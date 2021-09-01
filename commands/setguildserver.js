@@ -1,7 +1,7 @@
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
-const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
+const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   name: 'setguildserver',

@@ -2,7 +2,7 @@ const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { reactionError, reactionSuccess, deletionTimeout } = require('../config.json');
+const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   name: 'setinterval',

@@ -1,6 +1,6 @@
 const Keyv = require('keyv');
 const prefixes = new Keyv(process.env.prefixes);
-const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
+const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   name: 'setprefix',

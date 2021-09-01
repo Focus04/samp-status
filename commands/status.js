@@ -1,4 +1,4 @@
-const { deletionTimeout, reactionError, reactionSuccess } = require('../config.json');
+const { reactionError, reactionSuccess } = require('../config.json');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');
 
