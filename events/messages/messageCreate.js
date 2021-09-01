@@ -1,4 +1,4 @@
-const { defaultPrefix, deletionTimeout, reactionError } = require('../../config.json');
+const { defaultPrefix, reactionError } = require('../../config.json');
 
 module.exports = async (client, message) => {
   if (message.author.bot || !message.channel.type === 'GUILD_TEXT') return;
