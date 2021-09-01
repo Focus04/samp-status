@@ -42,7 +42,7 @@ module.exports = async (client) => {
         .fetch(interval.message)
         .catch((err) => console.log(err));
       if (oldMsg) oldMsg.delete();
-      let msg = await channel.send(status);
+      let msg = await channel.send({ embeds: [status] });
       interval.message = msg.id;
       await intervals.set(guild.id, interval);
     });

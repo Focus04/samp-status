@@ -12,14 +12,13 @@ module.exports = {
     const { server } = message.client.guildConfigs.get(message.guild.id);
     if (!server) {
       let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
     
     const color = getRoleColor(message.guild);
     const status = await getStatus(server, color);
     await loading.delete();
-    await message.channel.send(status);
+    await message.channel.send({ embeds: [status] });
     message.react(reactionSuccess);
   }
 }

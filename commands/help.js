@@ -25,13 +25,12 @@ module.exports = {
           { name: 'Useful Links', value: `[Add me on your server!](${botInviteLink}) [Code](${githubRepo})` }
         )
         .setTimestamp();
-      await message.channel.send(helpEmbed);
+      await message.channel.send({ embeds: [helpEmbed] });
       message.react(reactionSuccess);
     } else {
       const command = message.client.commands.get(args[0].toLowerCase());
       if (!command) {
         let msg = await message.channel.send(`Couldn't find ${args[0]} in my commands list.`);
-        msg.delete({ timeout: deletionTimeout });
         return message.react(reactionError);
       }
       const cmdEmbed = new MessageEmbed()
@@ -42,7 +41,7 @@ module.exports = {
           { name: 'Usage', value: command.usage }
         )
         .setTimestamp();
-      await message.channel.send(cmdEmbed);
+      await message.channel.send({ embeds: [cmdEmbed] });
       message.react(reactionSuccess);
     }
   }

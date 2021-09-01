@@ -14,7 +14,6 @@ module.exports = {
     let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
       let msg = await loading.edit(`Proper command usage ${prefix}setinterval [channel-name] [minutes]`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 
@@ -22,20 +21,17 @@ module.exports = {
     if (!channel) channel = message.guild.channels.cache.find((ch) => ch.name === args[0]);
     if (!channel) {
       let msg = await loading.edit(`Couldn't find ${args[0]}`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 
     if (args[1] < 3) {
       let msg = await loading.edit(`Minutes can't be lower than 3.`);
-      msg.delete({timeout: deletionTimeout });
       return message.react(reactionError);
     }
 
     const server = await servers.get(message.guild.id);
     if (!server) {
       let msg = await loading.edit(`This server doesn't have a server linked to it yet. Type ${prefix}setguildserver to setup one.`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 

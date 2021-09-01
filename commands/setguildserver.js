@@ -13,7 +13,6 @@ module.exports = {
     let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
       let msg = await loading.edit(`Proper command usage: ${prefix}setguildserver [ip] [port]`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 
@@ -24,7 +23,6 @@ module.exports = {
       port: args[1]
     }).catch(async (error) => {
       let msg = await loading.edit(`Couldn't find ${args[0]}:${args[1]}`);
-      msg.delete({ timeout: deletionTimeout });
       message.react(reactionError);
       err = 1;
     });

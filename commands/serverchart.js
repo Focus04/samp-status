@@ -14,7 +14,6 @@ module.exports = {
     const interval = await intervals.get(message.guild.id);
     if (!interval) {
       let msg = await loadingMsg.edit(`You must set an interval to view statistics. Set one using ${prefix}setinterval`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 

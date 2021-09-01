@@ -1,12 +1,7 @@
 require('dotenv').config();
 const { readdirSync } = require('fs');
 const { Client, Collection } = require('discord.js');
-const intents = {
-  ws: {
-    intents: ['GUILDS', 'GUILD_MESSAGES']
-  }
-};
-const client = new Client(intents);
+const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 
 client.commands = new Collection();
 readdirSync('./commands').forEach((file) => {

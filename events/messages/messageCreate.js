@@ -1,7 +1,7 @@
 const { defaultPrefix, deletionTimeout, reactionError } = require('../../config.json');
 
 module.exports = async (client, message) => {
-  if (message.author.bot || !message.channel.type === 'text') return;
+  if (message.author.bot || !message.channel.type === 'GUILD_TEXT') return;
 
   const { prefix = defaultPrefix } = client.guildConfigs.get(message.guild.id);
   if (!message.content.startsWith(prefix)) return;
@@ -10,9 +10,8 @@ module.exports = async (client, message) => {
   const command = client.commands.get(args.shift().toLowerCase());
   if (!command) return;
 
-  if (command.requiredPerms && !message.member.hasPermission(command.requiredPerms)) {
+  if (command.requiredPerms && !message.member.permissions.has(command.requiredPerms)) {
     let msg = await message.channel.send(command.permError);
-    msg.delete({ timeout: deletionTimeout });
     return message.react(reactionError);
   }
 

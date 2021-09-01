@@ -11,13 +11,11 @@ module.exports = {
   async execute(message, args, prefix) {
     if (!args[0]) {
       let msg = await message.channel.send(`Proper command usage: ${prefix}setprefix [prefix]`);
-      msg.delete({ timeout: deletionTimeout });
       return message.react(reactionError);
     }
 
-    if (!message.member.hasPermission('MANAGE_GUILD')) {
+    if (!message.member.permissions.has('MANAGE_GUILD')) {
       let msg = await message.channel.send('You need the Manage Server permission in order to run this command.');
-      msg.delete({ timeout: deletionTimeout })
       return message.react(reactionError);
     }
 
