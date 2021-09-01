@@ -24,9 +24,9 @@ module.exports = async (client) => {
     }
     client.guildConfigs.set(guild.id, config);
   });
-  console.log(client.guilds.cache);
   setInterval(() => {
-    client.guilds.cache.forEach(async (guild) => {
+    client.guilds.cache.forEach(async (guildRez) => {
+      const guild = await client.guilds.rezolve(guildRez);
       const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
       if (!interval || Date.now() < interval.next) return;
       interval.next = Date.now() + interval.time;
@@ -53,7 +53,8 @@ module.exports = async (client) => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {
       await maxPlayers.set('next', nextCheck + 86400000);
-      client.guilds.cache.forEach(async (guild) => {
+      client.guilds.cache.forEach(async (guildRez) => {
+        const guild = await client.guilds.rezolve(guildRez);
         const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
         if (!interval) return;
         const data = await maxPlayers.get(`${server.ip}:${server.port}`);
