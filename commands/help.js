@@ -2,8 +2,6 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 const {
-  reactionError,
-  reactionSuccess,
   botInviteLink,
   githubRepo
 } = require('../config.json');
@@ -31,12 +29,10 @@ module.exports = {
         )
         .setTimestamp();
       await message.channel.send({ embeds: [helpEmbed] });
-      message.react(reactionSuccess);
     } else {
       const command = message.client.commands.get(args[0].toLowerCase());
       if (!command) {
         let msg = await message.channel.send(`Couldn't find ${args[0]} in my commands list.`);
-        return message.react(reactionError);
       }
       const cmdEmbed = new MessageEmbed()
         .setColor(color.hex)
@@ -47,7 +43,6 @@ module.exports = {
         )
         .setTimestamp();
       await message.channel.send({ embeds: [cmdEmbed] });
-      message.react(reactionSuccess);
     }
   }
 }

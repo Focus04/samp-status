@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reactionError, reactionSuccess } = require('../config.json');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');
 
@@ -14,13 +13,11 @@ module.exports = {
     const { server } = message.client.guildConfigs.get(message.guild.id);
     if (!server) {
       let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
-      return message.react(reactionError);
     }
     
     const color = getRoleColor(message.guild);
     const status = await getStatus(server, color);
     await loading.delete();
     await message.channel.send({ embeds: [status] });
-    message.react(reactionSuccess);
   }
 }

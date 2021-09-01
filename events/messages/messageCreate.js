@@ -1,4 +1,4 @@
-const { defaultPrefix, reactionError } = require('../../config.json');
+const { defaultPrefix } = require('../../config.json');
 
 module.exports = async (client, message) => {
   if (message.author.bot || !message.channel.type === 'GUILD_TEXT') return;
@@ -12,7 +12,6 @@ module.exports = async (client, message) => {
 
   if (command.requiredPerms && !message.member.permissions.has(command.requiredPerms)) {
     let msg = await message.channel.send(command.permError);
-    return message.react(reactionError);
   }
 
   command.execute(message, args, prefix);

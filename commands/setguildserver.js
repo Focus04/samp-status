@@ -2,7 +2,6 @@ const gamedig = require('gamedig');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
-const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()

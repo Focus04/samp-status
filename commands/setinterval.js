@@ -3,14 +3,13 @@ const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setinterval')
     .setDescription(`Sets a channel for status messages to be sent in.`)
     .addChannelOption((option) => option
-      .setName('#channel-name')
+      .setName('channel-name')
       .setDescription('Tag the channel you want status updates to be sent in.')
       .setRequired(true)
     )
@@ -26,25 +25,21 @@ module.exports = {
     let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
       let msg = await loading.edit(`Proper command usage ${prefix}setinterval [channel-name] [minutes]`);
-      return message.react(reactionError);
     }
 
     let channel = message.mentions.channels.first();
     if (!channel) channel = message.guild.channels.cache.find((ch) => ch.name === args[0]);
     if (!channel) {
       let msg = await loading.edit(`Couldn't find ${args[0]}`);
-      return message.react(reactionError);
     }
 
     if (args[1] < 3) {
       let msg = await loading.edit(`Minutes can't be lower than 3.`);
-      return message.react(reactionError);
     }
 
     const server = await servers.get(message.guild.id);
     if (!server) {
       let msg = await loading.edit(`This server doesn't have a server linked to it yet. Type ${prefix}setguildserver to setup one.`);
-      return message.react(reactionError);
     }
 
     let Interval = {};
@@ -64,6 +59,5 @@ module.exports = {
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
     await loading.edit(`Successfully set an interval.`);
-    message.react(reactionSuccess);
   }
 }
