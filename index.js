@@ -13,7 +13,7 @@ readdirSync('./commands').forEach((file) => {
 });
 const rest = new REST({ version: '9' }).setToken(process.env.token);
 (async () => {
-  await rest.put(Routes.applicationGuildCommands(client.user.id, '729313166835712033'), { body: commands });
+  await rest.put(Routes.applicationGuildCommands('786612528951197726', '729313166835712033'), { body: commands });
 })();
 
 readdirSync('./events').forEach((folder) => {
