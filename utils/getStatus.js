@@ -12,7 +12,7 @@ module.exports = {
       maxAttempts: 10
     }).catch(() => err = 0);
     if (err === 1 || !data) {
-      const errEmbed = new Embed()
+      const errEmbed = new MessageEmbed()
         .setColor('ff0000')
         .setTitle('Error')
         .setDescription(`${server.ip}:${server.port} did not respond after 10 attempts.`)
