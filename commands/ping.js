@@ -7,6 +7,6 @@ module.exports = {
   usage: 'ping',
   async execute(interaction) {
     let msg = await interaction.channel.send('Pinging...');
-    msg.edit(`Response Latency: ${Math.floor(msg.createdTimestamp - message.createdTimestamp)} ms`);
+    msg.edit(`Response Latency: ${Math.floor(msg.createdTimestamp - interaction.createdTimestamp)} ms`);
   }
 }

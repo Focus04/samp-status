@@ -21,23 +21,24 @@ module.exports = {
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
+    const args = interaction.options.data;
     let err = 0;
     await gamedig.query({
       type: 'samp',
       host: args[0],
       port: args[1]
     }).catch(async (error) => {
-      let msg = await interaction.reply(`Couldn't find ${args[0]}:${args[1]}`);
+      let msg = await interaction.reply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
       err = 1;
     });
     if (err === 1) return;
     let Server = {};
     Server.ip = args[0];
     Server.port = args[1];
-    await servers.set(message.guild.id, Server);
-    const config = message.client.guildConfigs.get(message.guild.id);
+    await servers.set(interaction.guildId, Server);
+    const config = interaction.client.guildConfigs.get(interaction.guildId);
     config.server = Server;
-    message.client.guildConfigs.set(message.guild.id, config);
-    await interaction.reply(`You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`);
+    interaction.client.guildConfigs.set(interaction.guildId, config);
+    await interaction.reply({ content: `You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
   }
 }
