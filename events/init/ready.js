@@ -36,7 +36,7 @@ module.exports = async (client) => {
       const channel = await client.channels
         .fetch(interval.channel)
         .catch((err) => console.log(err));
-      const color = await getRoleColor(guild);
+      const color = await getRoleColor(client, guild);
       const status = await getStatus(server, color);
       const oldMsg = await channel.messages
         .fetch(interval.message)
@@ -65,7 +65,7 @@ module.exports = async (client) => {
         const channel = await client.channels
           .fetch(interval.channel)
           .catch((err) => console.log(err));
-        const color = await getRoleColor(guild);
+        const color = await getRoleColor(client, guild);
         const chart = await getChart(data, color);
         const oldMsg = await channel.messages
           .fetch(data.msg)
