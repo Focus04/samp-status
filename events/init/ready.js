@@ -23,7 +23,6 @@ module.exports = async (client) => {
       interval
     }
     client.guildConfigs.set(guild.id, config);
-    console.log(config);
   });
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
