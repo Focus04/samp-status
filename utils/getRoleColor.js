@@ -1,9 +1,9 @@
 module.exports = {
-  getRoleColor: (guild) => {
-    console.log(guild);
+  getRoleColor: (member) => {
+    console.log(member)
     let roleHexColor;
     let highestRole = { position: -1 };
-    guild.me.roles.cache.forEach((role) => {
+    member.roles.cache.forEach((role) => {
       if (role.position > highestRole.position && role.color != 0) highestRole = role;
     });
     if (highestRole.position === -1) roleHexColor = '#b9bbbe';
