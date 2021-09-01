@@ -8,6 +8,9 @@
   },
   "author": "Focus#7804",
   "license": "ISC",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@keyv/mongo": "^1.1.0",
     "chart.js": "^3.4.1",
