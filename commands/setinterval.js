@@ -13,7 +13,7 @@ module.exports = {
       .setDescription('Tag the channel you want status updates to be sent in.')
       .setRequired(true)
     )
-    .addNumberOption((option) => option
+    .addIntegerOption((option) => option
       .setName('minutes')
       .setDescription('The interval updates will be sent at (at least 3).')
       .setRequired(true)
