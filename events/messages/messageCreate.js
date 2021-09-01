@@ -1,7 +1,6 @@
 const { defaultPrefix, deletionTimeout, reactionError } = require('../../config.json');
 
 module.exports = async (client, message) => {
-  console.log('message event triggered')
   if (message.author.bot || !message.channel.type === 'GUILD_TEXT') return;
 
   const { prefix = defaultPrefix } = client.guildConfigs.get(message.guild.id);
