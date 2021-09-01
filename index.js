@@ -1,13 +1,20 @@
 require('dotenv').config();
-const { readdirSync } = require('fs');
-const { Client, Collection } = require('discord.js');
+const { readdirSync, cp } = require('fs');
+const { Client } = require('discord.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+
 const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 
-client.commands = new Collection();
+let commands = [];
 readdirSync('./commands').forEach((file) => {
   const command = require(`./commands/${file}`);
-  client.commands.set(command.name, command);
+  commands.push(command.data.toJSON());
 });
+const rest = new REST({ version: '9' }).setToken(process.env.token);
+(async () => {
+  await rest.put(Routes.applicationGuildCommands(client.user.id, '729313166835712033'), { body: commands });
+})();
 
 readdirSync('./events').forEach((folder) => {
   readdirSync(`./events/${folder}`).forEach((file) => {

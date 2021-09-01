@@ -1,13 +1,15 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { reactionError, reactionSuccess } = require('../config.json');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');
 
 module.exports = {
-  name: 'status',
-  description: `Tells you live information about your favourite SA-MP community!`,
+  data: new SlashCommandBuilder()
+    .setName('status')
+    .setDescription(`Tells you live information about your favourite SA-MP community!`),
   usage: 'status',
   guildOnly: true,
-  async execute(message, prefix) {
+  async execute(interaction) {
     let loading = await message.channel.send('Fetching server info...');
     const { server } = message.client.guildConfigs.get(message.guild.id);
     if (!server) {

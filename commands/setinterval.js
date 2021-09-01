@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
@@ -5,12 +6,23 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 const { reactionError, reactionSuccess } = require('../config.json');
 
 module.exports = {
-  name: 'setinterval',
-  description: `Sets a channel for status messages to be sent in.`,
+  data: new SlashCommandBuilder()
+    .setName('setinterval')
+    .setDescription(`Sets a channel for status messages to be sent in.`)
+    .addChannelOption((option) => option
+      .setName('#channel-name')
+      .setDescription('Tag the channel you want status updates to be sent in.')
+      .setRequired(true)
+    )
+    .addNumberOption((option) => option
+      .setName('minutes')
+      .setDescription('The interval updates will be sent at (at least 3).')
+      .setRequired(true)
+    ),
   usage: 'setinterval `channel-name` `minutes`',
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
-  async execute(message, args, prefix) {
+  async execute(interaction) {
     let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
       let msg = await loading.edit(`Proper command usage ${prefix}setinterval [channel-name] [minutes]`);

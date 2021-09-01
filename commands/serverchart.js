@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
@@ -6,10 +7,11 @@ const { getChart } = require('../utils/getChart');
 const { getRoleColor } = require('../utils/getRoleColor')
 
 module.exports = {
-  name: 'serverchart',
-  description: 'Sends a chart displaying server statistics for each day.',
+  data: new SlashCommandBuilder()
+    .setName('serverchart')
+    .setDescription('Sends a chart displaying server statistics for each day.'),
   usage: 'serverchart',
-  async execute(message, prefix) {
+  async execute(interaction) {
     let loadingMsg = await message.channel.send('Fetching server info...');
     const interval = await intervals.get(message.guild.id);
     if (!interval) {

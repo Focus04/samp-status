@@ -1,9 +1,12 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
-  name: 'ping',
-  description: `Displays the bot's current latency in ms.`,
+  data: new SlashCommandBuilder()
+    .setName('ping')
+    .setDescription(`Displays the bot's current latency in ms.`),
   usage: 'ping',
-  async execute(message) {
-    let msg = await message.channel.send('Pinging...');
+  async execute(interaction) {
+    let msg = await interaction.channel.send('Pinging...');
     msg.edit(`Response Latency: ${Math.floor(msg.createdTimestamp - message.createdTimestamp)} ms`);
   }
 }

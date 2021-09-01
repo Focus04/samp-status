@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 const {
@@ -9,10 +10,15 @@ const {
 const { getRoleColor } = require('../utils/getRoleColor');
 
 module.exports = {
-  name: 'help',
-  description: 'Displays a list of all available commands along with their usage.',
+  data: new SlashCommandBuilder()
+    .setName('help')
+    .setDescription('Displays a list of all available commands along with their usage.')
+    .addStringOption((option) => option
+      .setName('command')
+      .setDescription('The command to view info about.')
+    ),
   usage: 'help (`command`)',
-  async execute(message, args, prefix) {
+  async execute(interaction) {
     const color = getRoleColor(message.guild);
     if (!args.length) {
       let cmds = '';

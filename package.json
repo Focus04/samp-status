@@ -12,9 +12,12 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
     "@keyv/mongo": "^1.1.0",
     "chart.js": "^3.4.1",
     "chartjs-node-canvas": "^3.2.0",
+    "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "dotenv": "^8.6.0",
     "gamedig": "^2.0.28",

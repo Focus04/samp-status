@@ -1,11 +1,13 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { botInviteLink } = require('../config.json');
 
 module.exports = {
-  name: 'invitelink',
-  description: 'Sends the invite link for the bot.',
+  data: new SlashCommandBuilder()
+    .setName('invitelink')
+    .setDescription('Sends the invite link for the bot.'),
   usage: 'invitelink',
   guildOnly: true,
-  execute(message) {
+  execute(interaction) {
     message.channel.send(botInviteLink);
   }
 }
