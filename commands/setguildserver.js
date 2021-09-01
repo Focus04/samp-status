@@ -28,7 +28,7 @@ module.exports = {
       host: args[0],
       port: args[1]
     }).catch(async (error) => {
-      let msg = await interaction.reply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
+      await interaction.reply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
       err = 1;
     });
     if (err === 1) return;
