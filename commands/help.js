@@ -19,6 +19,6 @@ module.exports = {
         { name: 'Useful Links', value: `[Add me on your server!](${botInviteLink}) [Code](${githubRepo})` }
       )
       .setTimestamp();
-    await interaction.reply({ embeds: [helpEmbed], ephemeral: true });
+    await interaction.reply({ embeds: [helpEmbed] });
   }
 }

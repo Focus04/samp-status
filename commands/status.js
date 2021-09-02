@@ -14,6 +14,6 @@ module.exports = {
     
     const color = getRoleColor(interaction.guild);
     const status = await getStatus(server, color);
-    await interaction.reply({ embeds: [status], ephemeral: true });
+    await interaction.reply({ embeds: [status] });
   }
 }
