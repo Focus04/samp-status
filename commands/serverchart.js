@@ -16,6 +16,6 @@ module.exports = {
     const data = await maxPlayers.get(`${server.ip}:${server.port}`);
     const color = getRoleColor(interaction.guild);
     const chart = await getChart(data, color);
-    await interaction.reply({ files: [chart], ephemeral: true });
+    await interaction.reply({ files: [chart] });
   }
 }
