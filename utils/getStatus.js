@@ -8,13 +8,14 @@ module.exports = {
     const data = await gamedig.query({
       type: 'samp',
       host: server.ip,
-      port: server.port
+      port: server.port,
+      maxAttempts: 5
     }).catch(() => err = 0);
     if (err === 1 || !data) {
       const errEmbed = new MessageEmbed()
         .setColor('ff0000')
         .setTitle('Error')
-        .setDescription(`${server.ip}:${server.port} did not respond.`)
+        .setDescription(`${server.ip}:${server.port} did not respond after 5 attempts.`)
         .setTimestamp();
       return errEmbed;
     }
