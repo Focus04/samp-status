@@ -24,7 +24,8 @@ module.exports = {
     const channel = interaction.options.getChannel('channel-name');
     console.log(channel);
     if (!channel.type === 'GUILD_TEXT') {
-      return await interaction.reply({ content: `Invalid channel.`, ephemeral: true });
+      await interaction.reply({ content: `Invalid channel.`, ephemeral: true });
+      return;
     }
     const minutes = interaction.options.getInteger('minutes');
     if (minutes < 3) {
