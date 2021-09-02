@@ -39,7 +39,7 @@ module.exports = {
     Interval.channel = channel.id;
     Interval.time = minutes * 60000;
     Interval.next = Date.now();
-    Interval.message = loading.id;
+    Interval.message = 0;
     await intervals.set(interaction.guildId, Interval);
     const config = interaction.client.guildConfigs.get(interaction.guildId);
     config.interval = Interval;
