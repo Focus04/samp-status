@@ -9,13 +9,13 @@ module.exports = {
       type: 'samp',
       host: server.ip,
       port: server.port,
-      maxAttempts: 10
+      maxAttempts: 3
     }).catch(() => err = 0);
     if (err === 1 || !data) {
       const errEmbed = new MessageEmbed()
         .setColor('ff0000')
         .setTitle('Error')
-        .setDescription(`${server.ip}:${server.port} did not respond after 10 attempts.`)
+        .setDescription(`${server.ip}:${server.port} did not respond after 3 attempts.`)
         .setTimestamp();
       return errEmbed;
     }

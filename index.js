@@ -17,8 +17,8 @@ const loadCommands = (async () => {
   });
   const rest = new REST({ version: '9' }).setToken(process.env.token);
   await rest.put(
-    Routes.applicationCommands('786612528951197726'),
-    { body: commands },
+    Routes.applicationCommands(clientId),
+    { body: commands }
   );
 })();
 
