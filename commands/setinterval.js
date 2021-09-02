@@ -21,35 +21,26 @@ module.exports = {
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
-    let loading = await message.channel.send('This will take a moment...');
-    if (!args[1] || isNaN(args[1])) {
-      let msg = await loading.edit(`Proper command usage /setinterval [channel-name] [minutes]`);
+    const channel = interaction.options.getChannel('channel-name');
+    const minutes = interaction.options.getInteger('minutes');
+    if (minutes < 3) {
+      return interaction.reply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
     }
 
-    let channel = message.mentions.channels.first();
-    if (!channel) channel = message.guild.channels.cache.find((ch) => ch.name === args[0]);
-    if (!channel) {
-      let msg = await loading.edit(`Couldn't find ${args[0]}`);
-    }
-
-    if (args[1] < 3) {
-      let msg = await loading.edit(`Minutes can't be lower than 3.`);
-    }
-
-    const server = await servers.get(message.guild.id);
+    const server = await servers.get(interaction.guildId);
     if (!server) {
-      let msg = await loading.edit(`This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`);
+      return interaction.reply({ content: `This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`, ephemeral: true });
     }
 
     let Interval = {};
     Interval.channel = channel.id;
-    Interval.time = args[1] * 60000;
+    Interval.time = minutes * 60000;
     Interval.next = Date.now();
     Interval.message = loading.id;
-    await intervals.set(message.guild.id, Interval);
-    const config = message.client.guildConfigs.get(message.guild.id);
+    await intervals.set(interaction.guildId, Interval);
+    const config = interaction.client.guildConfigs.get(interaction.guildId);
     config.interval = Interval;
-    message.client.guildConfigs.set(message.guild.id, config);
+    interaction.client.guildConfigs.set(interaction.guildId, config);
     const serverData = await maxPlayers.get(`${server.ip}:${server.port}`);
     if (!serverData) {
       const data = {};
@@ -57,6 +48,6 @@ module.exports = {
       data.days = [];
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
-    await loading.edit(`Successfully set an interval.`);
+    await interaction.reply(`Successfully set an interval.`);
   }
 }

@@ -7,15 +7,13 @@ module.exports = {
     .setName('status')
     .setDescription(`Tells you live information about your favourite SA-MP community!`),
   async execute(interaction) {
-    let loading = await message.channel.send('Fetching server info...');
-    const { server } = message.client.guildConfigs.get(message.guild.id);
+    const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     if (!server) {
-      let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`);
+      return interaction.reply({ content: `This guild doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`, ephemeral: true });
     }
     
-    const color = getRoleColor(message.guild);
+    const color = getRoleColor(interaction.guild);
     const status = await getStatus(server, color);
-    await loading.delete();
-    await message.channel.send({ embeds: [status] });
+    await interaction.reply({ embeds: [status], ephemeral: true });
   }
 }
