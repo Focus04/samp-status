@@ -15,6 +15,7 @@ readdirSync('./commands').forEach((file) => {
   commands.push(command.data.toJSON());
 });
 const rest = new REST({ version: '9' }).setToken(process.env.token);
+console.log(client.guilds.cache);
 client.guilds.cache.forEach(async (guild) => {
   await rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands });
   console.log(`Loaded commands for ${guild.id}`)
