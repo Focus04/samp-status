@@ -51,6 +51,6 @@ module.exports = {
       data.days = [];
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
-    await interaction.reply(`Successfully set an interval.`);
+    await interaction.reply({ content: `Successfully set an interval.`, ephemeral: true });
   }
 }

@@ -11,11 +11,11 @@ module.exports = {
     .setDescription('Sends a chart displaying server statistics for each day.'),
   async execute(interaction) {
     const interval = await intervals.get(interaction.guildId);
-    if (!interval) return interaction.reply(`You must set an interval to view statistics. Set one using /setinterval`);
+    if (!interval) return interaction.reply({ content: `You must set an interval to view statistics. Set one using /setinterval`, ephemeral: true });
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     const data = await maxPlayers.get(`${server.ip}:${server.port}`);
     const color = getRoleColor(interaction.guild);
     const chart = await getChart(data, color);
-    await interaction.reply({ files: [chart] });
+    await interaction.reply({ files: [chart], ephemeral: true });
   }
 }
