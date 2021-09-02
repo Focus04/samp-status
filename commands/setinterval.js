@@ -22,6 +22,9 @@ module.exports = {
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
     const channel = interaction.options.getChannel('channel-name');
+    if (!channel.type === 'text') {
+      return interaction.reply({ content: `Invalid channel.`, ephemeral: true });
+    }
     const minutes = interaction.options.getInteger('minutes');
     if (minutes < 3) {
       return interaction.reply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
