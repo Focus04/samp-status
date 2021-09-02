@@ -1,8 +1,8 @@
 import { Collection } from 'discord.js';
-import gamedig from 'gamedig';
 import { getChart } from '../../utils/getChart';
 import { getStatus, getPlayerCount } from '../../utils/getStatus';
 import { getRoleColor } from '../../utils/getRoleColor';
+import gamedig from 'gamedig';
 import Keyv from 'keyv';
 const prefixes = new Keyv(process.env.prefixes);
 const intervals = new Keyv(process.env.intervals);

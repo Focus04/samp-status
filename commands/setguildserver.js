@@ -1,5 +1,5 @@
-import gamedig from 'gamedig';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import gamedig from 'gamedig';
 import Keyv from 'keyv'
 const servers = new Keyv(process.env.servers);
 
