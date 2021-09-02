@@ -1,9 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { getChart } = require('../utils/getChart');
+const { getRoleColor } = require('../utils/getRoleColor')
 const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { getChart } = require('../utils/getChart');
-const { getRoleColor } = require('../utils/getRoleColor')
 
 module.exports = {
   data: new SlashCommandBuilder()
