@@ -1,4 +1,4 @@
-module.exports = async (client, interaction) => {
+export default async (client, interaction) => {
   if (!interaction.isCommand()) return;
 
   const command = client.commands.get(interaction.commandName);

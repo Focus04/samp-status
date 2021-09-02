@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const Keyv = require('keyv');
+import { SlashCommandBuilder } from '@discordjs/builders'
+import Keyv from 'keyv'
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('setinterval')
     .setDescription(`Sets a channel for status messages to be sent in.`)

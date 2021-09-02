@@ -1,9 +1,9 @@
-const gamedig = require('gamedig');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const Keyv = require('keyv');
+import gamedig from 'gamedig';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import Keyv from 'keyv'
 const servers = new Keyv(process.env.servers);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('setguildserver')
     .setDescription(`Sets a per guild SA:MP server to receive updates on.`)
