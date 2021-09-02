@@ -12,6 +12,11 @@ const { getRoleColor } = require('../../utils/getRoleColor');
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
+  const rest = new REST({ version: '9' }).setToken(process.env.token);
+  client.guilds.cache.forEach(async (guild) => {
+    await rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands });
+    console.log(`Loaded commands for ${guild.id}`)
+  });
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     let prefix = await prefixes.get(guild.id);
