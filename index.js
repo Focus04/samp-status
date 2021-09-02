@@ -10,7 +10,7 @@ const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 let commands = [];
 client.commands = new Collection();
 readdirSync('./commands').forEach((file) => {
-  import command from `/commands/${file}`;
+  const command = require(`/commands/${file}`);
   client.commands.set(command.data.name, command);
   commands.push(command.data.toJSON());
 });
@@ -21,7 +21,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.token);
 
 readdirSync('./events').forEach((folder) => {
   readdirSync(`./events/${folder}`).forEach((file) => {
-    import event from `/events/${folder}/${file}`;
+    const event = require(`/events/${folder}/${file}`);
     client.on(file.split('.')[0], event.bind(null, client));
   });
 });

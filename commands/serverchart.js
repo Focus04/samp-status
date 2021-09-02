@@ -5,7 +5,7 @@ import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('serverchart')
     .setDescription('Sends a chart displaying server statistics for each day.'),

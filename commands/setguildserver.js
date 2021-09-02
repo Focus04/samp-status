@@ -3,7 +3,7 @@ import gamedig from 'gamedig';
 import Keyv from 'keyv'
 const servers = new Keyv(process.env.servers);
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('setguildserver')
     .setDescription(`Sets a per guild SA:MP server to receive updates on.`)

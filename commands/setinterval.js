@@ -4,7 +4,7 @@ const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('setinterval')
     .setDescription(`Sets a channel for status messages to be sent in.`)

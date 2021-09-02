@@ -9,7 +9,7 @@ const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-export default async (client) => {
+module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
   client.guildConfigs = new Collection();
