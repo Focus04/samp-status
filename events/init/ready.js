@@ -1,15 +1,15 @@
-const { Collection } = require('discord.js');
-const gamedig = require('gamedig');
-const Keyv = require('keyv');
+import { Collection } from 'discord.js';
+import { getChart } from '../../utils/getChart';
+import { getStatus, getPlayerCount } from '../../utils/getStatus';
+import { getRoleColor } from '../../utils/getRoleColor';
+import gamedig from 'gamedig';
+import Keyv from 'keyv';
 const prefixes = new Keyv(process.env.prefixes);
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { getChart } = require('../../utils/getChart');
-const { getStatus, getPlayerCount } = require('../../utils/getStatus');
-const { getRoleColor } = require('../../utils/getRoleColor');
 
-module.exports = async (client) => {
+export default async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
   client.guildConfigs = new Collection();
