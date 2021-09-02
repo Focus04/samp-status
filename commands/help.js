@@ -34,7 +34,7 @@ module.exports = {
         .setColor(color.hex)
         .setTitle(`/${command.name}`)
         .addFields(
-          { name: 'Description', value: command.description },
+          { name: 'Description', value: interaction.command.description },
           { name: 'Usage', value: command.usage }
         )
         .setTimestamp();
