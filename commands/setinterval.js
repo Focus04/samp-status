@@ -19,7 +19,6 @@ module.exports = {
       .setRequired(true)
     ),
   requiredPerms: 'MANAGE_GUILD',
-  permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
     const channel = interaction.options.getChannel('channel-name');
     if (channel.type !== 'GUILD_TEXT') {

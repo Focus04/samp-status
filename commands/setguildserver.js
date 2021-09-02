@@ -18,7 +18,6 @@ module.exports = {
       .setRequired(true)
     ),
   requiredPerms: 'MANAGE_GUILD',
-  permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
     const args = interaction.options.data.map((option) => option.value);
     let err = 0;
@@ -26,7 +25,7 @@ module.exports = {
       type: 'samp',
       host: args[0],
       port: args[1]
-    }).catch(async (error) => {
+    }).catch(async () => {
       await interaction.reply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
       err = 1;
     });
