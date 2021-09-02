@@ -22,6 +22,7 @@ module.exports = {
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
     const args = interaction.options.data;
+    console.log(args)
     let err = 0;
     await gamedig.query({
       type: 'samp',
