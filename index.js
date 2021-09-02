@@ -11,7 +11,7 @@ const loadCommands = (async () => {
   let commands = [];
   client.commands = new Collection();
   readdirSync('./commands').forEach((file) => {
-    let { default: command } = await import(`/commands/${file}`);
+    const command = await import(`/commands/${file}`).default;
     client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
   });
@@ -22,7 +22,7 @@ const loadCommands = (async () => {
 const loadEvents = (async () => {
   readdirSync('./events').forEach((folder) => {
     readdirSync(`./events/${folder}`).forEach((file) => {
-      let { default: event } = await import(`/events/${folder}/${file}`);
+      const event = await import(`/events/${folder}/${file}`).default;
       client.on(file.split('.')[0], event.bind(null, client));
     });
   });
