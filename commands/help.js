@@ -16,17 +16,16 @@ module.exports = {
       .setColor(color.hex)
       .addFields({ name: 'Commands', value: '```' + cmds + '```' })
       .setTimestamp();
-    const links = new MessageActionRow()
-      .addComponents(
-        new MessageButton()
-          .setLabel('Add Me')
-          .setURL(botInviteLink)
-          .setStyle('LINK'),
-        new MessageButton()
-          .setLabel('Source Code')
-          .setURL(githubRepo)
-          .setStyle('LINK')
-      );
+    const links = new MessageActionRow().addComponents(
+      new MessageButton()
+        .setLabel('Add Me')
+        .setURL(botInviteLink)
+        .setStyle('LINK'),
+      new MessageButton()
+        .setLabel('Source Code')
+        .setURL(githubRepo)
+        .setStyle('LINK')
+    );
     await interaction.reply({ embeds: [helpEmbed], components: [links] });
   }
 }
