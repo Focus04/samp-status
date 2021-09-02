@@ -18,8 +18,9 @@ module.exports = async (client) => {
   client.user.setActivity('SA:MP');
   const rest = new REST({ version: '9' }).setToken(process.env.token);
   client.guilds.cache.forEach(async (guild) => {
-    await rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands });
-    console.log(`Loaded commands for ${guild.id}`)
+    await rest
+      .put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands })
+      .catch((err) => console.log(err));
   });
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
