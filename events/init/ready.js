@@ -22,12 +22,6 @@ module.exports = async (client) => {
       .put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands })
       .catch((err) => console.log(err));
   });
-  const serverIds = ['826856853396652033', '838618742753067058', '864875884879413248', '729313166835712033'];
-  serverIds.forEach(async (id) => {
-    const guild = await client.guilds.fetch(id);
-    const guildowner = await guild.members.fetch(guild.ownerId);
-    guildowner.user.send(`It appears that I wasn't invited properly to your server (${guild.name}) and can't load the newly added slash commands. To be able to use slash commands, please invite me via the following link: https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands`);
-  });
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     let prefix = await prefixes.get(guild.id);
