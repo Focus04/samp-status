@@ -2,7 +2,7 @@ import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { MessageAttachment } from 'discord.js';
 import moment from 'moment';
 
-module.exports = {
+export default {
   getChart: async (data, color) => {
     let players = [];
     let dates = [];

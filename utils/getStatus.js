@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
-module.exports = {
+export default {
   getStatus: async (server, color) => {
     let err = 0;
     const data = await gamedig.query({

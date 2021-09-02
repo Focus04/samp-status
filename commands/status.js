@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders'
 import { getStatus } from '../utils/getStatus';
 import { getRoleColor } from '../utils/getRoleColor';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('status')
     .setDescription(`Tells you live information about your favourite SA-MP community!`),

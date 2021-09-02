@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { botInviteLink } from '../config.json';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('invitelink')
     .setDescription('Sends the invite link for the bot.'),

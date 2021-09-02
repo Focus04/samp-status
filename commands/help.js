@@ -4,7 +4,7 @@ import { botInviteLink, githubRepo } from '../config.json';
 import { getRoleColor } from '../utils/getRoleColor';
 import fs from 'fs';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Displays a list of all available commands along with their usage.')
