@@ -71,7 +71,7 @@ module.exports = async (client) => {
           .fetch(data.msg)
           .catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
-        const msg = await channel.send(chart);
+        const msg = await channel.send({ files: [chart] });
         data.msg = msg.id;
         await maxPlayers.set(`${server.ip}:${server.port}`, data);
       });
