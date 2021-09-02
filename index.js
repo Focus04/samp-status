@@ -9,9 +9,10 @@ const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 
 const loadCommands = (async () => {
   let commands = [];
+  let command;
   client.commands = new Collection();
   readdirSync('./commands').forEach((file) => {
-    const command = await import(`/commands/${file}`).default;
+    command = await import(`/commands/${file}`).default;
     client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
   });
@@ -20,9 +21,10 @@ const loadCommands = (async () => {
 })();
 
 const loadEvents = (async () => {
+  let event;
   readdirSync('./events').forEach((folder) => {
     readdirSync(`./events/${folder}`).forEach((file) => {
-      const event = await import(`/events/${folder}/${file}`).default;
+      event = await import(`/events/${folder}/${file}`).default;
       client.on(file.split('.')[0], event.bind(null, client));
     });
   });
