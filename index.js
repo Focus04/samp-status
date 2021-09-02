@@ -1,9 +1,6 @@
 require('dotenv').config();
 const { readdirSync } = require('fs');
 const { Client, Collection } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { clientId } = require('./config.json');
 
 const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 

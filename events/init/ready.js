@@ -1,13 +1,16 @@
 const { Collection } = require('discord.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { clientId } = require('./config.json');
+const { getChart } = require('../../utils/getChart');
+const { getStatus, getPlayerCount } = require('../../utils/getStatus');
+const { getRoleColor } = require('../../utils/getRoleColor');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const prefixes = new Keyv(process.env.prefixes);
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
-const { getChart } = require('../../utils/getChart');
-const { getStatus, getPlayerCount } = require('../../utils/getStatus');
-const { getRoleColor } = require('../../utils/getRoleColor');
 
 module.exports = async (client) => {
   console.log('I am live');
