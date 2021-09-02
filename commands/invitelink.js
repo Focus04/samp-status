@@ -6,6 +6,6 @@ module.exports = {
     .setName('invitelink')
     .setDescription('Sends the invite link for the bot.'),
   execute(interaction) {
-    interaction.reply(botInviteLink);
+    interaction.reply({ content: botInviteLink, ephemeral: true });
   }
 }
