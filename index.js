@@ -20,10 +20,6 @@ const loadCommands = (async () => {
     Routes.applicationCommands(clientId, '729313166835712033'),
     { body: [] }
   );
-  await rest.put(
-    Routes.applicationCommands(clientId),
-    { body: commands }
-  );
 })();
 
 const loadEvents = (() => {
