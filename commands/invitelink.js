@@ -6,6 +6,6 @@ module.exports = {
     .setName('invitelink')
     .setDescription('Sends the invite link for the bot.'),
   execute(interaction) {
-    message.channel.send(botInviteLink);
+    interaction.reply(botInviteLink);
   }
 }
