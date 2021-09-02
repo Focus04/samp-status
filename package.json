@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "logs": "heroku logs --app samp-status --source app -t"
+    "logs": "heroku logs --app samp-status --source app --dyno worker -t",
+    "run": "heroku run --app samp-status"
   },
   "author": "Focus#7804",
   "license": "ISC",
