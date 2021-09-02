@@ -1,7 +1,7 @@
 const { Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { clientId } = require('./config.json');
+const { clientId } = require('../../config.json');
 const { getChart } = require('../../utils/getChart');
 const { getStatus, getPlayerCount } = require('../../utils/getStatus');
 const { getRoleColor } = require('../../utils/getRoleColor');
