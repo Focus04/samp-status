@@ -1,6 +1,6 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription(`Displays the bot's current latency in ms.`),

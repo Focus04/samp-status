@@ -1,9 +1,9 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import gamedig from 'gamedig';
-import Keyv from 'keyv'
+const gamedig = require('gamedig');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const Keyv = require('keyv');
 const servers = new Keyv(process.env.servers);
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('setguildserver')
     .setDescription(`Sets a per guild SA:MP server to receive updates on.`)
@@ -22,6 +22,7 @@ export default {
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
     const args = interaction.options.data.map((option) => option.value);
+    console.log(args)
     let err = 0;
     await gamedig.query({
       type: 'samp',

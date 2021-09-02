@@ -1,18 +1,16 @@
-import { readdirSync } from 'fs';
-import { Client, Collection } from 'discord.js';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
+const { readdirSync } = require('fs');
+const { Client, Collection } = require('discord.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 
 const loadCommands = (async () => {
   let commands = [];
-  let command;
   client.commands = new Collection();
   readdirSync('./commands').forEach((file) => {
-    command = await import(`/commands/${file}`).default;
+    const command = require(`./commands/${file}`);
     client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
   });
@@ -20,11 +18,10 @@ const loadCommands = (async () => {
   await rest.put(Routes.applicationGuildCommands('786612528951197726', '729313166835712033'), { body: commands });
 })();
 
-const loadEvents = (async () => {
-  let event;
+const loadEvents = (() => {
   readdirSync('./events').forEach((folder) => {
     readdirSync(`./events/${folder}`).forEach((file) => {
-      event = await import(`/events/${folder}/${file}`).default;
+      const event = require(`./events/${folder}/${file}`);
       client.on(file.split('.')[0], event.bind(null, client));
     });
   });

@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
-import { botInviteLink, githubRepo } from '../config.json';
-import { getRoleColor } from '../utils/getRoleColor';
-import fs from 'fs';
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const { botInviteLink, githubRepo } = require('../config.json');
+const { getRoleColor } = require('../utils/getRoleColor');
+const fs = require('fs');
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Displays a list of all available commands along with their usage.')
@@ -14,7 +14,8 @@ export default {
     ),
   usage: 'help (`command`)',
   async execute(interaction) {
-    const color = getRoleColor(message.guild);
+    const color = getRoleColor(interaction.guild);
+    const args = interaction.options.data.map((option) => option.value);
     if (!args.length) {
       let cmds = '';
       fs.readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
@@ -25,12 +26,10 @@ export default {
           { name: 'Useful Links', value: `[Add me on your server!](${botInviteLink}) [Code](${githubRepo})` }
         )
         .setTimestamp();
-      await message.channel.send({ embeds: [helpEmbed] });
+      await interaction.reply({ embeds: [helpEmbed] });
     } else {
-      const command = message.client.commands.get(args[0].toLowerCase());
-      if (!command) {
-        let msg = await message.channel.send(`Couldn't find ${args[0]} in my commands list.`);
-      }
+      const command = interaction.client.commands.get(args[0].toLowerCase());
+      if (!command) await interaction.reply(`Couldn't find ${args[0]} in my commands list.`);
       const cmdEmbed = new MessageEmbed()
         .setColor(color.hex)
         .setTitle(`/${command.name}`)
@@ -39,7 +38,7 @@ export default {
           { name: 'Usage', value: command.usage }
         )
         .setTimestamp();
-      await message.channel.send({ embeds: [cmdEmbed] });
+      await interaction.reply({ embeds: [cmdEmbed] });
     }
   }
 }
