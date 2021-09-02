@@ -3,6 +3,7 @@
   "version": "2.5.4",
   "description": "Discord bot to send information about any SA:MP server.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "logs": "heroku logs --app samp-status --source app -t"
