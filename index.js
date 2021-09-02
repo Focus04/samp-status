@@ -3,6 +3,7 @@ const { readdirSync } = require('fs');
 const { Client, Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const { clientId } = require('./config.json');
 
 const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
 
@@ -15,7 +16,7 @@ const loadCommands = (async () => {
     commands.push(command.data.toJSON());
   });
   const rest = new REST({ version: '9' }).setToken(process.env.token);
-  await rest.put(Routes.applicationGuildCommands('786612528951197726', '729313166835712033'), { body: commands });
+  await rest.put(Routes.applicationGuildCommands(clientId), { body: commands });
 })();
 
 const loadEvents = (() => {
