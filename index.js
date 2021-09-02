@@ -16,7 +16,7 @@ const loadCommands = (async () => {
     commands.push(command.data.toJSON());
   });
   const rest = new REST({ version: '9' }).setToken(process.env.token);
-  await rest.put(Routes.applicationGuildCommands(clientId), { body: commands });
+  await rest.put(Routes.applicationGuildCommands('786612528951197726'), { body: commands });
 })();
 
 const loadEvents = (() => {
