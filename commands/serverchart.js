@@ -1,11 +1,11 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { getChart } from '../utils/getChart';
-import { getRoleColor } from '../utils/getRoleColor';
-import Keyv from 'keyv';
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const Keyv = require('keyv');
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
+const { getChart } = require('../utils/getChart');
+const { getRoleColor } = require('../utils/getRoleColor')
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('serverchart')
     .setDescription('Sends a chart displaying server statistics for each day.'),

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   getRoleColor: (guild) => {
     let roleHexColor;
     let highestRole = { position: -1 };

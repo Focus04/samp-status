@@ -1,10 +1,13 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
-import { botInviteLink, githubRepo } from '../config.json';
-import { getRoleColor } from '../utils/getRoleColor';
-import fs from 'fs';
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const fs = require('fs');
+const {
+  botInviteLink,
+  githubRepo
+} = require('../config.json');
+const { getRoleColor } = require('../utils/getRoleColor');
 
-export default {
+module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Displays a list of all available commands along with their usage.')
