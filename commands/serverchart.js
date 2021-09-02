@@ -14,7 +14,7 @@ module.exports = {
     let loadingMsg = await message.channel.send('Fetching server info...');
     const interval = await intervals.get(message.guild.id);
     if (!interval) {
-      let msg = await loadingMsg.edit(`You must set an interval to view statistics. Set one using ${prefix}setinterval`);
+      let msg = await loadingMsg.edit(`You must set an interval to view statistics. Set one using /setinterval`);
     }
 
     const { server } = message.client.guildConfigs.get(message.guild.id);

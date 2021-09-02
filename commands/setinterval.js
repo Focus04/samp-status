@@ -24,7 +24,7 @@ module.exports = {
   async execute(interaction) {
     let loading = await message.channel.send('This will take a moment...');
     if (!args[1] || isNaN(args[1])) {
-      let msg = await loading.edit(`Proper command usage ${prefix}setinterval [channel-name] [minutes]`);
+      let msg = await loading.edit(`Proper command usage /setinterval [channel-name] [minutes]`);
     }
 
     let channel = message.mentions.channels.first();
@@ -39,7 +39,7 @@ module.exports = {
 
     const server = await servers.get(message.guild.id);
     if (!server) {
-      let msg = await loading.edit(`This server doesn't have a server linked to it yet. Type ${prefix}setguildserver to setup one.`);
+      let msg = await loading.edit(`This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`);
     }
 
     let Interval = {};

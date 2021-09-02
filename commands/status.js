@@ -12,7 +12,7 @@ module.exports = {
     let loading = await message.channel.send('Fetching server info...');
     const { server } = message.client.guildConfigs.get(message.guild.id);
     if (!server) {
-      let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use ${prefix}setguildserver to do so.`);
+      let msg = await loading.edit(`This guild doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`);
     }
     
     const color = getRoleColor(message.guild);

@@ -20,7 +20,7 @@ module.exports = {
     const color = getRoleColor(message.guild);
     if (!args.length) {
       let cmds = '';
-      fs.readdirSync('./commands').forEach((file) => cmds += `${prefix}${file.split('.')[0]} `);
+      fs.readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
       const helpEmbed = new MessageEmbed()
         .setColor(color.hex)
         .addFields(
@@ -36,7 +36,7 @@ module.exports = {
       }
       const cmdEmbed = new MessageEmbed()
         .setColor(color.hex)
-        .setTitle(`${prefix}${command.name}`)
+        .setTitle(`/${command.name}`)
         .addFields(
           { name: 'Description', value: command.description },
           { name: 'Usage', value: command.usage }

@@ -40,6 +40,6 @@ module.exports = {
     const config = interaction.client.guildConfigs.get(interaction.guildId);
     config.server = Server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
-    await interaction.reply({ content: `You can now use ${prefix}status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
+    await interaction.reply({ content: `You can now use /status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
   }
 }

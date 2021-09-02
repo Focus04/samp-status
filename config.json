@@ -1,5 +1,4 @@
 {
-  "defaultPrefix": "!",
   "botInviteLink": "https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands",
   "githubRepo": "https://github.com/Focus04/samp-status"
 }
