@@ -11,6 +11,7 @@ readdirSync('./commands').forEach((file) => {
   client.commands.set(command.data.name, command);
   commands.push(command.data.toJSON());
 });
+module.exports = commands;
 
 readdirSync('./events').forEach((folder) => {
   readdirSync(`./events/${folder}`).forEach((file) => {

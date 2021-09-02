@@ -5,6 +5,7 @@ const { clientId } = require('../../config.json');
 const { getChart } = require('../../utils/getChart');
 const { getStatus, getPlayerCount } = require('../../utils/getStatus');
 const { getRoleColor } = require('../../utils/getRoleColor');
+const commands = require('../../index');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
 const prefixes = new Keyv(process.env.prefixes);
