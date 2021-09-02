@@ -18,7 +18,6 @@ module.exports = {
       .setDescription('The interval updates will be sent at (at least 3).')
       .setRequired(true)
     ),
-  usage: 'setinterval `channel-name` `minutes`',
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {

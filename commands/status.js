@@ -6,8 +6,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('status')
     .setDescription(`Tells you live information about your favourite SA-MP community!`),
-  usage: 'status',
-  guildOnly: true,
   async execute(interaction) {
     let loading = await message.channel.send('Fetching server info...');
     const { server } = message.client.guildConfigs.get(message.guild.id);

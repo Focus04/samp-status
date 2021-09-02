@@ -9,7 +9,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('serverchart')
     .setDescription('Sends a chart displaying server statistics for each day.'),
-  usage: 'serverchart',
   async execute(interaction) {
     let loadingMsg = await message.channel.send('Fetching server info...');
     const interval = await intervals.get(message.guild.id);

@@ -17,7 +17,6 @@ module.exports = {
       .setDescription('The port of a SA:MP server.')
       .setRequired(true)
     ),
-  usage: 'setguildserver `ip` `port`',
   requiredPerms: 'MANAGE_GUILD',
   permError: 'You require the Manage Server permission in order to run this command.',
   async execute(interaction) {
