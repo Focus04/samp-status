@@ -1,7 +1,4 @@
 const { Collection } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { clientId } = require('../../config.json');
 const { getChart } = require('../../utils/getChart');
 const { getStatus, getPlayerCount } = require('../../utils/getStatus');
 const { getRoleColor } = require('../../utils/getRoleColor');
@@ -16,12 +13,7 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  const rest = new REST({ version: '9' }).setToken(process.env.token);
-  client.guilds.cache.forEach(async (guild) => {
-    await rest
-      .put(Routes.applicationGuildCommands(clientId, guild.id), { body: commands })
-      .catch((err) => console.log(err));
-  });
+  client.guilds.cache.forEach((guild) => client.application.commands.set(commands, guild.id));
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     let prefix = await prefixes.get(guild.id);
