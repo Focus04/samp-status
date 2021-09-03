@@ -35,7 +35,7 @@ module.exports = {
     });
     let output, output2;
     if (players.length === 1) output = 'None';
-    else output = table(players, config);
+    else output = table(players, config).catch((err) => console.log(err));
     if (output.length > 1024) output2 = data.players.map((player) => player.name).join(', ');
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
