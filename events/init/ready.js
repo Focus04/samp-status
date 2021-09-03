@@ -13,7 +13,9 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 module.exports = async (client) => {
   console.log('I am live');
   client.user.setActivity('SA:MP');
-  client.guilds.cache.forEach(async (guild) => await client.application.commands.set(commands, guild.id));
+  client.guilds.cache.forEach(async (guild) => {
+    await client.application.commands.set(commands, guild.id).catch((err) => console.log(err));
+  });
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     let prefix = await prefixes.get(guild.id);
