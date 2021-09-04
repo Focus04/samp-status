@@ -12,10 +12,13 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 
 module.exports = async (client) => {
   console.log('I am live');
+  
   client.user.setActivity('SA:MP');
+
   client.guilds.cache.forEach((guild) => {
     client.application.commands.set(commands, guild.id).catch((err) => console.log(err));
   });
+
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
     let prefix = await prefixes.get(guild.id);
@@ -28,6 +31,7 @@ module.exports = async (client) => {
     }
     client.guildConfigs.set(guild.id, config);
   });
+
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
       const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);

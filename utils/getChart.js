@@ -10,10 +10,12 @@ module.exports = {
       players.push(day.value);
       dates.push(moment(day.date - 40000000).format('D.M'));
     });
+
     const canvas = new ChartJSNodeCanvas({
       width: 1280,
       height: 720
     });
+
     const config = {
       type: 'line',
       data: {
@@ -75,6 +77,7 @@ module.exports = {
         }
       ]
     };
+    
     const image = await canvas.renderToBuffer(config);
     const attachment = new MessageAttachment(image);
     return attachment;

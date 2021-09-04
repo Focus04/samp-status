@@ -11,6 +11,7 @@ module.exports = {
       port: server.port,
       maxAttempts: 5
     }).catch(() => err = 0);
+
     if (err === 1 || !data) {
       const errEmbed = new MessageEmbed()
         .setColor('ff0000')
@@ -19,6 +20,7 @@ module.exports = {
         .setTimestamp();
       return errEmbed;
     }
+
     const config = {
       border: getBorderCharacters(`void`),
       columnDefault: {
@@ -29,14 +31,17 @@ module.exports = {
         return false
       }
     }
+
     let players = [];
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
+
     let output, output2;
     if (players.length === 0) output = 'None';
     else output = table(players, config);
     if (output.length > 1024) output2 = data.players.map((player) => player.name).join(', ');
+
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
       .setTitle(`${data.name}`)
@@ -52,6 +57,7 @@ module.exports = {
       .setTimestamp();
     if (output2) serverEmbed.addField('Online Players', '```' + output2 + '```');
     else serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
+    
     return serverEmbed;
   },
 
