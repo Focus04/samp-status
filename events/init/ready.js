@@ -51,7 +51,9 @@ module.exports = async (client) => {
         .fetch(interval.message)
         .catch((err) => console.log(err));
       if (oldMsg) oldMsg.delete();
-      let msg = await channel.send({ embeds: [status] });
+      let msg = await channel
+        .send({ embeds: [status] })
+        .catch((err) => console.log(err));
       interval.message = msg.id;
       await intervals.set(guild.id, interval);
     });
@@ -81,7 +83,9 @@ module.exports = async (client) => {
           .fetch(data.msg)
           .catch((err) => console.log(err));
         if (oldMsg) oldMsg.delete();
-        const msg = await channel.send({ files: [chart] });
+        const msg = await channel
+          .send({ files: [chart] })
+          .catch((err) => console.log(err));
         data.msg = msg.id;
         await maxPlayers.set(`${server.ip}:${server.port}`, data);
       });
