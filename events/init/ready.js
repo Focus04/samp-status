@@ -44,10 +44,10 @@ module.exports = async (client) => {
       if (!channel) return;
       const color = getRoleColor(guild);
       const status = await getStatus(server, color);
-      const oldMsg = await channel.messages
+      channel.messages
         .fetch(interval.message)
+        .then((oldMsg) => oldMsg.delete())
         .catch((err) => console.log(err));
-      if (oldMsg) oldMsg.delete();
       channel
         .send({ embeds: [status] })
         .then((msg) => interval.message = msg.id)
@@ -76,10 +76,10 @@ module.exports = async (client) => {
         if (!channel) return;
         const color = getRoleColor(guild);
         const chart = await getChart(data, color);
-        const oldMsg = await channel.messages
+        channel.messages
           .fetch(data.msg)
+          .then((oldMsg) => oldMsg.delete())
           .catch((err) => console.log(err));
-        if (oldMsg) oldMsg.delete();
         channel
           .send({ files: [chart] })
           .then((msg) => data.msg = msg.id)
