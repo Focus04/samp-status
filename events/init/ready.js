@@ -5,7 +5,6 @@ const { getRoleColor } = require('../../utils/getRoleColor');
 const commands = require('../../index');
 const gamedig = require('gamedig');
 const Keyv = require('keyv');
-const prefixes = new Keyv(process.env.prefixes);
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
@@ -21,11 +20,9 @@ module.exports = async (client) => {
 
   client.guildConfigs = new Collection();
   client.guilds.cache.forEach(async (guild) => {
-    let prefix = await prefixes.get(guild.id);
     let server = await servers.get(guild.id);
     let interval = await intervals.get(guild.id);
     const config = {
-      prefix,
       server,
       interval
     }
