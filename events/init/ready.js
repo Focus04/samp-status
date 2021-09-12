@@ -35,6 +35,7 @@ module.exports = async (client) => {
       if (!interval || Date.now() < interval.next) return;
       interval.next = Date.now() + interval.time;
       const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
+      if (!chartData) return;
       const playerCount = await getPlayerCount(server, gamedig);
       if (playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = playerCount;
       await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
@@ -64,6 +65,7 @@ module.exports = async (client) => {
         const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
         if (!interval) return;
         const data = await maxPlayers.get(`${server.ip}:${server.port}`);
+        if (!data) return;
         let ChartData = {};
         ChartData.value = data.maxPlayersToday;
         ChartData.date = Date.now();
