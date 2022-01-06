@@ -31,7 +31,9 @@ module.exports = async (client) => {
 
   setInterval(() => {
     client.guilds.cache.forEach(async (guild) => {
-      const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
+      const guildConfigs = client.guildConfigs.get(guild.id);
+      if (!guildConfigs) return;
+      const { interval = 0, server = 0 } = guildConfigs;
       if (!interval || Date.now() < interval.next) return;
       interval.next = Date.now() + interval.time;
       const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
