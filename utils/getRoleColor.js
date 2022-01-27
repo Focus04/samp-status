@@ -5,7 +5,7 @@ module.exports = {
     guild.me.roles.cache.forEach((role) => {
       if (role.position > highestRole.position && role.color != 0) highestRole = role;
     });
-    if (highestRole.position === -1) roleHexColor = '#b9bbbe';
+    if (highestRole.position === -1) roleHexColor = '#5865F2';
     else roleHexColor = '#' + highestRole.color.toString(16);
     let r = parseInt(roleHexColor.slice(1, 3), 16);
     let g = parseInt(roleHexColor.slice(3, 5), 16);
