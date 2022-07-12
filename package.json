@@ -16,7 +16,7 @@
     "@discordjs/builders": "^0.5.0",
     "@keyv/mongo": "^1.1.0",
     "chart.js": "^3.4.1",
-    "chartjs-node-canvas": "^3.2.0",
+    "chartjs-node-canvas": "^4.1.6",
     "discord.js": "^13.1.0",
     "dotenv": "^8.6.0",
     "gamedig": "^2.0.28",
