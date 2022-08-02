@@ -11,7 +11,7 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 
 module.exports = async (client) => {
   console.log('I am live');
-  
+
   client.user.setActivity('SA:MP');
 
   client.guilds.cache.forEach((guild) => {
@@ -46,19 +46,19 @@ module.exports = async (client) => {
         .catch((err) => console.log(err));
       if (!channel) return;
       const color = getRoleColor(guild);
-      const status = await getStatus(server, color);
+      const serverEmbed = await getStatus(server, color);
       channel.messages
         .fetch(interval.message)
         .then((oldMsg) => oldMsg.delete())
         .catch((err) => console.log(err));
       channel
-        .send({ embeds: [status] })
+        .send({ embeds: [serverEmbed] })
         .then((msg) => interval.message = msg.id)
         .catch((err) => console.log(err));
       await intervals.set(guild.id, interval);
     });
   }, 60000);
-  
+
   setInterval(async () => {
     const nextCheck = await maxPlayers.get('next');
     if (Date.now() >= nextCheck) {

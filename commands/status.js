@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageAttachment } = require('discord.js');
 const { getStatus } = require('../utils/getStatus');
 const { getRoleColor } = require('../utils/getRoleColor');
 
@@ -11,9 +12,9 @@ module.exports = {
     if (!server) {
       return interaction.reply({ content: `This server doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`, ephemeral: true });
     }
-    
+
     const color = getRoleColor(interaction.guild);
-    const status = await getStatus(server, color);
-    await interaction.reply({ embeds: [status] });
+    const serverEmbed = await getStatus(server, color);
+    await interaction.reply({ embeds: [serverEmbed] });
   }
 }

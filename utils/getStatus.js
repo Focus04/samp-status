@@ -32,15 +32,14 @@ module.exports = {
       }
     }
 
-    let players = [];
+    let players = [['ID', 'Name', 'Score', 'Ping']];
     data.players.forEach((player) => {
       players.push([player.id, player.name, player.score, player.ping]);
     });
 
-    let output, output2;
+    let output;
     if (players.length === 0) output = 'None';
     else output = table(players, config);
-    if (output.length > 1024) output2 = data.players.map((player) => player.name).join(', ');
 
     let serverEmbed = new MessageEmbed()
       .setColor(color.hex)
@@ -55,9 +54,7 @@ module.exports = {
         { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
       )
       .setTimestamp();
-    if (output2) serverEmbed.addField('Online Players', '```' + output2 + '```');
-    else serverEmbed.addField('ID Name Score Ping', '```' + output + '```');
-    
+    if (output.length < 1024) serverEmbed.addField('Players List', '```' + output + '```');
     return serverEmbed;
   },
 

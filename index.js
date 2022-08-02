@@ -9,15 +9,15 @@ client.commands = new Collection();
 readdirSync('./commands').forEach((file) => {
   const command = require(`./commands/${file}`);
   client.commands.set(command.data.name, command);
-  commands.push(command.data.toJSON());
+  if (command.data.name !== 'help') commands.push(command.data.toJSON());
 });
-module.exports = commands;
+module.exports = commands; 
 
 readdirSync('./events').forEach((folder) => {
   readdirSync(`./events/${folder}`).forEach((file) => {
     const event = require(`./events/${folder}/${file}`);
     client.on(file.split('.')[0], event.bind(null, client));
   });
-});
+}); 
 
 client.login(process.env.token);

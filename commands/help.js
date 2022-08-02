@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const { botInviteLink, githubRepo } = require('../config.json');
+const { botInviteLink, discordInviteLink, topgg, githubRepo } = require('../config.json');
 const { getRoleColor } = require('../utils/getRoleColor');
 const fs = require('fs');
 
@@ -18,11 +18,19 @@ module.exports = {
       .setTimestamp();
     const links = new MessageActionRow().addComponents(
       new MessageButton()
-        .setLabel('Add Me')
+        .setLabel('Add me')
         .setURL(botInviteLink)
         .setStyle('LINK'),
       new MessageButton()
-        .setLabel('Source Code')
+        .setLabel('Support')
+        .setURL(discordInviteLink)
+        .setStyle('LINK'),
+      new MessageButton()
+        .setLabel('Vote!')
+        .setURL(topgg)
+        .setStyle('LINK'),
+      new MessageButton()
+        .setLabel('Code')
         .setURL(githubRepo)
         .setStyle('LINK')
     );
