@@ -14,6 +14,7 @@
   "engines": {
     "node": "16.x"
   },
+  "type": "module",
   "dependencies": {
     "@discordjs/builders": "^1.1.0",
     "@keyv/mongo": "^1.1.0",
@@ -21,7 +22,7 @@
     "chartjs-node-canvas": "^4.1.6",
     "discord.js": "^13.9.2",
     "dotenv": "^8.6.0",
-    "gamedig": "^2.0.28",
+    "gamedig": "^4.0.5",
     "keyv": "^4.0.3",
     "moment": "^2.29.1",
     "table": "^6.7.1"

@@ -1,9 +1,9 @@
-const gamedig = require('gamedig');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const Keyv = require('keyv');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import gamedig from 'gamedig';
+import Keyv from 'keyv';
 const servers = new Keyv(process.env.servers);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('setguildserver')
     .setDescription(`Sets a per guild SA:MP server to receive updates on.`)
@@ -18,7 +18,7 @@ module.exports = {
       .setRequired(true)
     ),
   requiredPerms: 'MANAGE_GUILD',
-  async execute(interaction) {
+  execute: async (interaction) => {
     const args = interaction.options.data.map((option) => option.value);
     let err = 0;
     await gamedig.query({
@@ -29,7 +29,8 @@ module.exports = {
       await interaction.reply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
       err = 1;
     });
-    if (err === 1) return;
+    if (err === 1)
+      return;
     let Server = {};
     Server.ip = args[0];
     Server.port = args[1];

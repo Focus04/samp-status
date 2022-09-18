@@ -1,13 +1,12 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment } = require('discord.js');
-const { getStatus } = require('../utils/getStatus');
-const { getRoleColor } = require('../utils/getRoleColor');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { getStatus } from '../utils/getStatus.js';
+import { getRoleColor } from '../utils/getRoleColor.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('status')
     .setDescription(`Tells you live information about your favourite SA-MP community!`),
-  async execute(interaction) {
+  execute: async (interaction) => {
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     if (!server) {
       return interaction.reply({ content: `This server doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`, ephemeral: true });

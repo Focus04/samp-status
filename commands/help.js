@@ -1,17 +1,18 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const { botInviteLink, discordInviteLink, topgg, githubRepo } = require('../config.json');
-const { getRoleColor } = require('../utils/getRoleColor');
-const fs = require('fs');
+import { readdirSync } from 'fs';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { MessageEmbed, MessageActionRow, MessageButton } from 'discord.js';
+import config from '../config.js';
+const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
+import { getRoleColor } from '../utils/getRoleColor.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Displays a list of all available commands along with their usage.'),
-  async execute(interaction) {
+  execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
     let cmds = '';
-    fs.readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
+    readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
     const helpEmbed = new MessageEmbed()
       .setColor(color.hex)
       .addFields({ name: 'Commands', value: '```' + cmds + '```' })

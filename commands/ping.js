@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { SlashCommandBuilder } from '@discordjs/builders';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription(`Displays the bot's current latency in ms.`),
-  async execute(interaction) {
+  execute: async (interaction) => {
     const msg = await interaction.reply({ content: 'Pinging...', fetchReply: true });
     interaction.editReply(`Response Latency: ${msg.createdTimestamp - interaction.createdTimestamp} ms`);
   }

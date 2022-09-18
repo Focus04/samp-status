@@ -1,15 +1,15 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getChart } = require('../utils/getChart');
-const { getRoleColor } = require('../utils/getRoleColor')
-const Keyv = require('keyv');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { getChart } from '../utils/getChart.js';
+import { getRoleColor } from '../utils/getRoleColor.js';
+import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('serverchart')
     .setDescription('Sends a chart displaying server statistics for each day.'),
-  async execute(interaction) {
+  execute: async (interaction) => {
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
       return interaction.reply({ content: `You must set an interval to view statistics. Set one using /setinterval`, ephemeral: true });
