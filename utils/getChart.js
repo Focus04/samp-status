@@ -38,7 +38,6 @@ export async function getChart(data, color) {
         title: {
           display: true,
           text: `Most players per day on the server`,
-          font: { size: 20 },
           padding: { bottom: 10 }
         }
       },
@@ -47,7 +46,6 @@ export async function getChart(data, color) {
           title: {
             display: true,
             text: 'Date',
-            font: { size: 15 }
           }
         },
         y: {
@@ -56,7 +54,6 @@ export async function getChart(data, color) {
           title: {
             display: true,
             text: 'Players',
-            font: { size: 15 }
           }
         }
       },
