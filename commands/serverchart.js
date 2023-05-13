@@ -10,6 +10,7 @@ export default {
     .setName('serverchart')
     .setDescription('Sends a chart displaying server statistics for each day.'),
   execute: async (interaction) => {
+    await interaction.deferReply();
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
       return interaction.reply({ content: `You must set an interval to view statistics. Set one using /setinterval`, ephemeral: true });
@@ -21,6 +22,6 @@ export default {
     }
     const color = getRoleColor(interaction.guild);
     const chart = await getChart(data, color);
-    await interaction.reply({ files: [chart] });
+    await interaction.editReply({ files: [chart] });
   }
 }

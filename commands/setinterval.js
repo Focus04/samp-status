@@ -20,6 +20,7 @@ export default {
     ),
   requiredPerms: 'MANAGE_GUILD',
   execute: async (interaction) => {
+    await interaction.deferReply();
     const channel = interaction.options.getChannel('channel-name');
     if (channel.type !== 'GUILD_TEXT') {
       await interaction.reply({ content: `Invalid channel.`, ephemeral: true });
@@ -36,7 +37,7 @@ export default {
     }
 
     let Interval = {};
-    Interval.channel = channel.id;
+    Interval.channel = channel.id
     Interval.time = minutes * 60000;
     Interval.next = Date.now();
     Interval.message = 0;
@@ -51,6 +52,6 @@ export default {
       data.days = [];
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
-    await interaction.reply({ content: `Successfully set an interval.`, ephemeral: true });
+    await interaction.editReply({ content: `Successfully set an interval.`, ephemeral: true });
   }
 }

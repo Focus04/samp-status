@@ -19,6 +19,7 @@ export default {
     ),
   requiredPerms: 'MANAGE_GUILD',
   execute: async (interaction) => {
+    await interaction.deferReply();
     const args = interaction.options.data.map((option) => option.value);
     let err = 0;
     await gamedig.query({
@@ -38,6 +39,6 @@ export default {
     const config = interaction.client.guildConfigs.get(interaction.guildId);
     config.server = Server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
-    await interaction.reply({ content: `You can now use /status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
+    await interaction.editReply({ content: `You can now use /status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
   }
 }
