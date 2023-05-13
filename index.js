@@ -27,4 +27,4 @@ readdir('./events', (err, folders) => {
 });
 
 client.login(process.env.token);
-export default commands;
+export default commands
