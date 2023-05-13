@@ -49,8 +49,6 @@ export async function getChart(data, color) {
           }
         },
         y: {
-          min: 0,
-          max: 100,
           title: {
             display: true,
             text: 'Players',
