@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 import { readdir } from 'fs';
-import { Client, Collection } from 'discord.js';
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
 
 config();
-const client = new Client();
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 let commands = [];
 client.commands = new Collection();
