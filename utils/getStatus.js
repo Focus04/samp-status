@@ -3,15 +3,14 @@ import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
 export async function getStatus(server, color) {
-  let err = 0;
   const data = await gamedig.query({
     type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 5
-  }).catch(() => err = 0);
+  });
 
-  if (err === 1 || !data) {
+  if (!data) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
