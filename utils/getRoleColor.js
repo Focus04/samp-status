@@ -1,7 +1,7 @@
 export function getRoleColor(guild) {
   let roleHexColor;
   let highestRole = { position: -1 };
-  guild.me.roles.cache.forEach((role) => {
+  guild.members.me.roles.cache.forEach((role) => {
     if (role.position > highestRole.position && role.color != 0)
       highestRole = role;
   });
