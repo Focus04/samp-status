@@ -12,7 +12,7 @@ export async function getStatus(server, color) {
       maxAttempts: 5
     });
   } catch {
-    console.log(data.raw.gamemode)
+    console.log(server.port)
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
