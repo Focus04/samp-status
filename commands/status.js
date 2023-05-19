@@ -10,7 +10,7 @@ export default {
     await interaction.deferReply();
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     if (!server) {
-      return interaction.reply({ content: `This server doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`, ephemeral: true });
+      return interaction.editReply({ content: `This server doesn't have a SA:MP Server linked to it. Use /setguildserver to do so.`, ephemeral: true });
     }
 
     const color = getRoleColor(interaction.guild);
