@@ -1,4 +1,5 @@
 export function getRoleColor(guild) {
+  let roleHexColor = '';
   if (!guild.members.me.roles.color)
     roleHexColor = '#5865F2';
   else
