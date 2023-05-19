@@ -26,9 +26,7 @@ export default {
       host: args[0],
       port: args[1]
     }).catch(async () => {
-      console.log('error!!!')
-      await interaction.editReply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
-      return;
+      return interaction.editReply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
     });
     let Server = {};
     Server.ip = args[0];
