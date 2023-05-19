@@ -21,13 +21,15 @@ export default {
   execute: async (interaction) => {
     await interaction.deferReply();
     const args = interaction.options.data.map((option) => option.value);
-    await gamedig.query({
-      type: 'samp',
-      host: args[0],
-      port: args[1]
-    }).catch(async () => {
+    try {
+      gamedig.query({
+        type: 'samp',
+        host: args[0],
+        port: args[1]
+      });
+    } catch {
       return interaction.editReply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
-    });
+    }
     let Server = {};
     Server.ip = args[0];
     Server.port = args[1];
