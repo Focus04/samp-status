@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getRoleColor } from '../utils/getRoleColor.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('botinfo')
     .setDescription(`Checks how many servers the bot is in.`),
