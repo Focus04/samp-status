@@ -8,7 +8,7 @@ export async function getStatus(server, color) {
     host: server.ip,
     port: server.port,
     maxAttempts: 5
-  });
+  }).catch((err) => console.log(err));
 
   if (!data) {
     const errEmbed = new EmbedBuilder()
@@ -68,7 +68,7 @@ export async function getPlayerCount(server) {
     host: server.ip,
     port: server.port,
     maxAttempts: 10
-  });
+  }).catch((err) => console.log(err));
   if (!data)
     return -1;
   else
