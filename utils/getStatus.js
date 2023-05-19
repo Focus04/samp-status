@@ -9,9 +9,9 @@ export async function getStatus(server, color) {
     host: server.ip,
     port: server.port,
     maxAttempts: 5
-  }).catch(() => err = 1);
+  }).catch(() => err = 0);
 
-  if (err === 1) {
+  if (err === 1 || !data) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
