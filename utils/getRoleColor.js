@@ -3,7 +3,7 @@ export function getRoleColor(guild) {
   if (!guild.members.me.roles.color)
     roleHexColor = '#5865F2';
   else
-    roleHexColor = '#' + guild.members.me.roles.color.color.toString(16);
+    roleHexColor = guild.members.me.roles.color.color;
   let r = parseInt(roleHexColor.slice(1, 3), 16);
   let g = parseInt(roleHexColor.slice(3, 5), 16);
   let b = parseInt(roleHexColor.slice(5, 7), 16);
