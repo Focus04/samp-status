@@ -23,17 +23,17 @@ export default {
     await interaction.deferReply();
     const channel = interaction.options.getChannel('channel-name');
     if (channel.type !== 'GUILD_TEXT') {
-      await interaction.reply({ content: `Invalid channel.`, ephemeral: true });
+      await interaction.editReply({ content: `Invalid channel.`, ephemeral: true });
       return;
     }
     const minutes = interaction.options.getInteger('minutes');
     if (minutes < 3) {
-      return interaction.reply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
+      return interaction.editReply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
     }
 
     const server = await servers.get(interaction.guildId);
     if (!server) {
-      return interaction.reply({ content: `This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`, ephemeral: true });
+      return interaction.editReply({ content: `This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`, ephemeral: true });
     }
 
     let interval = {
