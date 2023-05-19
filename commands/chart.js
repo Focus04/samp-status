@@ -7,7 +7,7 @@ const maxPlayers = new Keyv(process.env.maxPlayers);
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('serverchart')
+    .setName('chart')
     .setDescription('Sends a chart displaying server statistics for each day.'),
   execute: async (interaction) => {
     await interaction.deferReply();
