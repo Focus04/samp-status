@@ -1,5 +1,5 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
-import { MessageAttachment } from 'discord.js';
+import { AttachmentBuilder } from 'discord.js';
 import moment from 'moment';
 
 export async function getChart(data, color) {
@@ -73,6 +73,6 @@ export async function getChart(data, color) {
   };
 
   const image = await canvas.renderToBuffer(config);
-  const attachment = new MessageAttachment(image);
+  const attachment = new AttachmentBuilder(image);
   return attachment;
 }

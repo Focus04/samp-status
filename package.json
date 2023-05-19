@@ -16,11 +16,10 @@
   },
   "type": "module",
   "dependencies": {
-    "@discordjs/builders": "^1.1.0",
     "@keyv/mongo": "^1.1.0",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
-    "discord.js": "^13.9.2",
+    "discord.js": "^14.11.0",
     "dotenv": "^8.6.0",
     "fontconfig": "^0.5.0",
     "gamedig": "^4.0.5",

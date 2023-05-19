@@ -1,6 +1,5 @@
 import { readdirSync } from 'fs';
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed, MessageActionRow, MessageButton } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import config from '../config.js';
 const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
 import { getRoleColor } from '../utils/getRoleColor.js';
@@ -13,27 +12,27 @@ export default {
     const color = getRoleColor(interaction.guild);
     let cmds = '';
     readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
-    const helpEmbed = new MessageEmbed()
+    const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
       .addFields({ name: 'Commands', value: '```' + cmds + '```' })
       .setTimestamp();
-    const links = new MessageActionRow().addComponents(
-      new MessageButton()
+    const links = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setLabel('Add me')
         .setURL(botInviteLink)
-        .setStyle('LINK'),
-      new MessageButton()
+        .setStyle(ButtonStyle.Link),
+      new ButtonBuilder()
         .setLabel('Support')
         .setURL(discordInviteLink)
-        .setStyle('LINK'),
-      new MessageButton()
+        .setStyle(ButtonStyle.Link),
+      new ButtonBuilder()
         .setLabel('Vote!')
         .setURL(topgg)
-        .setStyle('LINK'),
-      new MessageButton()
+        .setStyle(ButtonStyle.Link),
+      new ButtonBuilder()
         .setLabel('Code')
         .setURL(githubRepo)
-        .setStyle('LINK')
+        .setStyle(ButtonStyle.Link)
     );
     await interaction.reply({ embeds: [helpEmbed], components: [links] });
   }

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
@@ -17,8 +17,8 @@ export default {
       .setName('minutes')
       .setDescription('The interval updates will be sent at (at least 3).')
       .setRequired(true)
-    ),
-  requiredPerms: 'MANAGE_GUILD',
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
     await interaction.deferReply();
     const channel = interaction.options.getChannel('channel-name');

@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
@@ -42,7 +42,7 @@ export async function getStatus(server, color) {
   else
     output = table(players, config);
 
-  let serverEmbed = new MessageEmbed()
+  let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
     .setDescription(data.raw.gamemode)

@@ -3,7 +3,7 @@ import { readdir } from 'fs';
 import { Client, Collection } from 'discord.js';
 
 config();
-const client = new Client({ intents: ['GUILD_MESSAGES', 'GUILDS'] });
+const client = new Client();
 
 let commands = [];
 client.commands = new Collection();

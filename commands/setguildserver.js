@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import gamedig from 'gamedig';
 import Keyv from 'keyv';
 const servers = new Keyv(process.env.servers);
@@ -16,8 +16,8 @@ export default {
       .setName('port')
       .setDescription('The port of a SA:MP server.')
       .setRequired(true)
-    ),
-  requiredPerms: 'MANAGE_GUILD',
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
     await interaction.deferReply();
     const args = interaction.options.data.map((option) => option.value);

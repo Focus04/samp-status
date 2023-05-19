@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import { getChart } from '../utils/getChart.js';
 import { getRoleColor } from '../utils/getRoleColor.js';
 import Keyv from 'keyv';
