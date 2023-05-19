@@ -1,11 +1,12 @@
 export function getRoleColor(guild) {
-  let roleHexColor;
-  let highestRole = { position: -1 };
-  guild.members.me.roles.cache.forEach((role) => {
-    if (role.position > highestRole.position && role.color != 0)
-      highestRole = role;
-  });
-  if (highestRole.position === -1)
+  let roleColor = guild.members.me.roles.color.color;
+  let roleHexColor = '';
+  // let highestRole = { position: -1 };
+  // guild.members.me.roles.cache.forEach((role) => {
+  //   if (role.position > highestRole.position && role.color != 0)
+  //     highestRole = role;
+  // });
+  if (roleColor === -1)
     roleHexColor = '#5865F2';
   else
     roleHexColor = '#' + highestRole.color.toString(16);
