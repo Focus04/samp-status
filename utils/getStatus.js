@@ -12,7 +12,7 @@ export async function getStatus(server, color) {
   }).catch(() => err = 0);
 
   if (err === 1 || !data) {
-    const errEmbed = new MessageEmbed()
+    const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
       .setDescription(`${server.ip}:${server.port} did not respond after 5 attempts.`)
