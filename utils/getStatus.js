@@ -63,14 +63,13 @@ export async function getStatus(server, color) {
 }
 
 export async function getPlayerCount(server) {
-  let err = 0;
   const data = await gamedig.query({
     type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 10
-  }).catch(() => err = 0);
-  if (err === 1 || !data)
+  });
+  if (!data)
     return -1;
   else
     return data.players.length;
