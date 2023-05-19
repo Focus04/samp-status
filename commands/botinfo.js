@@ -10,7 +10,7 @@ export default {
     let membercount = 0;
     interaction.client.guilds.cache.forEach((guild) => membercount += guild.memberCount);
     const infoEmbed = new EmbedBuilder()
-      .setColor(color.hex).catch((err) => console.log(err))
+      .setColor(color.hex)
       .setTitle('Bot info')
       .addFields(
         { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
