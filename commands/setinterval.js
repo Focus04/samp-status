@@ -36,20 +36,22 @@ export default {
       return interaction.reply({ content: `This server doesn't have a server linked to it yet. Type /setguildserver to setup one.`, ephemeral: true });
     }
 
-    let Interval = {};
-    Interval.channel = channel.id
-    Interval.time = minutes * 60000;
-    Interval.next = Date.now();
-    Interval.message = 0;
-    await intervals.set(interaction.guildId, Interval);
+    let interval = {
+      channel: channel.id,
+      time: minutes * 60000,
+      next: Date.now(),
+      message: 0
+    };
+    await intervals.set(interaction.guildId, interval);
     const config = interaction.client.guildConfigs.get(interaction.guildId);
-    config.interval = Interval;
+    config.interval = interval;
     interaction.client.guildConfigs.set(interaction.guildId, config);
     const serverData = await maxPlayers.get(`${server.ip}:${server.port}`);
     if (!serverData) {
-      const data = {};
-      data.maxPlayersToday = -1;
-      data.days = [];
+      const data = {
+        maxPlayersToday: -1,
+        days: []
+      };
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
     await interaction.editReply({ content: `Successfully set an interval.`, ephemeral: true });

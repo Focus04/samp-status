@@ -15,6 +15,7 @@ export default {
     .addStringOption((option) => option
       .setName('port')
       .setDescription('The port of a SA:MP server.')
+      .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
@@ -29,12 +30,13 @@ export default {
     } catch {
       return await interaction.editReply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
     }
-    let Server = {};
-    Server.ip = args[0];
-    Server.port = args[1];
-    await servers.set(interaction.guildId, Server);
+    let server = {
+      ip: args[0],
+      port: args[1]
+    };
+    await servers.set(interaction.guildId, server);
     const config = interaction.client.guildConfigs.get(interaction.guildId);
-    config.server = Server;
+    config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
     await interaction.editReply({ content: `You can now use /status to view information about ${args[0]}:${args[1]}`, ephemeral: true });
   }
