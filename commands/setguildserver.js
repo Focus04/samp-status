@@ -15,7 +15,6 @@ export default {
     .addStringOption((option) => option
       .setName('port')
       .setDescription('The port of a SA:MP server.')
-      .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
