@@ -22,7 +22,7 @@ export default {
     await interaction.deferReply();
     const args = interaction.options.data.map((option) => option.value);
     try {
-      gamedig.query({
+      await gamedig.query({
         type: 'samp',
         host: args[0],
         port: args[1]
