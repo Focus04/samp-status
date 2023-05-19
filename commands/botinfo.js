@@ -16,7 +16,8 @@ export default {
         { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
         { name: 'User Count', value: membercount.toString() }
       )
-      .setTimestamp();
+      .setTimestamp()
+      .catch((err) => console.log(err));
     interaction.reply({ embeds: [infoEmbed] });
   }
 }
