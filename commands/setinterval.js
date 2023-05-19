@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, ChannelType } from 'discord.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
@@ -22,10 +22,10 @@ export default {
   execute: async (interaction) => {
     await interaction.deferReply();
     const channel = interaction.options.getChannel('channel-name');
-    if (channel.type !== 'GUILD_TEXT') {
-      await interaction.editReply({ content: `Invalid channel.`, ephemeral: true });
-      return;
+    if (channel.type !== ChannelType.GuildText) {
+      return interaction.editReply({ content: `Invalid channel.`, ephemeral: true });
     }
+    
     const minutes = interaction.options.getInteger('minutes');
     if (minutes < 3) {
       return interaction.editReply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
