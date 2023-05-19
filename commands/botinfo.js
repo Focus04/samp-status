@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { getRoleColor } = require('../utils/getRoleColor');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { getRoleColor } from '../utils/getRoleColor';
 
 module.exports = {
   data: new SlashCommandBuilder()
