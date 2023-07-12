@@ -1,10 +1,10 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
-import gamedig from 'gamedig';
+import gamedig from '../gamedig/lib/index';
 
 export async function getStatus(server, color) {
   const data = await gamedig.query({
-    type: 'vcmp',
+    type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 5
