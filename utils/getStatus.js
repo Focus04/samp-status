@@ -64,7 +64,7 @@ export async function getStatus(server, color) {
 
 export async function getPlayerCount(server) {
   const data = await gamedig.query({
-    type: 'vcmp',
+    type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 10
