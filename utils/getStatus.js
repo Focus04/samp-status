@@ -4,7 +4,7 @@ import gamedig from 'gamedig';
 
 export async function getStatus(server, color) {
   const data = await gamedig.query({
-    type: 'samp',
+    type: 'vcmp',
     host: server.ip,
     port: server.port,
     maxAttempts: 5
