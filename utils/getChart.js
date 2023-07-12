@@ -1,14 +1,25 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
 import moment from 'moment';
+import gamedig from 'gamedig';
+import Keyv from 'keyv';
+const maxPlayers = new Keyv(process.env.maxPlayers);
 
-export async function getChart(data, color) {
+export async function getChart(server, color) {
   let players = [];
   let dates = [];
+  const data = await maxPlayers.get(`${server.ip}:${server.port}`);
   data.days.forEach((day) => {
     players.push(day.value);
     dates.push(moment(day.date - 40000000).format('D.M'));
   });
+
+  const liveData = await gamedig.query({
+    type: 'samp',
+    host: server.ip,
+    port: server.port,
+    maxAttempts: 5
+  }).catch((err) => console.log(err));
 
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
@@ -52,6 +63,7 @@ export async function getChart(data, color) {
         },
         y: {
           min: 0,
+          max: liveData.maxplayers,
           title: {
             display: true,
             text: 'Players',

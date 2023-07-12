@@ -21,7 +21,7 @@ export default {
       return interaction.editReply({ content: `No data has been collected yet. Check again tomorrow.`, ephemeral: true });
     }
     const color = getRoleColor(interaction.guild);
-    const chart = await getChart(data, color);
+    const chart = await getChart(server, color);
     await interaction.editReply({ files: [chart] });
   }
 }
