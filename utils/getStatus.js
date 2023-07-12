@@ -18,6 +18,7 @@ export async function getStatus(server, color) {
       .setTimestamp();
     return errEmbed;
   }
+  console.log(data);
 
   const config = {
     border: getBorderCharacters(`void`),
