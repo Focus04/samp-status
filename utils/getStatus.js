@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
-import gamedig from '../gamedig/lib/index';
+import gamedig from '../gamedig/lib/index.js';
 
 export async function getStatus(server, color) {
   const data = await gamedig.query({
