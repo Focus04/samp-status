@@ -18,7 +18,8 @@ export async function getStatus(server, color) {
       .setTimestamp();
     return errEmbed;
   }
-  console.log(data.players[1]);
+  console.log(data.players[1].name);
+  console.log(data.players[1].raw);
 
   const config = {
     border: getBorderCharacters(`void`),
