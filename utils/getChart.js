@@ -48,7 +48,7 @@ export async function getChart(server, color) {
       plugins: {
         title: {
           display: true,
-          text: `Most players per day on the server`,
+          text: `Most players per day on ${liveData.name}`,
           padding: { bottom: 10 },
           font: { size: 20 },
         }
