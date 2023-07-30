@@ -41,7 +41,7 @@ export default {
         let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         if (!chartData) return;
         const info = await getPlayerCount(server);
-        if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
+        chartData.maxPlayersToday = info.playerCount;
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
