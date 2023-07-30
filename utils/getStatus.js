@@ -71,6 +71,12 @@ export async function getPlayerCount(server) {
   }).catch((err) => console.log(err));
   if (!data)
     return -1;
-  else
-    return data.players.length;
+  else {
+    const info = {
+      playerCount: data.maxplayers,
+      name: data.name,
+      maxPlayers: data.maxplayers
+    }
+    return info;
+  }
 }

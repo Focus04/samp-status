@@ -37,7 +37,7 @@ export async function getChart(data, color) {
       plugins: {
         title: {
           display: true,
-          text: `Most players per day on the server`,
+          text: `Most players per day on ${data.name}`,
           padding: { bottom: 10 },
           font: { size: 20 },
         }
@@ -52,6 +52,7 @@ export async function getChart(data, color) {
         },
         y: {
           min: 0,
+          max: data.maxPlayers,
           title: {
             display: true,
             text: 'Players',
