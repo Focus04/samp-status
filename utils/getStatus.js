@@ -36,10 +36,8 @@ export async function getStatus(server, color) {
   });
 
   let output;
-  if (players.length === 0)
-    output = 'None';
-  else
-    output = table(players, config);
+  if (players.length === 0) output = 'None';
+  else output = table(players, config);
 
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
@@ -70,18 +68,19 @@ export async function getPlayerCount(server) {
     maxAttempts: 10
   }).catch((err) => console.log(err));
   let info;
-  if (!data)
+  if (!data) {
     info = {
       playerCount: -1,
       name: 'the server',
       maxPlayers: 50
     }
+  }
   else {
     info = {
       playerCount: data.players.length,
       name: data.name,
       maxPlayers: data.maxplayers
     }
-    return info;
   }
+  return info;
 }
