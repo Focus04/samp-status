@@ -81,7 +81,7 @@ export default {
             .catch((err) => console.log(err));
           if (!channel) return;
           const color = getRoleColor(guild);
-          const chart = await getChart(server, color);
+          const chart = await getChart(data, color);
           channel.messages
             .fetch(data.msg)
             .then((oldMsg) => oldMsg.delete())
