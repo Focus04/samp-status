@@ -69,10 +69,15 @@ export async function getPlayerCount(server) {
     port: server.port,
     maxAttempts: 10
   }).catch((err) => console.log(err));
+  let info;
   if (!data)
-    return -1;
+    info = {
+      playerCount: -1,
+      name: 'the server',
+      maxPlayers: 50
+    }
   else {
-    const info = {
+    info = {
       playerCount: data.maxplayers,
       name: data.name,
       maxPlayers: data.maxplayers
