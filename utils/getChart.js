@@ -45,6 +45,7 @@ export async function getChart(data, color) {
       scales: {
         x: {
           grid: { display: false },
+          border: { width: 2 },
           title: {
             display: true,
             text: 'Date',
