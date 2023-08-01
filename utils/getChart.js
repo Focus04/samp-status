@@ -58,6 +58,7 @@ export async function getChart(data, color) {
             borderDash: [10],
             lineWidth: 2
           },
+          border: { width: 2 },
           title: {
             display: true,
             text: 'Players',
