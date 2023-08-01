@@ -1,6 +1,5 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
-import moment from 'moment';
 import gradient from 'chartjs-plugin-gradient';
 
 export async function getChart(data, color) {
@@ -14,10 +13,7 @@ export async function getChart(data, color) {
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
     height: 720,
-    backgroundColour: 'white',
-    plugins: {
-      modern: [gradient]
-    }
+    backgroundColour: 'white'
   });
 
   const config = {
@@ -28,7 +24,7 @@ export async function getChart(data, color) {
         {
           label: 'players',
           data: players,
-          // backgroundColor: color.rgba,
+          backgroundColor: color.rgba,
           gradient: {
             backgroundColour: {
               axis: 'y',
