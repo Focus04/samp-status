@@ -17,7 +17,7 @@ export default {
     }
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     const data = await maxPlayers.get(`${server.ip}:${server.port}`);
-    if (!data) {
+    if (!data || !data.days[0]) {
       return interaction.editReply({ content: `No data has been collected yet. Check again tomorrow.`, ephemeral: true });
     }
     const color = getRoleColor(interaction.guild);
