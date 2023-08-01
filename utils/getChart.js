@@ -87,10 +87,10 @@ export async function getChart(data, color) {
         beforeDraw: (chart) => {
           const ctx = chart.canvas.getContext('2d');
           ctx.save();
-          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+          const gradient = ctx.createLinearGradient(0, 0, 0, 100);
           gradient.addColorStop(0.5, 'transparent');
           gradient.addColorStop(1, color.rgba);
-          chart.data.datasets.backgroundColor = gradient;
+          chart.data.datasets[0].backgroundColor = gradient;
         }
       }
     ]
