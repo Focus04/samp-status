@@ -41,9 +41,11 @@ export async function getChart(data, color) {
           align: 'start',
           text: `Most players per day on ${data.name}`,
           font: { size: 20 },
+          padding: { bottom: 0 }
         },
         subtitle: {
           display: true,
+          align: 'start',
           text: `Showing past ${data.days.length} days data`,
           padding: { bottom: 0 }
         },
@@ -52,12 +54,7 @@ export async function getChart(data, color) {
       scales: {
         x: {
           grid: { display: false },
-          border: { display: false },
-          title: {
-            display: true,
-            text: 'Date',
-            font: { size: 15 }
-          }
+          border: { display: false }
         },
         y: {
           min: 0,
@@ -66,12 +63,7 @@ export async function getChart(data, color) {
             borderDash: [10],
             lineWidth: 3
           },
-          border: { display: false },
-          title: {
-            display: true,
-            text: 'Players',
-            font: { size: 15 }
-          }
+          border: { display: false }
         }
       },
       layout: { padding: 20 }
