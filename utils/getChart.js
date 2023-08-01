@@ -47,7 +47,8 @@ export async function getChart(data, color) {
           align: 'end',
           labels: {
             usePointStyle: true,
-            boxHeight: 5
+            boxHeight: 5,
+            font: { size: 15 }
           }
         }
       },
@@ -56,6 +57,9 @@ export async function getChart(data, color) {
           grid: {
             display: false,
             drawBorder: false
+          },
+          ticks: {
+            font: { size: 15 }
           }
         },
         y: {
@@ -65,6 +69,9 @@ export async function getChart(data, color) {
             borderDash: [10],
             lineWidth: 3,
             drawBorder: false
+          },
+          ticks: {
+            font: { size: 15 }
           }
         }
       },
