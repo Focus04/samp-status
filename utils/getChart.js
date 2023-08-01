@@ -1,5 +1,6 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
+import moment from 'moment';
 
 export async function getChart(data, color) {
   let players = [];
