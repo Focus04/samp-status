@@ -24,7 +24,7 @@ export async function getChart(data, color) {
         {
           label: 'players',
           data: players,
-          backgroundColor: color.rgba,
+          // backgroundColor: color.rgba,
           borderColor: color.rgb,
           pointRadius: 5,
           tension: 0.5,
@@ -90,6 +90,7 @@ export async function getChart(data, color) {
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
           gradient.addColorStop(0.5, 'transparent');
           gradient.addColorStop(1, color.rgba);
+          chart.data.datasets.backgroundColor = gradient;
         }
       }
     ]
