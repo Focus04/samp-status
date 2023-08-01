@@ -53,17 +53,19 @@ export async function getChart(data, color) {
       },
       scales: {
         x: {
-          grid: { display: false },
-          border: { display: false }
+          grid: {
+            display: false,
+            drawBorder: false
+          }
         },
         y: {
           min: 0,
           max: data.maxPlayers,
           grid: {
             borderDash: [10],
-            lineWidth: 3
-          },
-          border: { display: false }
+            lineWidth: 3,
+            drawBorder: false
+          }
         }
       },
       layout: { padding: 20 }
