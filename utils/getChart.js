@@ -1,6 +1,5 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
-import gradient from 'chartjs-plugin-gradient';
 
 export async function getChart(data, color) {
   let players = [];
@@ -25,16 +24,6 @@ export async function getChart(data, color) {
           label: 'players',
           data: players,
           backgroundColor: color.rgba,
-          gradient: {
-            backgroundColour: {
-              axis: 'y',
-              colors: {
-                0: 'red',
-                50: 'yellow',
-                100: 'green'
-              }
-            }
-          },
           borderColor: color.rgb,
           pointRadius: 5,
           tension: 0.5,
