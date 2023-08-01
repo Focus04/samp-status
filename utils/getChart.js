@@ -44,6 +44,7 @@ export async function getChart(data, color) {
       },
       scales: {
         x: {
+          grid: { display: false },
           title: {
             display: true,
             text: 'Date',
@@ -53,6 +54,9 @@ export async function getChart(data, color) {
         y: {
           min: 0,
           max: data.maxPlayers,
+          grid: {
+            borderDash: [10]
+          },
           title: {
             display: true,
             text: 'Players',
@@ -69,7 +73,7 @@ export async function getChart(data, color) {
           const ctx = chart.canvas.getContext('2d');
           ctx.save();
           ctx.globalCompositeOperation = 'destination-over';
-          ctx.fillStyle = '#eeeeee';
+          // ctx.fillStyle = '#eeeeee';
           ctx.fillRect(0, 0, chart.width, chart.height);
           ctx.restore();
         }
