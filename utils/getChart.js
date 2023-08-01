@@ -16,8 +16,7 @@ export async function getChart(data, color) {
     height: 720,
     backgroundColour: 'white',
     plugins: {
-      modern: [gradient],
-      requireLegacy: ['chartjs-plugin-gradient']
+      modern: [gradient]
     }
   });
 
