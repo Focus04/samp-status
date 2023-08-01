@@ -11,8 +11,8 @@ export async function getChart(data, color) {
   });
 
   const canvas = new ChartJSNodeCanvas({
-    width: 1920,
-    height: 1080
+    width: 1280,
+    height: 720
   });
 
   const config = {
