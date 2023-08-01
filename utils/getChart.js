@@ -46,7 +46,7 @@ export async function getChart(data, color) {
           display: true,
           align: 'start',
           text: `Showing past ${data.days.length} days data`,
-          padding: { top: 10 }
+          padding: { top: 10, bottom: 10 }
         },
         legend: { align: 'end' }
       },
