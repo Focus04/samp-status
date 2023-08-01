@@ -68,14 +68,14 @@ export async function getChart(data, color) {
     },
     plugins: [
       {
-        id: 'background-color',
-        beforeDraw: (chart) => {
-          const ctx = chart.canvas.getContext('2d');
-          ctx.save();
-          ctx.globalCompositeOperation = 'destination-over';
-          // ctx.fillStyle = '#eeeeee';
-          ctx.fillRect(0, 0, chart.width, chart.height);
-          ctx.restore();
+        // id: 'background-color',
+        // beforeDraw: (chart) => {
+        //   const ctx = chart.canvas.getContext('2d');
+        //   ctx.save();
+        //   ctx.globalCompositeOperation = 'destination-over';
+        //   ctx.fillStyle = '#eeeeee';
+        //   ctx.fillRect(0, 0, chart.width, chart.height);
+        //   ctx.restore();
         }
       }
     ]
