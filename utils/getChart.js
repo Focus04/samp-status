@@ -55,7 +55,8 @@ export async function getChart(data, color) {
           min: 0,
           max: data.maxPlayers,
           grid: {
-            borderDash: [50]
+            borderDash: [10],
+            lineWidth: 2
           },
           title: {
             display: true,
