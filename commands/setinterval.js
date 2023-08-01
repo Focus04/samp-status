@@ -50,10 +50,9 @@ export default {
     if (!serverData) {
       const data = {
         maxPlayersToday: -1,
-        days: [],
         name: 'the server',
-        maxPlayers: 50
-
+        maxPlayers: 50,
+        days: []
       };
       await maxPlayers.set(`${server.ip}:${server.port}`, data);
     }
