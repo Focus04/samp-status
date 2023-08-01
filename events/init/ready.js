@@ -14,9 +14,6 @@ export default {
   execute: async (client) => {
     console.log('I am live');
 
-    await maxPlayers.set('next', 1690934399000);
-    console.log(`Created next`)
-
     client.user.setActivity('SA:MP');
 
     client.guilds.cache.forEach((guild) => {
