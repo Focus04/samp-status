@@ -40,14 +40,14 @@ export async function getChart(data, color) {
         title: {
           display: true,
           text: `Most players per day on ${data.name}`,
-          font: { size: 30 }
+          font: { size: 27 }
         },
         legend: {
           align: 'end',
           labels: {
             usePointStyle: true,
             boxHeight: 8,
-            font: { size: 20 }
+            font: { size: 17 }
           }
         }
       },
@@ -63,7 +63,7 @@ export async function getChart(data, color) {
             drawBorder: false
           },
           ticks: {
-            font: { size: 20 }
+            font: { size: 17 }
           }
         },
         y: {
