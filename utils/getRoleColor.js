@@ -12,7 +12,7 @@ export function getRoleColor(guild) {
 
   let color = {
     rgb: `rgb(${r}, ${g}, ${b})`,
-    rgba: `rgba(${r}, ${g}, ${b}, 0.1)`,
+    rgba: `rgba(${r}, ${g}, ${b}, 0.3)`,
     hex: roleColor
   };
   return color;
