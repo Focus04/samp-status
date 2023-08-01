@@ -19,6 +19,7 @@
     "@keyv/mongo": "^2.2.8",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
+    "chartjs-plugin-gradient": "^0.6.1",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
     "fontconfig": "^0.5.0",

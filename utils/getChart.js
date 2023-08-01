@@ -1,5 +1,6 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
+import gradient from 'chartjs-plugin-gradient';
 import moment from 'moment';
 
 export async function getChart(data, color) {
@@ -13,7 +14,11 @@ export async function getChart(data, color) {
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
     height: 720,
-    backgroundColour: 'white'
+    backgroundColour: 'white',
+    plugins: {
+      modern: ['chartjs-plugin-gradient'],
+      requireLegacy: ['chartjs-plugin-gradient']
+    }
   });
 
   const config = {
@@ -25,6 +30,16 @@ export async function getChart(data, color) {
           label: 'players',
           data: players,
           // backgroundColor: color.rgba,
+          gradient: {
+            backgroundColour: {
+              axis: 'y',
+              colors: {
+                0: 'red',
+                50: 'yellow',
+                100: 'green'
+              }
+            }
+          },
           borderColor: color.rgb,
           pointRadius: 5,
           tension: 0.5,
@@ -80,20 +95,7 @@ export async function getChart(data, color) {
         }
       },
       layout: { padding: 20 }
-    },
-    plugins: [
-      {
-        id: 'background-gradient',
-        beforeDraw: (chart) => {
-          const ctx = chart.canvas.getContext('2d');
-          ctx.save();
-          const gradient = ctx.createLinearGradient(0, 0, 0, 100);
-          gradient.addColorStop(0.5, 'transparent');
-          gradient.addColorStop(1, color.rgba);
-          chart.data.datasets[0].backgroundColor = gradient;
-        }
-      }
-    ]
+    }
   };
 
   const image = await canvas.renderToBuffer(config);
