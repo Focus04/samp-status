@@ -26,6 +26,7 @@ export async function getChart(data, color) {
           data: players,
           backgroundColor: color.rgba,
           borderColor: color.rgb,
+          pointRadius: 5,
           tension: 0.5,
           fill: {
             target: 'origin',
@@ -46,7 +47,7 @@ export async function getChart(data, color) {
           align: 'end',
           labels: {
             usePointStyle: true,
-            boxHeight: 3
+            boxHeight: 5
           }
         }
       },
