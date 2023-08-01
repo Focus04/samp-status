@@ -40,15 +40,14 @@ export async function getChart(data, color) {
           display: true,
           align: 'start',
           text: `Most players per day on ${data.name}`,
-          font: { size: 20 }
+          font: { size: 20 },
+          padding: { bottom: 0 }
         },
-        subtitle: {
-          display: true,
-          align: 'start',
-          text: `Showing past ${data.days.length} days data`,
-          padding: { top: 10, bottom: 10 }
-        },
-        legend: { align: 'end' }
+        legend: {
+          align: 'end',
+          usePointStyle: true,
+          pointStyle: circle
+        }
       },
       scales: {
         x: {
