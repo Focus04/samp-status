@@ -24,7 +24,7 @@ export async function getChart(data, color) {
         {
           label: 'players',
           data: players,
-          backgroundColor: color.rgba,
+          backgroundColor: color.rgb,
           borderColor: color.rgb,
           pointRadius: 5,
           tension: 0.5,
