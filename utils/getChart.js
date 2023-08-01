@@ -47,6 +47,9 @@ export async function getChart(data, color) {
           labels: {
             usePointStyle: true,
             boxWidth: 5
+          },
+          title: {
+            padding: { bottom: 10 }
           }
         }
       },
