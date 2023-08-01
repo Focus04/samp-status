@@ -46,7 +46,7 @@ export async function getChart(data, color) {
           align: 'start',
           labels: {
             usePointStyle: true,
-            boxHeight: 5,
+            boxHeight: 8,
             font: { size: 17 }
           }
         }
@@ -66,7 +66,7 @@ export async function getChart(data, color) {
           max: data.maxPlayers,
           grid: {
             borderDash: [10],
-            lineWidth: 3,
+            lineWidth: 2,
             drawBorder: false
           },
           ticks: {
