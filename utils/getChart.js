@@ -12,7 +12,8 @@ export async function getChart(data, color) {
 
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
-    height: 720
+    height: 720,
+    backgroundColour: 'white'
   });
 
   const config = {
@@ -73,19 +74,19 @@ export async function getChart(data, color) {
       },
       layout: { padding: 20 }
     },
-    plugins: [
-      {
-        id: 'background-color',
-        beforeDraw: (chart) => {
-          const ctx = chart.canvas.getContext('2d');
-          ctx.save();
-          ctx.globalCompositeOperation = 'destination-over';
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, chart.width, chart.height);
-          ctx.restore();
-        }
-      }
-    ]
+    // plugins: [
+    //   {
+    //     id: 'background-color',
+    //     beforeDraw: (chart) => {
+    //       const ctx = chart.canvas.getContext('2d');
+    //       ctx.save();
+    //       ctx.globalCompositeOperation = 'destination-over';
+    //       ctx.fillStyle = '#ffffff';
+    //       ctx.fillRect(0, 0, chart.width, chart.height);
+    //       ctx.restore();
+    //     }
+    //   }
+    // ]
   };
 
   const image = await canvas.renderToBuffer(config);
