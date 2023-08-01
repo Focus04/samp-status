@@ -45,7 +45,7 @@ export async function getChart(data, color) {
       scales: {
         x: {
           grid: { display: false },
-          border: { width: 2 },
+          border: { width: 3 },
           title: {
             display: true,
             text: 'Date',
@@ -57,9 +57,9 @@ export async function getChart(data, color) {
           max: data.maxPlayers,
           grid: {
             borderDash: [10],
-            lineWidth: 2
+            lineWidth: 3
           },
-          border: { width: 2 },
+          border: { width: 3 },
           title: {
             display: true,
             text: 'Players',
