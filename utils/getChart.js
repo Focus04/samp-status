@@ -43,12 +43,17 @@ export async function getChart(data, color) {
           font: { size: 22 }
         },
         legend: {
-          align: 'start',
+          align: 'end',
           labels: {
             usePointStyle: true,
             boxHeight: 8,
             font: { size: 17 }
           }
+        }
+      },
+      elements: {
+        line: {
+          borderWidth: 5
         }
       },
       scales: {
