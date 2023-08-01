@@ -40,6 +40,10 @@ export async function getChart(data, color) {
           text: `Most players per day on ${data.name}`,
           padding: { bottom: 10 },
           font: { size: 20 },
+        },
+        legend: {
+          position: 'top',
+          align: 'end'
         }
       },
       scales: {
