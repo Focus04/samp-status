@@ -1,6 +1,7 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { AttachmentBuilder } from 'discord.js';
 import moment from 'moment';
+import gradient from 'chartjs-plugin-gradient';
 
 export async function getChart(data, color) {
   let players = [];
@@ -15,7 +16,7 @@ export async function getChart(data, color) {
     height: 720,
     backgroundColour: 'white',
     plugins: {
-      modern: ['chartjs-plugin-gradient'],
+      modern: [gradient],
       requireLegacy: ['chartjs-plugin-gradient']
     }
   });
