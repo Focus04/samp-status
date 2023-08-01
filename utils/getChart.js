@@ -12,8 +12,7 @@ export async function getChart(data, color) {
 
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
-    height: 720,
-    backgroundColour: 'white'
+    height: 720
   });
 
   const config = {
@@ -80,7 +79,19 @@ export async function getChart(data, color) {
         }
       },
       layout: { padding: 20 }
-    }
+    },
+    plugins: [
+      {
+        id: 'background-gradient',
+        beforeDraw: (chart) => {
+          const ctx = chart.canvas.getContext('2d');
+          ctx.save();
+          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0.5, 'transparent');
+          gradient.addColorStop(1, color.rgba);
+        }
+      }
+    ]
   };
 
   const image = await canvas.renderToBuffer(config);
