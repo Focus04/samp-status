@@ -45,7 +45,7 @@ export async function getChart(data, color) {
       scales: {
         x: {
           grid: { display: false },
-          border: { width: 3 },
+          border: { display: false },
           title: {
             display: true,
             text: 'Date',
@@ -59,7 +59,7 @@ export async function getChart(data, color) {
             borderDash: [10],
             lineWidth: 3
           },
-          border: { width: 3 },
+          border: { display: false },
           title: {
             display: true,
             text: 'Players',
