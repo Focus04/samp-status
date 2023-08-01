@@ -39,11 +39,12 @@ export default {
         if (!interval || Date.now() < interval.next) return;
         interval.next = Date.now() + interval.time;
         let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
-        if (!chartData) return;
+        if (!chartData) chartData = {};
         const info = await getPlayerCount(server);
-        if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
+        chartData.maxPlayersToday = info.playerCount;
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
+        chartData.days = [];
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const channel = await client.channels
           .fetch(interval.channel)
