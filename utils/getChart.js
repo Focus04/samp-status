@@ -45,7 +45,9 @@ export async function getChart(data, color) {
         },
         legend: {
           align: 'end',
-          usePointStyle: true
+          labels: {
+            usePointStyle: true
+          }
         }
       },
       scales: {
