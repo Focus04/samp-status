@@ -40,14 +40,13 @@ export async function getChart(data, color) {
           display: true,
           align: 'start',
           text: `Most players per day on ${data.name}`,
-          font: { size: 20 },
-          padding: { bottom: 0 }
+          font: { size: 20 }
         },
         subtitle: {
           display: true,
           align: 'start',
           text: `Showing past ${data.days.length} days data`,
-          padding: { bottom: 0 }
+          padding: { top: 10 }
         },
         legend: { align: 'end' }
       },
@@ -67,20 +66,7 @@ export async function getChart(data, color) {
         }
       },
       layout: { padding: 20 }
-    },
-    // plugins: [
-    //   {
-    //     id: 'background-color',
-    //     beforeDraw: (chart) => {
-    //       const ctx = chart.canvas.getContext('2d');
-    //       ctx.save();
-    //       ctx.globalCompositeOperation = 'destination-over';
-    //       ctx.fillStyle = '#ffffff';
-    //       ctx.fillRect(0, 0, chart.width, chart.height);
-    //       ctx.restore();
-    //     }
-    //   }
-    // ]
+    }
   };
 
   const image = await canvas.renderToBuffer(config);
