@@ -38,14 +38,11 @@ export async function getChart(data, color) {
       plugins: {
         title: {
           display: true,
+          align: 'start',
           text: `Most players per day on ${data.name}`,
-          padding: { bottom: 10 },
           font: { size: 20 },
         },
-        legend: {
-          position: 'top',
-          align: 'end'
-        }
+        legend: { align: 'end' }
       },
       scales: {
         x: {
