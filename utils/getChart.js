@@ -43,9 +43,9 @@ export async function getChart(data, color) {
           font: { size: 27 }
         },
         legend: {
-          color: color.rgb,
           align: 'end',
           labels: {
+            color: color.rgb,
             usePointStyle: true,
             boxHeight: 8,
             font: { size: 17 }
