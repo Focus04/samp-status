@@ -76,6 +76,7 @@ export default {
           ChartData.value = data.maxPlayersToday;
           ChartData.date = Date.now();
           data.maxPlayersToday = -1;
+          if (!data.days) data.days = [];
           if (ChartData.value >= 0) data.days.push(ChartData);
           if (data.days.length > 30) data.days.shift();
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
