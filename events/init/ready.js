@@ -96,6 +96,6 @@ export default {
             .catch((err) => console.log(err));
         });
       }
-    }, 60000);
+    }, 3600000);
   }
 }
