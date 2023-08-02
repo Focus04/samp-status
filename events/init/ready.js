@@ -76,9 +76,9 @@ export default {
           ChartData.value = data.maxPlayersToday;
           ChartData.date = Date.now();
           data.maxPlayersToday = -1;
-          data.days = [];
-          // if (ChartData.value >= 0) data.days.push(ChartData);
-          // if (data.days.length > 30) data.days.shift();
+          if (!data.days) data.days = [];
+          if (ChartData.value >= 0) data.days.push(ChartData);
+          if (data.days.length > 30) data.days.shift();
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
           const channel = await client.channels
             .fetch(interval.channel)
@@ -96,6 +96,6 @@ export default {
             .catch((err) => console.log(err));
         });
       }
-    }, 60000);
+    }, 3600000);
   }
 }
