@@ -43,6 +43,7 @@ export async function getChart(data, color) {
           font: { size: 27 }
         },
         legend: {
+          color: color.rgb,
           align: 'end',
           labels: {
             usePointStyle: true,
@@ -80,9 +81,6 @@ export async function getChart(data, color) {
         }
       },
       layout: { padding: 20 }
-    },
-    defaults: {
-      color: 'black'
     }
   };
 
