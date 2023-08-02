@@ -79,10 +79,10 @@ export async function getChart(data, color) {
           }
         }
       },
-      layout: { padding: 20 },
-      defaults: {
-        color: 'black'
-      }
+      layout: { padding: 20 }
+    },
+    defaults: {
+      color: 'black'
     }
   };
 
