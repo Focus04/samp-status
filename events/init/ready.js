@@ -78,6 +78,7 @@ export default {
           data.maxPlayersToday = -1;
           if (ChartData.value >= 0) data.days.push(ChartData);
           if (data.days.length > 30) data.days.shift();
+          await maxPlayers.set(`${server.ip}:${server.port}`, data);
           const channel = await client.channels
             .fetch(interval.channel)
             .catch((err) => console.log(err));
@@ -92,7 +93,6 @@ export default {
             .send({ files: [chart] })
             .then((msg) => data.msg = msg.id)
             .catch((err) => console.log(err));
-          await maxPlayers.set(`${server.ip}:${server.port}`, data);
         });
       }
     }, 3600000);

@@ -81,7 +81,7 @@ export async function getChart(data, color) {
       },
       layout: { padding: 20 },
       defaults: {
-        color: '#222222'
+        color: 'black'
       }
     }
   };
