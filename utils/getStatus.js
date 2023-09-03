@@ -50,7 +50,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (!data.players[0]) console.log(`c query required for ${server.ip}`);
+  if (!data.players[0].raw) console.log(`c query required for ${server.ip}`);
   let output;
   if (players.length === 1) output = 'None';
   else output = table(players, tableConfig);
