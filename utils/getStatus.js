@@ -80,7 +80,7 @@ export async function getPlayerCount(server) {
     type: 'samp',
     host: server.ip,
     port: server.port,
-    maxAttempts: 10
+    maxAttempts: 5
   }).catch((err) => console.log(err));
   let info;
   if (!data) {
