@@ -3,16 +3,13 @@ import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
 async function cQuery(server) {
-  const response = await fetch('https://dg-clan.com/api/players', {
-    method: 'POST',
-    body: JSON.stringify(server),
-    headers: {
-      'content-type': 'application/json; charset=UTF-8'
-    }
-  });
+  const response = await fetch(`https://dg-clan.com/api/players/${server.ip}:${server.port}`);
   const data = await response.json();
-  console.log('Sent post request!')
-  return data;
+  let players = [['Name', 'Score']];
+  data.forEach((player) => {
+    players.push([player.Nickname, player.Score]);
+  });
+  return { data, players };
 }
 
 async function dQuery(server) {
@@ -22,7 +19,11 @@ async function dQuery(server) {
     port: server.port,
     maxAttempts: 5
   }).catch((err) => console.log(err));
-  return data;
+  let players = [['ID', 'Name', 'Score', 'Ping']];
+  data.players.forEach((player) => {
+    players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
+  });
+  return { data, players };
 }
 
 const tableConfig = {
@@ -37,7 +38,7 @@ const tableConfig = {
 };
 
 export async function getStatus(server, color) {
-  let data = await dQuery(server);
+  let { data, players } = await dQuery(server);
   if (!data) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
@@ -47,15 +48,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  // if (server.ip === '51.178.185.229') {
-  //   const cData = await cQuery(server);
-  // }
-
-  let players = [['ID', 'Name', 'Score', 'Ping']];
-  data.players.forEach((player) => {
-    players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
-  });
-
+  if (!data.players[0]) console.log(`c query required for ${server.ip}`);
   let output;
   if (players.length === 0) output = 'None';
   else output = table(players, tableConfig);
