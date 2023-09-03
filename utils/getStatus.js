@@ -6,7 +6,7 @@ async function cQuery(server) {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   const data = await response.json().catch((err) => console.log(`Error at ${server.ip}:${server.port}`));
   let players = [['Name', 'Score']];
-  if (data[0]) {
+  if (data && data[0]) {
     data.forEach((player) => {
       players.push([player.nickname, player.score]);
     });
