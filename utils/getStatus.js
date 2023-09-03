@@ -9,7 +9,7 @@ async function cQuery(server) {
   data.forEach((player) => {
     players.push([player.Nickname, player.Score]);
   });
-  return { data, players };
+  return players;
 }
 
 async function dQuery(server) {
@@ -50,7 +50,7 @@ export async function getStatus(server, color) {
 
   if (!data.players[0]) console.log(`c query required for ${server.ip}`);
   let output;
-  if (players.length === 0) output = 'None';
+  if (players.length === 1) output = 'None';
   else output = table(players, tableConfig);
 
   let serverEmbed = new EmbedBuilder()
