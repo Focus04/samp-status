@@ -52,7 +52,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data.players[0] && !data.players[0].name) players = await cQuery(server); // check if server is OMP
+  // if (data.players[0] && !data.players[0].name) players = await cQuery(server); // check if server is OMP
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
