@@ -6,9 +6,11 @@ async function cQuery(server) {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   const data = await response.json();
   let players = [['Name', 'Score']];
-  data.forEach((player) => {
-    players.push([player.nickname, player.score]);
-  });
+  if (data[0]) {
+    data.forEach((player) => {
+      players.push([player.nickname, player.score]);
+    });
+  }
   return players;
 }
 
@@ -49,7 +51,7 @@ export async function getStatus(server, color) {
       .setTimestamp();
     return errEmbed;
   }
-  
+
   if (data.players[0] && !data.players[0].name) players = await cQuery(server); // check if server is OMP
   let output;
   if (players.length === 1) output = 'None';
