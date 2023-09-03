@@ -2,14 +2,42 @@ import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
-export async function getStatus(server, color) {
+async function cQuery(server) {
+  const response = await fetch('https://dg-clan.com/api/players', {
+    method: 'POST',
+    body: JSON.stringify(server),
+    headers: {
+      'content-type': 'application/json; charset=UTF-8'
+    }
+  });
+  const data = await response.json();
+  console.log('Sent post request!')
+  return data;
+}
+
+async function dQuery(server) {
   const data = await gamedig.query({
     type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 5
   }).catch((err) => console.log(err));
+  return data;
+}
 
+const tableConfig = {
+  border: getBorderCharacters(`void`),
+  columnDefault: {
+    paddingLeft: 0,
+    paddingRight: 1
+  },
+  drawHorizontalLine: () => {
+    return false;
+  }
+};
+
+export async function getStatus(server, color) {
+  let data = await dQuery(server);
   if (!data) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
@@ -19,17 +47,6 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  const config = {
-    border: getBorderCharacters(`void`),
-    columnDefault: {
-      paddingLeft: 0,
-      paddingRight: 1
-    },
-    drawHorizontalLine: () => {
-      return false;
-    }
-  };
-
   let players = [['ID', 'Name', 'Score', 'Ping']];
   data.players.forEach((player) => {
     players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
@@ -37,7 +54,7 @@ export async function getStatus(server, color) {
 
   let output;
   if (players.length === 0) output = 'None';
-  else output = table(players, config);
+  else output = table(players, tableConfig);
 
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)

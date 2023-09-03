@@ -12,7 +12,7 @@
   "author": "Focus#7804",
   "license": "ISC",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "type": "module",
   "dependencies": {
