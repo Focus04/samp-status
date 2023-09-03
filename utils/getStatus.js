@@ -20,9 +20,11 @@ async function dQuery(server) {
     maxAttempts: 5
   }).catch((err) => console.log(err));
   let players = [['ID', 'Name', 'Score', 'Ping']];
-  data.players.forEach((player) => {
-    players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
-  });
+  if (data.players && data.players.length) {
+    data.players.forEach((player) => {
+      players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
+    });
+  }
   return { data, players };
 }
 
