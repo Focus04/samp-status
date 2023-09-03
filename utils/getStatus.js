@@ -3,11 +3,11 @@ import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
 
 async function cQuery(server) {
-  const response = await fetch(`https://dg-clan.com/api/players/${server.ip}:${server.port}`);
+  const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   const data = await response.json();
   let players = [['Name', 'Score']];
   data.forEach((player) => {
-    players.push([player.Nickname, player.Score]);
+    players.push([player.nickname, player.score]);
   });
   return players;
 }
@@ -41,7 +41,7 @@ const tableConfig = {
 
 export async function getStatus(server, color) {
   let { data, players } = await dQuery(server);
-  if (!data) {
+  if (!data) { // check if server is offline
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
@@ -50,8 +50,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
   
-  if (server.ip === '51.178.185.229') console.log(data.players)
-  if (data.players[0] && !data.players[0].raw) console.log(`c query required for ${server.ip}`);
+  if (data.players[0] && !data.players[0].name) players = await cQuery(server); // check if server is OMP
   let output;
   if (players.length === 1) output = 'None';
   else output = table(players, tableConfig);
