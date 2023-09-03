@@ -49,7 +49,8 @@ export async function getStatus(server, color) {
       .setTimestamp();
     return errEmbed;
   }
-
+  
+  if (server.ip === '51.178.185.229') console.log(data.players)
   if (data.players[0] && !data.players[0].raw) console.log(`c query required for ${server.ip}`);
   let output;
   if (players.length === 1) output = 'None';
