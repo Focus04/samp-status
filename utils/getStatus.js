@@ -4,7 +4,7 @@ import gamedig from 'gamedig';
 
 async function cQuery(server) {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
-  const data = await response.json().catch((err) => console.log(`Error at ${server.ip}:${server.port}`));
+  const data = await response.json();
   let players = [['Name', 'Score']];
   if (data && data[0]) {
     data.forEach((player) => {
@@ -43,7 +43,7 @@ const tableConfig = {
 
 export async function getStatus(server, color) {
   let { data, players } = await dQuery(server);
-  if (!data) { // check if server is offline
+  if (!data) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
@@ -52,7 +52,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data.players[0] && !data.players[0].name) players = await cQuery(server); // check if server is OMP
+  if (data.players[0] && !data.players[0].name) players = await cQuery(server);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)

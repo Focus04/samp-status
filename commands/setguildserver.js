@@ -25,7 +25,8 @@ export default {
       await gamedig.query({
         type: 'samp',
         host: args[0],
-        port: args[1]
+        port: args[1],
+        maxAttempts: 5
       });
     } catch {
       return await interaction.editReply({ content: `Couldn't find ${args[0]}:${args[1]}`, ephemeral: true });
