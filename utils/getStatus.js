@@ -47,9 +47,9 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (server.ip === '51.178.185.229') {
-    const cData = await cQuery(server);
-  }
+  // if (server.ip === '51.178.185.229') {
+  //   const cData = await cQuery(server);
+  // }
 
   let players = [['ID', 'Name', 'Score', 'Ping']];
   data.players.forEach((player) => {
