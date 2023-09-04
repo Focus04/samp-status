@@ -4,7 +4,7 @@ import gamedig from 'gamedig';
 
 async function cQuery(server) {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
-  const data = await response.json().catch((err) => console.log(`Error at ${server.ip}:${server.port}`));
+  const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   let players = [['Name', 'Score']];
   if (data && data[0]) {
     data.forEach((player) => {
@@ -20,7 +20,7 @@ async function dQuery(server) {
     host: server.ip,
     port: server.port,
     maxAttempts: 5
-  }).catch((err) => console.log(err));
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)!`));
   let players = [['ID', 'Name', 'Score', 'Ping']];
   if (data && data.players && data.players[0]) {
     data.players.forEach((player) => {
@@ -81,7 +81,7 @@ export async function getPlayerCount(server) {
     host: server.ip,
     port: server.port,
     maxAttempts: 5
-  }).catch((err) => console.log(err));
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)`));
   let info;
   if (!data) {
     info = {

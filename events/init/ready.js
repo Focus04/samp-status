@@ -17,7 +17,7 @@ export default {
     client.user.setActivity('SA:MP');
 
     client.guilds.cache.forEach((guild) => {
-      client.application.commands.set(commands, guild.id).catch((err) => console.log(err));
+      client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));
     });
 
     client.guildConfigs = new Collection();
@@ -47,18 +47,18 @@ export default {
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
         const channel = await client.channels
           .fetch(interval.channel)
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
         if (!channel) return;
         const color = getRoleColor(guild);
         const serverEmbed = await getStatus(server, color);
         channel.messages
           .fetch(interval.message)
           .then((oldMsg) => oldMsg.delete())
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(`Error: Could not delete message ${interval.message} in channel ${interval.channel} in guild ${guild.id}!`));
         channel
           .send({ embeds: [serverEmbed] })
           .then((msg) => interval.message = msg.id)
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
         await intervals.set(guild.id, interval);
       });
     }, 60000);
@@ -82,18 +82,18 @@ export default {
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
           const channel = await client.channels
             .fetch(interval.channel)
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
           if (!channel) return;
           const color = getRoleColor(guild);
           const chart = await getChart(data, color);
           channel.messages
             .fetch(data.msg)
             .then((oldMsg) => oldMsg.delete())
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(`Error: Could not delete message ${interval.message} in channel ${interval.channel} in guild ${guild.id}!`));
           channel
             .send({ files: [chart] })
             .then((msg) => data.msg = msg.id)
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
         });
       }
     }, 3600000);
