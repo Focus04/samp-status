@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { botInviteLink, discordInviteLink, topgg, githubRepo } from '../config.json';
+import { botInviteLink, discordInviteLink, topgg, githubRepo } from '../config.js';
 import { getRoleColor } from '../utils/getRoleColor.js';
 
 export default {
