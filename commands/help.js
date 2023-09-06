@@ -1,6 +1,5 @@
-import { readdirSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { botInviteLink, discordInviteLink, topgg, githubRepo } from '../config.json' with { type: 'json' };
 import { getRoleColor } from '../utils/getRoleColor.js';
 
 export default {
@@ -10,6 +9,7 @@ export default {
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
     let cmds = '';
+    const { botInviteLink, discordInviteLink, topgg, githubRepo } = JSON.parse(readFileSync('../config.json'));
     readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
