@@ -1,3 +1,4 @@
+import { readdirSync } from 'fs';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { getRoleColor } from '../utils/getRoleColor.js';
 
