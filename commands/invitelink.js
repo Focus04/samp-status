@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { botInviteLink } from '../config.js';
+import { botInviteLink } from '../config.json' assert { type: 'json' };
 
 export default {
   data: new SlashCommandBuilder()
