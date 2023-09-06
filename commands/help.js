@@ -1,6 +1,7 @@
 import { readdirSync } from 'fs';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { getRoleColor } from '../utils/getRoleColor.js';
+import config from '../config.json' assert { type: 'json' };
 
 export default {
   data: new SlashCommandBuilder()
@@ -8,11 +9,8 @@ export default {
     .setDescription('Displays a list of all available commands along with their usage.'),
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
-    const botInviteLink = 'https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands';
-    const discordInviteLink = 'https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands';
-    const topgg = 'https://top.gg/bot/786612528951197726';
-    const githubRepo = 'https://github.com/Focus04/samp-status';
     let cmds = '';
+    const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
     readdirSync('./commands').forEach((file) => cmds += `/${file.split('.')[0]} `);
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
