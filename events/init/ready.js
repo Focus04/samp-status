@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
-import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
+import { getStatus, getPlayerCount, getState } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import index from '../../index.js';
 const commands = index;
@@ -8,6 +8,7 @@ import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const servers = new Keyv(process.env.servers);
 const maxPlayers = new Keyv(process.env.maxPlayers);
+const uptimes = new Keyv(process.env.uptime);
 
 export default {
   name: 'ready',
@@ -38,6 +39,17 @@ export default {
         const { interval = 0, server = 0 } = guildConfigs;
         if (!interval || Date.now() < interval.next) return;
         interval.next = Date.now() + interval.time;
+        let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
+        if (!onlineStats) {
+          onlineStats = {
+            uptime: 0,
+            downtime: 0
+          }
+        }
+        let state = await getState(server);
+        if (!state) onlineStats.downtime++;
+        else onlineStats.uptime++;
+        await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
         let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         if (!chartData) return;
         const info = await getPlayerCount(server);

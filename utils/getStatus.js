@@ -53,8 +53,6 @@ export async function getStatus(server, color) {
   }
   let { data, players } = await dQuery(server);
   if (!data) {
-    onlineStats.downtime++;
-    await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
@@ -65,9 +63,9 @@ export async function getStatus(server, color) {
 
   if (data.players[0] && !data.players[0].name) players = await cQuery(server);
   let output = table(players, tableConfig);
-  onlineStats.uptime++;
-  await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
-  const percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
+  let percent;
+  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) percent = 100;
+  else percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
@@ -112,4 +110,15 @@ export async function getPlayerCount(server) {
     }
   }
   return info;
+}
+
+export async function getState(server) {
+  const data = await gamedig.query({
+    type: 'samp',
+    host: server.ip,
+    port: server.port,
+    maxAttempts: 5
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)`));
+  if (!data) return 0;
+  return 1;
 }
