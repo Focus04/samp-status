@@ -48,8 +48,8 @@ export default {
         if (!state) onlineStats.downtime++;
         else onlineStats.uptime++;
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
-        interval.next = Date.now() + interval.time;
         if (!interval || Date.now() < interval.next) return;
+        interval.next = Date.now() + interval.time;
         let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         if (!chartData) return;
         const info = await getPlayerCount(server);
