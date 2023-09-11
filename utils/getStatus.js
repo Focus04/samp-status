@@ -21,8 +21,8 @@ let dQuery = async (server) => {
     type: 'samp',
     host: server.ip,
     port: server.port,
-    maxAttempts: 5
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)!`));
+    maxAttempts: 3
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)!`));
   let players = [['ID', 'Name', 'Score', 'Ping']];
   if (data && data.players && data.players[0]) {
     data.players.forEach((player) => {
@@ -56,7 +56,7 @@ export async function getStatus(server, color) {
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
-      .setDescription(`${server.ip}:${server.port} did not respond after 5 attempts.`)
+      .setDescription(`${server.ip}:${server.port} did not respond after 3 attempts.`)
       .setTimestamp();
     return errEmbed;
   }
@@ -92,8 +92,8 @@ export async function getPlayerCount(server) {
     type: 'samp',
     host: server.ip,
     port: server.port,
-    maxAttempts: 5
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)`));
+    maxAttempts: 3
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
   let info;
   if (!data) {
     info = {
@@ -117,8 +117,8 @@ export async function getState(server) {
     type: 'samp',
     host: server.ip,
     port: server.port,
-    maxAttempts: 5
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (5 attempts)`));
+    maxAttempts: 3
+  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
   if (!data) return 0;
   return 1;
 }
