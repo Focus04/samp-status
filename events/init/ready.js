@@ -36,8 +36,7 @@ export default {
       client.guilds.cache.forEach(async (guild) => {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
-        const { interval = 0, server = 0 } = guildConfigs;
-        interval.next = Date.now() + interval.time;
+        const { interval = {}, server = {} } = guildConfigs;
         let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
         if (!onlineStats) {
           onlineStats = {
@@ -49,6 +48,7 @@ export default {
         if (!state) onlineStats.downtime++;
         else onlineStats.uptime++;
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
+        interval.next = Date.now() + interval.time;
         if (!interval || Date.now() < interval.next) return;
         let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         if (!chartData) return;
