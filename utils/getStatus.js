@@ -4,7 +4,7 @@ import gamedig from 'gamedig';
 import Keyv from 'keyv';
 const uptimes = new Keyv(process.env.uptime);
 
-cQuery = async (server) => {
+let cQuery = async (server) => {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   let players = [['Name', 'Score']];
@@ -16,7 +16,7 @@ cQuery = async (server) => {
   return players;
 }
 
-dQuery = async (server) => {
+let dQuery = async (server) => {
   const data = await gamedig.query({
     type: 'samp',
     host: server.ip,
@@ -30,11 +30,6 @@ dQuery = async (server) => {
     });
   }
   return { data, players };
-}
-
-getUptimePercent = (uptime, downtime) => {
-  let totalTime = uptime + downtime;
-  return 
 }
 
 const tableConfig = {
