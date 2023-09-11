@@ -1,8 +1,10 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
+import Keyv from 'keyv';
+const uptimes = new Keyv(process.env.uptime);
 
-async function cQuery(server) {
+cQuery = async (server) => {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   let players = [['Name', 'Score']];
@@ -14,7 +16,7 @@ async function cQuery(server) {
   return players;
 }
 
-async function dQuery(server) {
+dQuery = async (server) => {
   const data = await gamedig.query({
     type: 'samp',
     host: server.ip,
@@ -30,6 +32,11 @@ async function dQuery(server) {
   return { data, players };
 }
 
+getUptimePercent = (uptime, downtime) => {
+  let totalTime = uptime + downtime;
+  return 
+}
+
 const tableConfig = {
   border: getBorderCharacters(`void`),
   columnDefault: {
@@ -42,8 +49,17 @@ const tableConfig = {
 };
 
 export async function getStatus(server, color) {
+  let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
+  if (!onlineStats) {
+    onlineStats = {
+      uptime: 0,
+      downtime: 0
+    }
+  }
   let { data, players } = await dQuery(server);
   if (!data) {
+    onlineStats.downtime++;
+    await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
     const errEmbed = new EmbedBuilder()
       .setColor('ff0000')
       .setTitle('Error')
@@ -54,6 +70,9 @@ export async function getStatus(server, color) {
 
   if (data.players[0] && !data.players[0].name) players = await cQuery(server);
   let output = table(players, tableConfig);
+  onlineStats.uptime++;
+  await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
+  const percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
@@ -61,7 +80,7 @@ export async function getStatus(server, color) {
     .addFields(
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
       { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
-      { name: 'Time', value: `${data.raw.rules.worldtime}`, inline: true },
+      { name: 'Uptime', value: `${percent.toFixed(2)}%`, inline: true },
       { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
       { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
