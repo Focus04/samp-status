@@ -63,9 +63,12 @@ export async function getStatus(server, color) {
 
   if (data.players[0] && !data.players[0].name) players = await cQuery(server);
   let output = table(players, tableConfig);
-  let percent;
-  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) percent = 100;
-  else percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
+  let uptimeText;
+  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) uptimeText = 'N/A';
+  else {
+    let percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
+    uptimeText = `${percent.toFixed(2)}%`;
+  }
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
@@ -73,7 +76,7 @@ export async function getStatus(server, color) {
     .addFields(
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
       { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
-      { name: 'Uptime', value: `${percent.toFixed(2)}%`, inline: true },
+      { name: 'Uptime', value: `${uptimeText}`, inline: true },
       { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
       { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
