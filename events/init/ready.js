@@ -59,7 +59,7 @@ export default {
         if (!channel) return;
         const color = getRoleColor(guild);
         const serverEmbed = await getStatus(server, color);
-        if (!serverEmbed.fields) onlineStats.downtime++;
+        if (!serverEmbed.data.fields) onlineStats.downtime++;
         else onlineStats.uptime++;
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
         channel.messages
