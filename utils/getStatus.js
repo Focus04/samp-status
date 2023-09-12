@@ -58,7 +58,6 @@ export async function getStatus(server, color) {
       .setTitle('Error')
       .setDescription(`${server.ip}:${server.port} did not respond after 3 attempts.`)
       .setTimestamp();
-    console.log(errEmbed.fields);
     return errEmbed;
   }
 
