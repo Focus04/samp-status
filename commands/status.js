@@ -15,7 +15,7 @@ export default {
 
     const color = getRoleColor(interaction.guild);
     const serverEmbed = await getStatus(server, color);
-    console.log(serverEmbed.title);
+    console.log(serverEmbed);
     await interaction.editReply({ embeds: [serverEmbed] });
   }
 }
