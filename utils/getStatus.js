@@ -58,6 +58,7 @@ export async function getStatus(server, color) {
       .setTitle('Error')
       .setDescription(`${server.ip}:${server.port} did not respond after 3 attempts.`)
       .setTimestamp();
+    console.log(errEmbed.fields);
     return errEmbed;
   }
 
@@ -110,15 +111,4 @@ export async function getPlayerCount(server) {
     }
   }
   return info;
-}
-
-export async function getState(server) {
-  const data = await gamedig.query({
-    type: 'samp',
-    host: server.ip,
-    port: server.port,
-    maxAttempts: 3
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
-  if (!data) return 0;
-  return 1;
 }

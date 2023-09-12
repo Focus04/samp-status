@@ -13,22 +13,12 @@ export default {
       .setDescription('Tag the channel you want status updates to be sent in.')
       .setRequired(true)
     )
-    .addIntegerOption((option) => option
-      .setName('minutes')
-      .setDescription('The interval updates will be sent at (at least 3).')
-      .setRequired(true)
-    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
     await interaction.deferReply();
     const channel = interaction.options.getChannel('channel-name');
     if (channel.type !== ChannelType.GuildText) {
       return interaction.editReply({ content: `Invalid channel.`, ephemeral: true });
-    }
-    
-    const minutes = interaction.options.getInteger('minutes');
-    if (minutes < 3) {
-      return interaction.editReply({ content: `Minutes can't be lower than 3.`, ephemeral: true });
     }
 
     const server = await servers.get(interaction.guildId);
@@ -38,7 +28,6 @@ export default {
 
     let interval = {
       channel: channel.id,
-      time: minutes * 60000,
       next: Date.now(),
       message: 0
     };
