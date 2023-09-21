@@ -1,8 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
-import Keyv from 'keyv';
-const uptimes = new Keyv(process.env.uptime);
+import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
   const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
@@ -44,13 +43,6 @@ const tableConfig = {
 };
 
 export async function getStatus(server, color) {
-  let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
-  if (!onlineStats) {
-    onlineStats = {
-      uptime: 0,
-      downtime: 0
-    }
-  }
   let { data, players } = await dQuery(server);
   if (!data) {
     const errEmbed = new EmbedBuilder()
@@ -62,13 +54,8 @@ export async function getStatus(server, color) {
   }
 
   if (data.players[0] && !data.players[0].name) players = await cQuery(server);
+  const uptime = await getUptime(server);
   let output = table(players, tableConfig);
-  let uptimeText;
-  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) uptimeText = 'N/A';
-  else {
-    let percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
-    uptimeText = `${percent.toFixed(2)}%`;
-  }
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
@@ -76,7 +63,7 @@ export async function getStatus(server, color) {
     .addFields(
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
       { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
-      { name: 'Uptime', value: `${uptimeText}`, inline: true },
+      { name: 'Uptime', value: `${uptime.text}`, inline: true },
       { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
       { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
