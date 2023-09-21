@@ -15,11 +15,12 @@ export default {
     }
 
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
+    
     const uptime = await getUptime(server);
     const uptimeEmbed = new EmbedBuilder()
       .setColor(uptime.color)
-      .setTitle(`${uptime.emoji} ${server.ip}:${server.port} Uptime Percentage`)
-      .setDescription(uptime.text)
+      .setTitle(`${server.ip}:${server.port} - Uptime Percentage`)
+      .setDescription(`${uptime.emoji} ${uptime.text}`)
       .setTimestamp();
     interaction.editReply({ embeds: [uptimeEmbed] }); 
   }
