@@ -11,6 +11,7 @@
 - `/status` Tells you live information about your favourite SA-MP community!
 - `/stats` Tells you how many players are online across all servers.
 - `/botinfo` Checks how many servers the bot is in.
+- `/uptime` Sends the server's uptime percent.
 ## Reviews
 > Great bot, been using this bot for the multiple servers I’ve had upon the years and so have others, extremely helpful 10/10.
 ## Official Invite Link
