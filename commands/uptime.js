@@ -21,6 +21,6 @@ export default {
       .setTitle(`${uptime.emoji} ${server.ip}:${server.port} Uptime Percentage`)
       .setDescription(uptime.text)
       .setTimestamp();
-    interaction.editReply({ embeds: [uptimeEmbed] });
+    interaction.editReply({ embeds: [uptimeEmbed] }); 
   }
 }
