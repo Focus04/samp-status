@@ -22,20 +22,20 @@ export async function getUptime(server) {
     uptime.text = `${percent.toFixed(2)}%`;
   }
 
-  switch (percent) {
-    case (percent >= 99):
+  switch (true) {
+    case percent >= 99:
       uptime.color = '#339933';
       uptime.emoji = ':green_circle:';
       break;
-    case (percent >= 96 && percent < 99):
+    case percent >= 96 && percent < 99:
       uptime.color = '#ffff00';
       uptime.emoji = ':yellow_circle:';
       break;
-    case (percent >= 90 && percent < 95):
+    case percent >= 90 && percent < 95:
       uptime.color = '#ff9900';
       uptime.emoji = ':brown_circle:';
       break;
-    case (percent < 90):
+    case percent < 90:
       uptime.color = '#ff0000';
       uptime.emoji = ':red_circle:';
       break;
