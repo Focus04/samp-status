@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getUptime } from '../utils/getUptime.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
@@ -16,6 +16,11 @@ export default {
 
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);
     const uptime = await getUptime(server);
-    console.log(uptime);
+    const uptimeEmbed = new EmbedBuilder()
+      .setColor(uptime.color)
+      .setTitle(`${uptime.emoji} ${server.ip}:${server.port} Uptime Percentage`)
+      .setDescription(uptime.text)
+      .setTimestamp();
+    interaction.editReply({ embeds: [uptimeEmbed] });
   }
 }
