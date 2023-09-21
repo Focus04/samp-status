@@ -63,7 +63,7 @@ export async function getStatus(server, color) {
     .addFields(
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
       { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
-      { name: 'Uptime', value: `${uptime.text}`, inline: true },
+      { name: 'Uptime', value: `${`${uptime.emoji} ${uptime.text}`}`, inline: true },
       { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
       { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
