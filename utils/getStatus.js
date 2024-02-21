@@ -1,21 +1,22 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
+import cquery from 'node-samp-query';
 import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
   // const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   // const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
-  const data = await gamedig.query({
-    type: 'saomp',
-    host: server.ip,
-    port: server.port,
-    maxAttempts: 3
-  }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  const query = new cquery({
+    ip: `51.178.185.229`,
+    port: 7777
+  });
+  const data = await query.getServerInfo().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  console.log(data[2])
   let players = [['Name', 'Score']];
-  if (data && data.players && data.players[0]) {
-    data.players.forEach((player) => {
-      players.push([player.name, player.raw.score]);
+  if (data && data[2][0] && data[2][0].name) {
+    data[2].forEach((player) => {
+      players.push([player.name, player.score]);
     });
   }
   return players;
