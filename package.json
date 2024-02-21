@@ -23,7 +23,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "fontconfig": "^0.5.0",
-    "gamedig": "^5.0.0-beta.2",
+    "gamedig": "^4.3.1",
     "keyv": "^4.5.4",
     "moment": "^2.30.1",
     "table": "^6.8.1"
