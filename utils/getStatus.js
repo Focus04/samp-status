@@ -12,8 +12,6 @@ let cQuery = async (server) => {
     port: server.port,
     maxAttempts: 3
   }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
-  console.log(data.players[0].name)
-  console.log(data.players[0].raw)
   let players = [['Name', 'Score']];
   if (data && data.players && data.players[0]) {
     data.players.forEach((player) => {
@@ -61,7 +59,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data.players[0] && !data.players[0].name) players = await cQuery(server);
+  if (data && data.players[0] && !data.players[0].name) players = await cQuery(server);
   const uptime = await getUptime(server);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
