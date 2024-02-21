@@ -12,12 +12,10 @@ let cQuery = async (server) => {
     port: server.port,
     maxAttempts: 3
   }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
-  console.log('//DATA//');
-  console.log(data);
   let players = [['Name', 'Score']];
-  if (data && data[0]) {
-    data.forEach((player) => {
-      players.push([player.nickname, player.score]);
+  if (data && data.players && data.players[0]) {
+    data.players.forEach((player) => {
+      players.push([player.name, player.raw.score]);
     });
   }
   return players;
