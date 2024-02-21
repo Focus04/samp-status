@@ -11,7 +11,7 @@ let cQuery = async (server) => {
     ip: server.ip,
     port: server.port
   });
-  const data = await query.getServerInfo().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  const data = await query.getServerPlayers().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
   console.log(data)
   let players = [['Name', 'Score']];
   if (data && data[2][0] && data[2][0].name) {
