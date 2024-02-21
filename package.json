@@ -17,7 +17,7 @@
   "type": "module",
   "dependencies": {
     "@keyv/mongo": "^2.2.8",
-    "chart.js": "^4.4.1",
+    "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "chartjs-plugin-gradient": "^0.6.1",
     "discord.js": "^14.14.1",
