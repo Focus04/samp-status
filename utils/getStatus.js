@@ -53,7 +53,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data.players[0] && !data.players[0].name) players = await cQuery(server);
+  if (data.players[0] && !data.players[0].name) players = [['ID', 'Name', 'Score', 'Ping']]; //await cQuery(server);
   const uptime = await getUptime(server);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
