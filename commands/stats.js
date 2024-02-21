@@ -11,7 +11,7 @@ export default {
     const servers = await serversResponse.json();
     const infoEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setTitle(':green_circle:SAMP Live Stats')
+      .setTitle(':green_circle: SAMP Live Stats')
       .addFields(
         {
           name: 'Online (Populated) Servers Count',
