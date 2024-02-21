@@ -8,11 +8,11 @@ let cQuery = async (server) => {
   // const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   // const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   const query = new cquery({
-    ip: `51.178.185.229`,
-    port: 7777
+    ip: server.ip,
+    port: server.port
   });
   const data = await query.getServerInfo().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
-  console.log(data[2])
+  console.log(data)
   let players = [['Name', 'Score']];
   if (data && data[2][0] && data[2][0].name) {
     data[2].forEach((player) => {
