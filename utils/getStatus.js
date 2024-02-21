@@ -4,8 +4,16 @@ import gamedig from 'gamedig';
 import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
-  const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
-  const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
+  // const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
+  // const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
+  const data = await gamedig.query({
+    type: 'vcmp',
+    host: server.ip,
+    port: server.port,
+    maxAttempts: 3
+  }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  console.log('//DATA//');
+  console.log(data);
   let players = [['Name', 'Score']];
   if (data && data[0]) {
     data.forEach((player) => {
@@ -53,7 +61,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data.players[0] && !data.players[0].name) players = [['ID', 'Name', 'Score', 'Ping']]; // await cQuery(server);
+  if (data.players[0] && !data.players[0].name) players = await cQuery(server);
   const uptime = await getUptime(server);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
