@@ -5,8 +5,6 @@ import cquery from 'node-samp-query';
 import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
-  // const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
-  // const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   const query = new cquery({
     ip: server.ip,
     port: server.port
