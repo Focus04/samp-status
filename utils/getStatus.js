@@ -7,7 +7,7 @@ let cQuery = async (server) => {
   // const response = await fetch(`https://dg-clan.com/api/players/?ip=${server.ip}:${server.port}`);
   // const data = await response.json().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (1 attempt)!`));
   const data = await gamedig.query({
-    type: 'vcmp',
+    type: 'gtasao',
     host: server.ip,
     port: server.port,
     maxAttempts: 3
@@ -25,7 +25,7 @@ let cQuery = async (server) => {
 
 let dQuery = async (server) => {
   const data = await gamedig.query({
-    type: 'samp',
+    type: 'gtasam',
     host: server.ip,
     port: server.port,
     maxAttempts: 3
