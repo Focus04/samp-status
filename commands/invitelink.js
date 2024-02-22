@@ -6,7 +6,7 @@ export default {
     .setName('invitelink')
     .setDescription('Sends the invite link for the bot.'),
   execute: (interaction) => {
-    const { botInviteLink } = config;
-    interaction.reply({ content: botInviteLink, ephemeral: true });
+    const { botInviteLink, discordInviteLink } = config;
+    interaction.reply({ content: `Bot invite: ${botInviteLink}\nDiscord invite: ${discordInviteLink}`, ephemeral: true });
   }
 }
