@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { bugChId, discordInviteLink } from '../config.json';
+import config from '../config.json';
 
 export default {
   data: new SlashCommandBuilder()
@@ -11,6 +11,7 @@ export default {
       .setRequired(true)
     ),
   async execute(interaction) {
+    const { bugChId, discordInviteLink } = config;
     const author = interaction.member.user.tag;
     let bug = interaction.options.getString('bug');
     await interaction.client.channels.cache
