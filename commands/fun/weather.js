@@ -2,7 +2,7 @@ import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
 import fetch from 'node-fetch';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('weather')
     .setDescription(`Tells you information about the weather in a given location.`)
