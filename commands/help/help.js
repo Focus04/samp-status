@@ -10,9 +10,9 @@ export default {
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
     let funCmds, helpCmds, sampCmds;
-    fs.readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
-    fs.readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
-    fs.readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
+    readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
+    readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
+    readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
     const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
