@@ -9,7 +9,7 @@ export default {
     .setDescription('Displays a list of all available commands along with their usage.'),
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
-    let funCmds, helpCmds, sampCmds;
+    let funCmds = '', helpCmds = '', sampCmds = '';
     readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
     readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
     readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
@@ -18,7 +18,7 @@ export default {
       .setColor(color.hex)
       .addFields(
         {
-          name: `🎮 SAMP Server Commands`,
+          name: `🎮 SAMP Commands`,
           value: `${'```' + sampCmds + '```'}`, inline: true
         },
         {
