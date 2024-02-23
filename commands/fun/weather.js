@@ -1,4 +1,4 @@
-import { MessageEmbed, SlashCommandBuilder } from 'discord.js'
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
 import fetch from 'node-fetch';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
@@ -78,7 +78,7 @@ module.exports = {
     }
 
     let color = getRoleColor(interaction.guild);
-    const weatherEmbed = new MessageEmbed()
+    const weatherEmbed = new EmbedBuilder()
       .setColor(color)
       .setTitle(`Weather in ${data.name}, ${data.sys.country}`)
       .addFields(
