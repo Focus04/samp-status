@@ -10,12 +10,13 @@ export default {
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
     let funCmds = '', helpCmds = '', sampCmds = '';
-    readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
-    readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
-    readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))} `);
+    readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
+    readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
+    readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
     const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
+      .setTitle('Slash Commands')
       .addFields(
         {
           name: `🎮 SAMP Commands`,
@@ -37,16 +38,8 @@ export default {
         .setURL(botInviteLink)
         .setStyle(ButtonStyle.Link),
       new ButtonBuilder()
-        .setLabel('Support')
+        .setLabel('Support Server')
         .setURL(discordInviteLink)
-        .setStyle(ButtonStyle.Link),
-      new ButtonBuilder()
-        .setLabel('Vote!')
-        .setURL(topgg)
-        .setStyle(ButtonStyle.Link),
-      new ButtonBuilder()
-        .setLabel('Code')
-        .setURL(githubRepo)
         .setStyle(ButtonStyle.Link)
     );
     await interaction.reply({ embeds: [helpEmbed], components: [links] });
