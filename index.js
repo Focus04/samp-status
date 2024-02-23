@@ -7,12 +7,12 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 let commands = [];
 client.commands = new Collection();
-readdir('./commands', (err, files) => {
-  files.forEach(async (file) => {
-    const command = await import(`./commands/${file}`);
-    client.commands.set(command.default.data.name, command.default);
-    if (command.default.data.name !== 'help') commands.push(command.default.data.toJSON());
-  })
+readdir('./commands').forEach(folder => {
+  readdir(`./commands/${folder}`).forEach(file => {
+    const command = require(`./commands/${folder}/${file}`);
+    client.commands.set(command.data.name, command);
+    if (command.data.name !== 'help') commands.push(command.data.toJSON());
+  });
 });
 
 readdir('./events', (err, folders) => {
