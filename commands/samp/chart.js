@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { getChart } from '../utils/getChart.js';
-import { getRoleColor } from '../utils/getRoleColor.js';
+import { getChart } from '../../utils/getChart.js';
+import { getRoleColor } from '../../utils/getRoleColor.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 const maxPlayers = new Keyv(process.env.maxPlayers);

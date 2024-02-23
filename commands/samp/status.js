@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { getStatus } from '../utils/getStatus.js';
-import { getRoleColor } from '../utils/getRoleColor.js';
+import { getStatus } from '../../utils/getStatus.js';
+import { getRoleColor } from '../../utils/getRoleColor.js';
 
 export default {
   data: new SlashCommandBuilder()

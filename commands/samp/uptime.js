@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { getUptime } from '../utils/getUptime.js';
+import { getUptime } from '../../utils/getUptime.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.intervals);
 
