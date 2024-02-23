@@ -80,14 +80,13 @@ export default {
     let color = getRoleColor(interaction.guild);
     const weatherEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setTitle(`Weather in ${data.name}, ${data.sys.country}`)
+      .setTitle(`${Math.floor(data.main.temp)} in ${data.name}, ${data.sys.country}`)
       .addFields(
-        { name: 'Temperature', value: `${Math.floor(data.main.temp)} °C`, inline: true },
-        { name: 'Weather Conditions', value: `${data.weather[0].main}`, inline: true },
-        { name: 'Cloudiness', value: `${data.clouds.all} %`, inline: true },
-        { name: 'Humidity', value: `${data.main.humidity} %`, inline: true },
-        { name: 'Pressure', value: `${Math.floor(data.main.pressure / 1.3)} mm Hg`, inline: true },
-        { name: 'Wind', value: `${Math.floor(data.wind.speed * 3.6)} km/h, ${data.wind.deg} °`, inline: true }
+        { name: 'Weather Conditions', value: `${data.weather[0].main}` },
+        { name: 'Cloudiness', value: `${data.clouds.all} %` },
+        { name: 'Humidity', value: `${data.main.humidity} %` },
+        { name: 'Pressure', value: `${Math.floor(data.main.pressure / 1.3)} mm Hg` },
+        { name: 'Wind', value: `${Math.floor(data.wind.speed * 3.6)} km/h, ${data.wind.deg} °` }
       )
       .setThumbnail(`${icon}.png`)
       .setTimestamp();
