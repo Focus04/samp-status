@@ -79,7 +79,7 @@ export default {
 
     let color = getRoleColor(interaction.guild);
     const weatherEmbed = new EmbedBuilder()
-      .setColor(color)
+      .setColor(color.hex)
       .setTitle(`Weather in ${data.name}, ${data.sys.country}`)
       .addFields(
         { name: 'Temperature', value: `${Math.floor(data.main.temp)} °C`, inline: true },
