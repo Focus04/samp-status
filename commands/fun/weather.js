@@ -1,5 +1,5 @@
 import { MessageEmbed, SlashCommandBuilder } from 'discord.js'
-import fetch from 'fetch';
+import fetch from 'node-fetch';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
 module.exports = {
