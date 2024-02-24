@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getUptime } from '../../utils/getUptime.js';
 import Keyv from 'keyv';
-const intervals = new Keyv(process.env.intervals);
+const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 
 export default {
   data: new SlashCommandBuilder()

@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import gamedig from 'gamedig';
 import Keyv from 'keyv';
-const servers = new Keyv(process.env.servers);
+const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 
 export default {
   data: new SlashCommandBuilder()

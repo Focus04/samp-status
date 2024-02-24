@@ -1,5 +1,5 @@
 import Keyv from 'keyv';
-const uptimes = new Keyv(process.env.uptime);
+const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 
 export async function getUptime(server) {
   let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);

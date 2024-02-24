@@ -2,8 +2,8 @@ import { SlashCommandBuilder } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import Keyv from 'keyv';
-const intervals = new Keyv(process.env.intervals);
-const maxPlayers = new Keyv(process.env.maxPlayers);
+const intervals = new Keyv(process.env.database, { collection: 'intervals' });
+const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 
 export default {
   data: new SlashCommandBuilder()
@@ -21,7 +21,7 @@ export default {
     if (!data || !data.days[0]) {
       return interaction.editReply({ content: `No data has been collected yet. Check again tomorrow.`, ephemeral: true });
     }
-    
+
     const color = getRoleColor(interaction.guild);
     const chart = await getChart(data, color);
     await interaction.editReply({ files: [chart] });

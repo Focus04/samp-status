@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, PermissionFlagsBits, ChannelType } from 'discord.js';
 import Keyv from 'keyv';
-const intervals = new Keyv(process.env.intervals);
-const servers = new Keyv(process.env.servers);
-const maxPlayers = new Keyv(process.env.maxPlayers);
+const intervals = new Keyv(process.env.database, { collection: 'intervals' });
+const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
+const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 
 export default {
   data: new SlashCommandBuilder()

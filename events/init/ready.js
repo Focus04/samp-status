@@ -5,10 +5,10 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 import index from '../../index.js';
 const commands = index;
 import Keyv from 'keyv';
-const intervals = new Keyv(process.env.intervals);
-const servers = new Keyv(process.env.servers);
-const maxPlayers = new Keyv(process.env.maxPlayers);
-const uptimes = new Keyv(process.env.uptime);
+const intervals = new Keyv(process.env.database, { collection: 'intervals' });
+const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
+const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
+const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 
 export default {
   name: 'ready',
