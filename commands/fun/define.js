@@ -31,7 +31,7 @@ export default {
       .join('');
     let color = getRoleColor(interaction.guild);
     const defineEmbed = new EmbedBuilder()
-      .setColor(color)
+      .setColor(color.hex)
       .setTitle(`What does ${term} mean?`)
       .addFields(
         { name: 'Definition', value: '```' + definition + '```' },
