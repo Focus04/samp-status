@@ -8,6 +8,6 @@ export default {
   async execute(interaction) {
     let response = await fetch('https://dog-api.kinduff.com/api/facts');
     let data = await response.json();
-    interaction.reply({ content: data.facts[0] });
+    interaction.reply({ content: '🐶' + data.facts[0] });
   }
 }
