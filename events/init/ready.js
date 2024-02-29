@@ -86,11 +86,9 @@ export default {
           let ChartData = {};
           ChartData.value = data.maxPlayersToday;
           ChartData.date = Date.now();
-          data.maxPlayersToday = -1;
           if (!data.days) data.days = [];
           if (ChartData.value >= 0) data.days.push(ChartData);
           if (data.days.length > 30) data.days.shift();
-          await maxPlayers.set(`${server.ip}:${server.port}`, data);
           const channel = await client.channels
             .fetch(interval.channel)
             .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
@@ -105,6 +103,10 @@ export default {
             .send({ files: [chart] })
             .then((msg) => data.msg = msg.id)
             .catch((err) => console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
+          setTimeout(async () => {
+            data.maxPlayersToday = -1;
+            await maxPlayers.set(`${server.ip}:${server.port}`, data);
+          }, 60000)
         });
       }
     }, 3600000);
