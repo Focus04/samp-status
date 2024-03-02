@@ -107,7 +107,7 @@ export default {
             if (!interval) return;
             const data = await maxPlayers.get(`${server.ip}:${server.port}`);
             if (!data) return;
-            data.maxPlayersToday = -1;
+            else data.maxPlayersToday = -1;
             await maxPlayers.set(`${server.ip}:${server.port}`, data);
           });
         }, 60000);
