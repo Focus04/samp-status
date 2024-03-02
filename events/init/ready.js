@@ -17,6 +17,7 @@ export default {
 
     client.guilds.cache.forEach(async (guild) => {
       let interval = await intervals.get(guild.id);
+      if (!interval) return;
       interval.enabled = 1;
       await intervals.set(guild.id, interval);
       console.log(`Successfully enabled logs on guild ${guild.id})`)
