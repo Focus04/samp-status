@@ -84,7 +84,7 @@ export default {
           const data = await maxPlayers.get(`${server.ip}:${server.port}`);
           if (!data) return;
           let ChartData = {};
-          ChartData.value = data.maxPlayersToday;
+          if (data.maxPlayersToday >= 0) ChartData.value = data.maxPlayersToday;
           ChartData.date = Date.now();
           if (!data.days) data.days = [];
           if (ChartData.value >= 0) data.days.push(ChartData);
