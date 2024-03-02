@@ -15,6 +15,13 @@ export default {
   execute: async (client) => {
     console.log('I am live');
 
+    client.guilds.cache.forEach(async (guild) => {
+      let interval = await intervals.get(guild.id);
+      interval.enabled = 1;
+      await intervals.set(guild.id, interval);
+      console.log(`Successfully enabled logs on guild ${guild.id})`)
+    });
+
     client.user.setActivity('SA:MP');
 
     client.guilds.cache.forEach((guild) => {
