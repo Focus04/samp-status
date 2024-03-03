@@ -21,7 +21,7 @@ export default {
 
     client.guilds.cache.forEach(async (guild) => {
       let interval = await intervals.get(guild.id);
-      if (!interval.enabled) interval.enabled = 1;
+      if (interval && !interval.enabled) interval.enabled = 1;
       await intervals.set(guild.id, interval);
       console.log(`Enabled interval on guild ${guild.id}`);
     });
