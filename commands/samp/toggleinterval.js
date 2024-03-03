@@ -13,8 +13,11 @@ export default {
     }
 
     interval.enabled = !interval.enabled;
+    const config = interaction.client.guildConfigs.get(interaction.guildId);
+    config.interval.enabled = interval.enabled;
+    interaction.client.guildConfigs.set(interaction.guildId, config);
+    await intervals.set(interaction.guildId, interval);
     if (!interval.enabled) interaction.reply({ content: `❌ Interval disabled.`, ephemeral: true });
     else interaction.reply({ content: `✅ Interval enabled.`, ephemeral: true });
-    await intervals.set(interaction.guildId, interval);
   }
 }
