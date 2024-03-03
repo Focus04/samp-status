@@ -29,7 +29,8 @@ export default {
     let interval = {
       channel: channel.id,
       next: Date.now(),
-      message: 0
+      message: 0,
+      enabled: 1
     };
     await intervals.set(interaction.guildId, interval);
     const config = interaction.client.guildConfigs.get(interaction.guildId);
