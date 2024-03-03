@@ -9,6 +9,7 @@
 - `/uptime` Sends the server's uptime percent.
 - `/chart` Sends a chart displaying server statistics for each day.
 - `/stats` Tells you how many players are online across all servers.
+- `/toggleinterval` Toggles server status logs on/off.
 ### 🎈 Fun Commands
 - `/dogfact` Sends a lovely dog fact.
 - `/catfact` Same as dogfact, except it's for cats.
