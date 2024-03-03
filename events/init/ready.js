@@ -19,13 +19,6 @@ export default {
       client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));
     });
 
-    client.guilds.cache.forEach(async (guild) => {
-      let interval = await intervals.get(guild.id);
-      if (interval && !interval.enabled) interval.enabled = 1;
-      await intervals.set(guild.id, interval);
-      console.log(`Enabled interval on guild ${guild.id}`);
-    });
-
     client.guildConfigs = new Collection();
     client.guilds.cache.forEach(async (guild) => {
       let server = await servers.get(guild.id);

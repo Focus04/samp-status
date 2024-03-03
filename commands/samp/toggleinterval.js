@@ -1,11 +1,12 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import Keyv from 'keyv';
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 
 export default {
   data: new SlashCommandBuilder()
     .setName('toggleinterval')
-    .setDescription('Toggles server status logs on/off.'),
+    .setDescription('Toggles server status logs on/off.')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   execute: async (interaction) => {
     let interval = await intervals.get(interaction.guildId);
     if (!interval) {
