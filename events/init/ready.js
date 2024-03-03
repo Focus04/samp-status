@@ -14,9 +14,7 @@ export default {
   name: 'ready',
   execute: async (client) => {
     console.log('I am live');
-
     client.user.setActivity('SA:MP');
-
     client.guilds.cache.forEach((guild) => {
       client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));
     });

@@ -7,20 +7,14 @@ export default {
     .setName('toggleinterval')
     .setDescription('Toggles server status logs on/off.'),
   execute: async (interaction) => {
-    await interaction.deferReply();
     let interval = await intervals.get(interaction.guildId);
     if (!interval) {
-      return interaction.editReply({ content: `There is no interval on this server.`, ephemeral: true });
+      return interaction.reply({ content: `There is no interval on this server.`, ephemeral: true });
     }
 
-    if (interval.enabled) {
-      interval.enabled = 0;
-      interaction.editReply({ content: `❌ Interval disabled.`, ephemeral: true });
-    } else {
-      interval.enabled = 1;
-      interaction.editReply({ content: `✅ Interval enabled.`, ephemeral: true });
-    }
-
+    interval.enabled = !interval.enabled;
+    if (!interval.enabled) interaction.reply({ content: `❌ Interval disabled.`, ephemeral: true });
+    else interaction.reply({ content: `✅ Interval enabled.`, ephemeral: true });
     await intervals.set(interaction.guildId, interval);
   }
 }
