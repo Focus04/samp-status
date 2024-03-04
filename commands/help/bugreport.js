@@ -16,7 +16,11 @@ export default {
     let bug = interaction.options.getString('bug');
     await interaction.client.channels.cache
       .get(bugChId)
-      .send(`# Bug reported by ${author}\n\n${bug}`);
+      .send(`# Bug reported by ${author}\n\n${bug}`)
+      .then((msg) => {
+        msg.react('👍');
+        msg.react('👎');
+      });
     interaction.reply({ content: `Your bug has been successfully submitted to our server and is now awaiting a review from the developer's side. You can join our Discord server anytime using this link: ${discordInviteLink}`, ephemeral: true });
   }
 }
