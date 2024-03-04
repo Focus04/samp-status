@@ -35,7 +35,7 @@ export default {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
         let { interval = 0, server = 0 } = guildConfigs;
-        if (!interval || !interval.enabled || Date.now() < interval.next) return;
+        if (!interval || Date.now() < interval.next) return;
         interval.next = Date.now() + 180000;
         let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
         if (!onlineStats) {
@@ -60,6 +60,7 @@ export default {
         if (!serverEmbed.data.fields) onlineStats.downtime++;
         else onlineStats.uptime++;
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
+        if (!interval.enabled) return;
         channel.messages
           .fetch(interval.message)
           .then((oldMsg) => oldMsg.delete())
