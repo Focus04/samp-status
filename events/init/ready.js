@@ -13,7 +13,7 @@ const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 export default {
   name: 'ready',
   execute: async (client) => {
-    console.log('I am live');
+    console.log('I am live on Railway!');
     client.user.setActivity('SA:MP');
     client.guilds.cache.forEach((guild) => {
       client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));

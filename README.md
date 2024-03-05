@@ -2,8 +2,8 @@
 ## Overview
 *SAMP Status is an open source Discord bot to query information about any SAMP/OMP server with per-guild setup. It displays real time information, including the server's name, IP and an online list of players along with their ID, score and ping. It can also output a chart displaying the server's past month's activity. Discord admins can link a SAMP server to the Discord server, allowing any member to view live server data in a separate channel updated every 3 minutes.*
 ## Commands List
-### 🎮 SAMP Commands
-- `/setguildserver` Sets a per guild SA:MP server to receive updates on.
+### 🎮 Server Query Commands
+- `/setguildserver` Sets a per guild game server to receive updates on.
 - `/status` Tells you live information about your favourite SA-MP community!
 - `/setinterval` Sets a channel for status messages to be sent in.
 - `/uptime` Sends the server's uptime percent.

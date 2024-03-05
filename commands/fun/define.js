@@ -1,5 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js'
-import fetch from 'node-fetch';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
 export default {
