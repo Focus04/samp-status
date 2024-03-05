@@ -21,7 +21,7 @@ let cQuery = async (server) => {
 
 let dQuery = async (server) => {
   const data = await gamedig.query({
-    type: 'samp',
+    type: server.game,
     host: server.ip,
     port: server.port,
     maxAttempts: 3
@@ -83,7 +83,7 @@ export async function getStatus(server, color) {
 
 export async function getPlayerCount(server) {
   const data = await gamedig.query({
-    type: 'samp',
+    type: server.game,
     host: server.ip,
     port: server.port,
     maxAttempts: 3

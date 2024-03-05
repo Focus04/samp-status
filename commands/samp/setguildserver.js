@@ -6,15 +6,23 @@ const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 export default {
   data: new SlashCommandBuilder()
     .setName('setguildserver')
-    .setDescription(`Sets a per guild SA:MP server to receive updates on.`)
+    .setDescription(`Sets a per guild game server to receive updates on.`)
     .addStringOption((option) => option
       .setName('ip')
-      .setDescription('The IP of a SA:MP server.')
+      .setDescription('The IP of a game server.')
       .setRequired(true)
     )
     .addStringOption((option) => option
       .setName('port')
-      .setDescription('The port of a SA:MP server.')
+      .setDescription('The port of a game server.')
+      .setRequired(true)
+    )
+    .addStringOption((option) => option
+      .setName('game')
+      .setDescription('Choose the appropriate game title for your server.')
+      .addChoices(
+        { name: 'San Andreas Multiplayer', value: 'samp' }
+      )
       .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
@@ -23,7 +31,7 @@ export default {
     const args = interaction.options.data.map((option) => option.value);
     try {
       await gamedig.query({
-        type: 'samp',
+        type: args[2],
         host: args[0],
         port: args[1],
         maxAttempts: 5
@@ -33,7 +41,8 @@ export default {
     }
     let server = {
       ip: args[0],
-      port: args[1]
+      port: args[1],
+      game: args[2]
     };
     await servers.set(interaction.guildId, server);
     const config = interaction.client.guildConfigs.get(interaction.guildId);
