@@ -25,5 +25,6 @@
 - `/botinfo` Checks how many servers the bot is in.
 ## Reviews
 > Great bot, been using this bot for the multiple servers I’ve had upon the years and so have others, extremely helpful 10/10.
-## Official Invite Link
-You can invite my official bot running on the latest version [from here](https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands).
+## Official Links
+- You can invite my official bot running on the latest version [from here](https://discord.com/api/oauth2/authorize?client_id=786612528951197726&permissions=0&scope=bot%20applications.commands).
+- Join my support server [here](https://discord.gg/yYNZQD274Z).

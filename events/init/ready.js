@@ -19,6 +19,14 @@ export default {
       client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));
     });
 
+    client.guilds.cache.forEach(async (guild) => {
+      let serverInfo = await servers.get(guild.id);
+      if (!serverInfo) return;
+      serverInfo.game = 'samp';
+      console.log(`Added game type to guild ${guild.id}`);
+      await servers.set(guild.id, serverInfo);
+    });
+
     client.guildConfigs = new Collection();
     client.guilds.cache.forEach(async (guild) => {
       let server = await servers.get(guild.id);
