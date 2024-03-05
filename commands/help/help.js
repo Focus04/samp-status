@@ -9,18 +9,18 @@ export default {
     .setDescription('Displays a list of all available commands along with their usage.'),
   execute: async (interaction) => {
     const color = getRoleColor(interaction.guild);
-    let funCmds = '', helpCmds = '', sampCmds = '';
+    let funCmds = '', helpCmds = '', serverCmds = '';
     readdirSync('./commands/fun').forEach((file) => funCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
     readdirSync('./commands/help').forEach((file) => helpCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
-    readdirSync('./commands/samp').forEach((file) => sampCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
+    readdirSync('./commands/query').forEach((file) => serverCmds += `/${file.slice(0, file.lastIndexOf('.'))}\n`);
     const { botInviteLink, discordInviteLink, topgg, githubRepo } = config;
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
       .setTitle('Slash Commands')
       .addFields(
         {
-          name: `🎮 SAMP Commands`,
-          value: `${'```' + sampCmds + '```'}`, inline: true
+          name: `🎮 Server Query Commands`,
+          value: `${'```' + serverCmds + '```'}`, inline: true
         },
         {
           name: `🎈 Fun Commands`,
