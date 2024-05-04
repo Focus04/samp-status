@@ -16,10 +16,9 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "fontconfig": "^0.5.0",
-    "gamedig": "^4.3.1",
+    "gamedig": "git+https://github.com/gamedig/node-gamedig#46db10fcc707b934974a4d0d035808ec1c9d72e0",
     "keyv": "^4.5.4",
     "moment": "^2.30.1",
-    "node-samp-query": "^1.0.0",
     "table": "^6.8.1"
   }
 }

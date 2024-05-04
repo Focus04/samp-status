@@ -1,19 +1,19 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import gamedig from 'gamedig';
-import cquery from 'node-samp-query';
 import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
-  const query = new cquery({
-    ip: server.ip,
-    port: server.port
-  });
-  const data = await query.getServerPlayers().catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  const data = await gamedig.query({
+    type: 'gtasao',
+    host: server.ip,
+    port: server.port,
+    maxAttempts: 3
+  }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
   let players = [['Name', 'Score']];
-  if (data && data[0] && data[0].name) {
-    data.forEach((player) => {
-      players.push([player.name, player.score]);
+  if (data && data.players && data.players[0]) {
+    data.players.forEach((player) => {
+      players.push([player.name, player.raw.score]);
     });
   }
   return players;
@@ -21,7 +21,7 @@ let cQuery = async (server) => {
 
 let dQuery = async (server) => {
   const data = await gamedig.query({
-    type: server.game,
+    type: 'gtasam',
     host: server.ip,
     port: server.port,
     maxAttempts: 3
@@ -83,7 +83,7 @@ export async function getStatus(server, color) {
 
 export async function getPlayerCount(server) {
   const data = await gamedig.query({
-    type: server.game,
+    type: 'samp',
     host: server.ip,
     port: server.port,
     maxAttempts: 3

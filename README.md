@@ -4,7 +4,7 @@
 ## Commands List
 ### 🎮 Server Query Commands
 - `/setguildserver` Sets a per guild game server to receive updates on.
-- `/status` Tells you live information about your favourite SA-MP community!
+- `/status` Tells you live information about your favourite community!
 - `/setinterval` Sets a channel for status messages to be sent in.
 - `/uptime` Sends the server's uptime percent.
 - `/chart` Sends a chart displaying server statistics for each day.

@@ -5,7 +5,7 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 export default {
   data: new SlashCommandBuilder()
     .setName('status')
-    .setDescription(`Tells you live information about your favourite SA-MP community!`),
+    .setDescription(`Tells you live information about your favourite community!`),
   execute: async (interaction) => {
     await interaction.deferReply();
     const { server } = interaction.client.guildConfigs.get(interaction.guildId);

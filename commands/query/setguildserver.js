@@ -21,7 +21,7 @@ export default {
       .setName('game')
       .setDescription('Choose the appropriate game title for your server.')
       .addChoices(
-        { name: 'San Andreas Multiplayer', value: 'samp' }
+        { name: 'San Andreas Multiplayer', value: 'gtasam' }
       )
       .setRequired(true)
     )
@@ -31,7 +31,7 @@ export default {
     const args = interaction.options.data.map((option) => option.value);
     try {
       await gamedig.query({
-        type: args[2],
+        type: 'samp',
         host: args[0],
         port: args[1],
         maxAttempts: 5
