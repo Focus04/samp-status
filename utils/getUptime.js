@@ -1,24 +1,26 @@
 import Keyv from 'keyv';
+
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 
 export async function getUptime(server) {
   let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
-  let percent;
   if (!onlineStats) {
     onlineStats = {
       uptime: 0,
-      downtime: 0
-    }
+      downtime: 0,
+    };
   }
-  
-  let uptime = {
+
+  const uptime = {
     color: '',
     emoji: '',
-    text: ''
+    text: '',
   };
-  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) uptime.text = 'N/A';
-  else {
-    percent = onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime) * 100;
+
+  if (onlineStats.uptime === 0 && onlineStats.downtime === 0) {
+    uptime.text = 'N/A';
+  } else {
+    const percent = (onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime)) * 100;
     uptime.text = `${percent.toFixed(2)}%`;
   }
 
@@ -39,13 +41,15 @@ export async function getUptime(server) {
       uptime.color = '#ff0000';
       uptime.emoji = ':red_circle:';
       break;
+    default:
+      uptime.color = '#cccccc';
+      uptime.emoji = ':white_circle:';
   }
 
   return uptime;
 }
 
 export function formatUrl(url) {
-  if (!url.length) return "N/A";
-  else if (!url.startsWith("http")) return "https://" + url;
-  return url;
+  if (!url?.trim()) return 'N/A';
+  return url.startsWith('http') ? url : `https://${url.trim()}`;
 }

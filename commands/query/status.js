@@ -5,16 +5,19 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 export default {
   data: new SlashCommandBuilder()
     .setName('status')
-    .setDescription(`Tells you live information about your favourite community!`),
-  execute: async (interaction) => {
+    .setDescription('Shows live information about your favorite community'),
+  async execute(interaction) {
     await interaction.deferReply();
-    const { server } = interaction.client.guildConfigs.get(interaction.guildId);
+    const { server } = interaction.client.guildConfigs.get(interaction.guildId) || {};
+
     if (!server) {
-      return interaction.editReply({ content: `This server doesn't have a server linked to it. Use /setguildserver to do so.`, ephemeral: true });
+      return interaction.editReply({
+        content: 'This server isn\'t linked to any game server. Use /setguildserver to set one up.', ephemeral: true
+      });
     }
 
     const color = getRoleColor(interaction.guild);
     const serverEmbed = await getStatus(server, color);
     await interaction.editReply({ embeds: [serverEmbed] });
-  }
-}
+  },
+};

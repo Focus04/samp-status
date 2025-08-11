@@ -4,22 +4,22 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 export default {
   data: new SlashCommandBuilder()
     .setName('stats')
-    .setDescription(`Tells you how many players are online across all servers.`),
+    .setDescription('Shows player count across all SA-MP servers'),
   async execute(interaction) {
-    let color = getRoleColor(interaction.guild);
-    const serversResponse = await fetch('http://sam.markski.ar/api/GetGlobalStats');
-    const servers = await serversResponse.json();
-    const infoEmbed = new EmbedBuilder()
+    const color = getRoleColor(interaction.guild);
+    const response = await fetch('http://sam.markski.ar/api/GetGlobalStats');
+    const { serversOnline, serversInhabited, playersOnline } = await response.json();
+
+    const statsEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setTitle('🟢 SAMP Live Stats')
+      .setTitle('🟢 SA-MP Global Stats')
       .addFields(
-        {
-          name: 'Online (Populated) Servers Count',
-          value: `${servers.serversOnline.toString()} (${servers.serversInhabited.toString()})`
-        },
-        { name: 'Players Across All Servers', value: servers.playersOnline.toString() }
+        { name: 'Online Servers', value: `${serversOnline} (${serversInhabited} populated)`, inline: true },
+        { name: 'Total Players Online', value: playersOnline.toString(), inline: true }
       )
+      .setFooter({ text: 'Data provided by SA-MP Live' })
       .setTimestamp();
-    interaction.reply({ embeds: [infoEmbed] });
-  }
-}
+
+    await interaction.reply({ embeds: [statsEmbed] });
+  },
+};

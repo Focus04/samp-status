@@ -3,8 +3,9 @@ import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import index from '../../index.js';
-const commands = index;
 import Keyv from 'keyv';
+
+const commands = index;
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
@@ -15,103 +16,133 @@ export default {
   execute: async (client) => {
     console.log('I am live on Railway!');
     client.user.setActivity('SA:MP');
+
+    // Register commands in all guilds
     client.guilds.cache.forEach((guild) => {
-      client.application.commands.set(commands, guild.id).catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`));
+      client.application.commands
+        .set(commands, guild.id)
+        .catch((err) => console.log(`Error: Could not create commands on guild ${guild.id}!`, err));
     });
 
+    // Cache guild configs
     client.guildConfigs = new Collection();
-    client.guilds.cache.forEach(async (guild) => {
-      let server = await servers.get(guild.id);
-      let interval = await intervals.get(guild.id);
-      const config = {
-        server,
-        interval
-      }
-      client.guildConfigs.set(guild.id, config);
-    });
+    await Promise.all(client.guilds.cache.map(async (guild) => {
+      const [server, interval] = await Promise.all([
+        servers.get(guild.id),
+        intervals.get(guild.id),
+      ]);
+      client.guildConfigs.set(guild.id, { server, interval });
+    }));
 
-    setInterval(() => {
-      client.guilds.cache.forEach(async (guild) => {
+    // Status update interval (1 minute)
+    setInterval(async () => {
+      await Promise.all(client.guilds.cache.map(async (guild) => {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
-        let { interval = 0, server = 0 } = guildConfigs;
-        if (!interval || Date.now() < interval.next) return;
+
+        const { interval = {}, server = {} } = guildConfigs;
+        if (!interval?.enabled || Date.now() < interval.next) return;
+
         interval.next = Date.now() + 180000;
-        let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
-        if (!onlineStats) {
-          onlineStats = {
-            uptime: 0,
-            downtime: 0
-          }
-        }
-        let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
+        let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
+
+        const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
         if (!chartData) return;
+
         const info = await getPlayerCount(server);
-        if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
+        if (info.playerCount > chartData.maxPlayersToday) {
+          chartData.maxPlayersToday = info.playerCount;
+        }
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
+
         const channel = await client.channels
           .fetch(interval.channel)
-          .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
+          .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`, err));
         if (!channel) return;
+
         const color = getRoleColor(guild);
         const serverEmbed = await getStatus(server, color);
-        if (!serverEmbed.data.fields) onlineStats.downtime++;
-        else onlineStats.uptime++;
+
+        if (!serverEmbed.data?.fields) {
+          onlineStats.downtime += 1;
+        } else {
+          onlineStats.uptime += 1;
+        }
+
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
-        if (!interval.enabled) return;
-        channel.messages
-          .fetch(interval.message)
-          .then((oldMsg) => oldMsg.delete())
-          .catch((err) => console.log(`Error: Could not delete message ${interval.message} in channel ${interval.channel} in guild ${guild.id}!`));
-        channel
-          .send({ embeds: [serverEmbed] })
-          .then((msg) => interval.message = msg.id)
-          .catch((err) => console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
-        client.guildConfigs.set(guild.id, guildConfigs);
+
+        try {
+          const oldMsg = await channel.messages.fetch(interval.message).catch(() => null);
+          if (oldMsg) await oldMsg.delete();
+
+          const newMsg = await channel.send({ embeds: [serverEmbed] });
+          interval.message = newMsg.id;
+        } catch (err) {
+          console.log(`Error updating message in channel ${interval.channel} in guild ${guild.id}!`, err);
+        }
+
+        client.guildConfigs.set(guild.id, { server, interval });
         await intervals.set(guild.id, interval);
-      });
+      }));
     }, 60000);
 
+    // Daily stats interval (1 hour)
     setInterval(async () => {
-      const nextCheck = await maxPlayers.get('next');
-      if (Date.now() >= nextCheck) {
-        await maxPlayers.set('next', nextCheck + 86400000);
-        client.guilds.cache.forEach(async (guild) => {
-          const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
-          if (!interval || !interval.enabled) return;
-          const data = await maxPlayers.get(`${server.ip}:${server.port}`);
-          if (!data) return;
-          let ChartData = {};
-          ChartData.value = data.maxPlayersToday;
-          ChartData.date = Date.now();
-          if (!data.days) data.days = [];
-          if (ChartData.value >= 0) data.days.push(ChartData);
-          if (data.days.length > 30) data.days.shift();
+      const nextCheck = await maxPlayers.get('next') || Date.now();
+      if (Date.now() < nextCheck) return;
+
+      await maxPlayers.set('next', Date.now() + 86400000);
+
+      await Promise.all(client.guilds.cache.map(async (guild) => {
+        const guildConfig = client.guildConfigs.get(guild.id) || {};
+        const { interval = {}, server = {} } = guildConfig;
+        if (!interval?.enabled) return;
+
+        const data = await maxPlayers.get(`${server.ip}:${server.port}`);
+        if (!data) return;
+
+        const chartData = {
+          value: data.maxPlayersToday,
+          date: Date.now(),
+        };
+
+        if (!data.days) data.days = [];
+        if (chartData.value >= 0) data.days.push(chartData);
+        if (data.days.length > 30) data.days.shift();
+
+        await maxPlayers.set(`${server.ip}:${server.port}`, data);
+
+        const channel = await client.channels
+          .fetch(interval.channel)
+          .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`, err));
+        if (!channel) return;
+
+        const color = getRoleColor(guild);
+        const chart = await getChart(data, color);
+
+        try {
+          const msg = await channel.send({ files: [chart] });
+          data.msg = msg.id;
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
-          const channel = await client.channels
-            .fetch(interval.channel)
-            .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
-          if (!channel) return;
-          const color = getRoleColor(guild);
-          const chart = await getChart(data, color);
-          channel
-            .send({ files: [chart] })
-            .then((msg) => data.msg = msg.id)
-            .catch((err) => console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
-        });
-        setTimeout(() => {
-          client.guilds.cache.forEach(async (guild) => {
-            const { interval = 0, server = 0 } = client.guildConfigs.get(guild.id);
-            if (!interval) return;
-            const data = await maxPlayers.get(`${server.ip}:${server.port}`);
-            if (!data) return;
-            else data.maxPlayersToday = -1;
-            await maxPlayers.set(`${server.ip}:${server.port}`, data);
-          });
-        }, 120000);
-      }
+        } catch (err) {
+          console.log(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`, err);
+        }
+      }));
+
+      // Reset max players after 2 minutes
+      setTimeout(async () => {
+        await Promise.all(client.guilds.cache.map(async (guild) => {
+          const guildConfig = client.guildConfigs.get(guild.id) || {};
+          const { interval = {}, server = {} } = guildConfig;
+          if (!interval) return;
+
+          const data = await maxPlayers.get(`${server.ip}:${server.port}`) || {};
+          data.maxPlayersToday = -1;
+          await maxPlayers.set(`${server.ip}:${server.port}`, data);
+        }));
+      }, 120000);
     }, 3600000);
-  }
-}
+  },
+};

@@ -3,47 +3,47 @@ import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
 import { getUptime, formatUrl } from './getUptime.js';
 
-let cQuery = async (server) => {
+const tableConfig = {
+  border: getBorderCharacters('void'),
+  columnDefault: {
+    paddingLeft: 0,
+    paddingRight: 1,
+  },
+  drawHorizontalLine: () => false,
+};
+
+const cQuery = async (server) => {
   const data = await GameDig.query({
     type: 'gtasao',
     host: server.ip,
     port: server.port,
-    maxAttempts: 3
+    maxAttempts: 3,
   }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
-  let players = [['Name', 'Score']];
-  if (data && data.players && data.players[0]) {
+
+  const players = [['Name', 'Score']];
+  if (data?.players?.[0]) {
     data.players.forEach((player) => {
-      players.push([player.name, player.raw.score]);
+      players.push([player.name, player.raw?.score]);
     });
   }
   return players;
-}
+};
 
-let dQuery = async (server) => {
+const dQuery = async (server) => {
   const data = await GameDig.query({
     type: 'gtasam',
     host: server.ip,
     port: server.port,
-    maxAttempts: 3
+    maxAttempts: 3,
   }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)!`));
-  let players = [['ID', 'Name', 'Score', 'Ping']];
-  if (data && data.players && data.players[0]) {
+
+  const players = [['ID', 'Name', 'Score', 'Ping']];
+  if (data?.players?.[0]) {
     data.players.forEach((player) => {
-      players.push([player.raw.id, player.name, player.raw.score, player.raw.ping]);
+      players.push([player.raw?.id, player.name, player.raw?.score, player.raw?.ping]);
     });
   }
   return { data, players };
-}
-
-const tableConfig = {
-  border: getBorderCharacters(`void`),
-  columnDefault: {
-    paddingLeft: 0,
-    paddingRight: 1
-  },
-  drawHorizontalLine: () => {
-    return false;
-  }
 };
 
 export async function getStatus(server, color) {
@@ -59,24 +59,26 @@ export async function getStatus(server, color) {
 
   if (data && !data.players?.length) players = await cQuery(server);
   const uptime = await getUptime(server);
-  const websiteUrl = formatUrl(data.raw.rules.weburl);
-  let output = table(players, tableConfig);
-  let serverEmbed = new EmbedBuilder()
+  const websiteUrl = formatUrl(data.raw?.rules?.weburl);
+  const output = table(players, tableConfig);
+
+  const serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
     .setTitle(`${data.name}`)
-    .setDescription(data.raw.gamemode)
+    .setDescription(data.raw?.gamemode)
     .addFields(
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
-      { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
-      { name: 'Uptime', value: `${`${uptime.emoji} ${uptime.text}`}`, inline: true },
+      { name: 'Map', value: `${data.raw?.rules?.mapname}`, inline: true },
+      { name: 'Uptime', value: `${uptime.emoji} ${uptime.text}`, inline: true },
       { name: 'Website', value: websiteUrl, inline: true },
-      { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-      { name: 'Players', value: `${players.length - 1}/${data.maxplayers}`, inline: true }
+      { name: 'Version', value: `${data.raw?.rules?.version}`, inline: true },
+      { name: 'Players', value: `${players.length - 1}/${data.maxplayers}`, inline: true },
     )
     .setTimestamp();
 
-  if (output.length < 1000 && players[1]?.length && players[1][1])
-    serverEmbed.addFields({ name: 'Players List', value: '```' + output + '```' });
+  if (output.length < 1000 && players[1]?.length && players[1][1]) {
+    serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
+  }
   return serverEmbed;
 }
 
@@ -85,22 +87,20 @@ export async function getPlayerCount(server) {
     type: 'gtasam',
     host: server.ip,
     port: server.port,
-    maxAttempts: 3
+    maxAttempts: 3,
   }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
-  let info;
+
   if (!data) {
-    info = {
+    return {
       playerCount: -1,
       name: 'the server',
-      maxPlayers: 50
-    }
+      maxPlayers: 50,
+    };
   }
-  else {
-    info = {
-      playerCount: data.players.length,
-      name: data.name,
-      maxPlayers: data.maxplayers
-    }
-  }
-  return info;
+
+  return {
+    playerCount: data.players?.length || 0,
+    name: data.name,
+    maxPlayers: data.maxplayers,
+  };
 }

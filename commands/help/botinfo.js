@@ -4,19 +4,24 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 export default {
   data: new SlashCommandBuilder()
     .setName('botinfo')
-    .setDescription(`Checks how many servers the bot is in.`),
+    .setDescription('Checks how many servers the bot is in'),
   async execute(interaction) {
-    let color = getRoleColor(interaction.guild);
-    let membercount = 0;
-    interaction.client.guilds.cache.forEach((guild) => membercount += guild.memberCount);
+    const color = getRoleColor(interaction.guild);
+    let memberCount = 0;
+
+    interaction.client.guilds.cache.forEach((guild) => {
+      memberCount += guild.memberCount;
+    });
+
     const infoEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setTitle('Bot info')
+      .setTitle('Bot Information')
       .addFields(
         { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
-        { name: 'Members Across All Servers', value: membercount.toString() }
+        { name: 'Members Across All Servers', value: memberCount.toString() },
       )
       .setTimestamp();
-    interaction.reply({ embeds: [infoEmbed] });
-  }
-}
+
+    await interaction.reply({ embeds: [infoEmbed] });
+  },
+};

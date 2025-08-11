@@ -4,40 +4,34 @@ import { getRoleColor } from '../../utils/getRoleColor.js';
 export default {
   data: new SlashCommandBuilder()
     .setName('define')
-    .setDescription(`Looks up a term in the dictionary.`)
+    .setDescription('Looks up a term in the dictionary')
     .addStringOption((option) => option
       .setName('term')
-      .setDescription('The term you want to search.')
-      .setRequired(true)
-    ),
+      .setDescription('The term you want to search')
+      .setRequired(true)),
   async execute(interaction) {
     const term = interaction.options.getString('term');
     const response = await fetch(`http://api.urbandictionary.com/v0/define?term=${term}`);
     const data = await response.json();
-    if (!data.list[0] || !data.list[0].definition) {
-      return interaction.reply({ content: `Couldn't find any results for ${'`' + term + '`'}`, ephemeral: true });
+
+    if (!data.list[0]?.definition) {
+      return interaction.reply({ content: `Couldn't find any results for \`${term}\``, ephemeral: true });
     }
 
-    const definition = data.list[0].definition
-      .split('[')
-      .join('')
-      .split(']')
-      .join('');
-    const example = data.list[0].example
-      .split('[')
-      .join('')
-      .split(']')
-      .join('');
-    let color = getRoleColor(interaction.guild);
+    const cleanText = (text) => text.replace(/[[\]]/g, '');
+    const definition = cleanText(data.list[0].definition);
+    const example = cleanText(data.list[0].example);
+
+    const color = getRoleColor(interaction.guild);
     const defineEmbed = new EmbedBuilder()
       .setColor(color.hex)
       .setTitle(`What does ${term} mean?`)
       .addFields(
-        { name: 'Definition', value: '```' + definition + '```' },
-        { name: 'Example', value: '```' + (example || 'N/A') + '```' }
+        { name: 'Definition', value: `\`\`\`${definition}\`\`\`` },
+        { name: 'Example', value: `\`\`\`${example || 'N/A'}\`\`\`` },
       )
       .setTimestamp();
-    interaction.reply({ embeds: [defineEmbed] });
-  }
 
-}
+    interaction.reply({ embeds: [defineEmbed] });
+  },
+};
