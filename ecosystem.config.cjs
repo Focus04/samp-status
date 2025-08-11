@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
-    name: "your-app",
-    script: "./server.js",
+    name: "samp-status",
+    script: "./index.js",
     instances: "max",
     exec_mode: "cluster",
     autorestart: true,
