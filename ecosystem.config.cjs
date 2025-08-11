@@ -1,8 +1,7 @@
-export default {
+module.exports = {
   apps: [{
-    name: "samp-status",
-    script: "./index.js",
-    interpreter_args: "--experimental-vm-modules",
+    name: "your-app",
+    script: "./server.js",
     instances: "max",
     exec_mode: "cluster",
     autorestart: true,
@@ -10,6 +9,7 @@ export default {
     env: {
       NODE_ENV: "production",
       NODE_OPTIONS: "--experimental-vm-modules"
-    }
+    },
+    node_args: "--experimental-vm-modules"
   }]
 }

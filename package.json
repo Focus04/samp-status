@@ -4,7 +4,9 @@
   "description": "Discord bot to send information about any SA:MP server.",
   "main": "index.js",
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js"
+    "start": "npm_config_production=true pm2-runtime start ecosystem.config.cjs",
+    "dev": "node index.js",
+    "prod": "npm start --omit=dev"
   },
   "author": "focus2004",
   "license": "ISC",
