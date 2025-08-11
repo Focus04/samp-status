@@ -4,6 +4,7 @@ const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 
 export async function getUptime(server) {
   let onlineStats = await uptimes.get(`${server.ip}:${server.port}`);
+  let percent;
   if (!onlineStats) {
     onlineStats = {
       uptime: 0,
@@ -20,7 +21,7 @@ export async function getUptime(server) {
   if (onlineStats.uptime === 0 && onlineStats.downtime === 0) {
     uptime.text = 'N/A';
   } else {
-    const percent = (onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime)) * 100;
+    percent = (onlineStats.uptime / (onlineStats.uptime + onlineStats.downtime)) * 100;
     uptime.text = `${percent.toFixed(2)}%`;
   }
 
