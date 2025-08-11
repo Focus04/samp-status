@@ -14,10 +14,9 @@ export default {
       .setColor(color.hex)
       .setTitle('🟢 SA-MP Global Stats')
       .addFields(
-        { name: 'Online Servers', value: `${serversOnline} (${serversInhabited} populated)`, inline: true },
-        { name: 'Total Players Online', value: playersOnline.toString(), inline: true }
+        { name: 'Online Servers', value: `${serversOnline} (${serversInhabited} populated)` },
+        { name: 'Total Players Online', value: playersOnline.toString() }
       )
-      .setFooter({ text: 'Data provided by SA-MP Live' })
       .setTimestamp();
 
     await interaction.reply({ embeds: [statsEmbed] });
