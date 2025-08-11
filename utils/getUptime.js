@@ -33,7 +33,7 @@ export async function getUptime(server) {
       break;
     case percent >= 90 && percent < 95:
       uptime.color = '#ff9900';
-      uptime.emoji = ':brown_circle:';
+      uptime.emoji = ':orange_circle:';
       break;
     case percent < 90:
       uptime.color = '#ff0000';

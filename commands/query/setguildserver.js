@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
-import gamedig from 'gamedig';
+import { GameDig } from 'gamedig';
 import Keyv from 'keyv';
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 
@@ -30,8 +30,8 @@ export default {
     await interaction.deferReply();
     const args = interaction.options.data.map((option) => option.value);
     try {
-      await gamedig.query({
-        type: 'samp',
+      GameDig.query({
+        type: 'gtasam',
         host: args[0],
         port: args[1],
         maxAttempts: 5

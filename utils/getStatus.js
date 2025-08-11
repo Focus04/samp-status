@@ -1,10 +1,10 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
-import gamedig from 'gamedig';
+import { GameDig } from 'gamedig';
 import { getUptime } from './getUptime.js';
 
 let cQuery = async (server) => {
-  const data = await gamedig.query({
+  const data = await GameDig.query({
     type: 'gtasao',
     host: server.ip,
     port: server.port,
@@ -20,7 +20,7 @@ let cQuery = async (server) => {
 }
 
 let dQuery = async (server) => {
-  const data = await gamedig.query({
+  const data = await GameDig.query({
     type: 'gtasam',
     host: server.ip,
     port: server.port,
@@ -57,7 +57,7 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data && data.players[0] && !data.players[0].name) players = await cQuery(server);
+  if (data && !data.players.length) players = await cQuery(server);
   const uptime = await getUptime(server);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
@@ -70,7 +70,7 @@ export async function getStatus(server, color) {
       { name: 'Uptime', value: `${`${uptime.emoji} ${uptime.text}`}`, inline: true },
       { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
-      { name: 'Players', value: `${data.players.length}/${data.maxplayers}`, inline: true }
+      { name: 'Players', value: `${players.length - 1}/${data.maxplayers}`, inline: true }
     )
     .setTimestamp();
 
@@ -82,8 +82,8 @@ export async function getStatus(server, color) {
 }
 
 export async function getPlayerCount(server) {
-  const data = await gamedig.query({
-    type: 'samp',
+  const data = await GameDig.query({
+    type: 'gtasam',
     host: server.ip,
     port: server.port,
     maxAttempts: 3
