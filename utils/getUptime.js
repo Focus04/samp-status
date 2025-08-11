@@ -43,3 +43,9 @@ export async function getUptime(server) {
 
   return uptime;
 }
+
+export function formatUrl(url) {
+  if (!url.length) return "N/A";
+  else if (!url.startsWith("http")) return "https://" + url;
+  return url;
+}

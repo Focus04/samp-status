@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
-import { getUptime } from './getUptime.js';
+import { getUptime, formatUrl } from './getUptime.js';
 
 let cQuery = async (server) => {
   const data = await GameDig.query({
@@ -57,8 +57,9 @@ export async function getStatus(server, color) {
     return errEmbed;
   }
 
-  if (data && !data.players.length) players = await cQuery(server);
+  if (data && !data.players?.length) players = await cQuery(server);
   const uptime = await getUptime(server);
+  const websiteUrl = formatUrl(data.raw.rules.weburl);
   let output = table(players, tableConfig);
   let serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
@@ -68,16 +69,14 @@ export async function getStatus(server, color) {
       { name: 'Server IP', value: `${server.ip}:${server.port}`, inline: true },
       { name: 'Map', value: `${data.raw.rules.mapname}`, inline: true },
       { name: 'Uptime', value: `${`${uptime.emoji} ${uptime.text}`}`, inline: true },
-      { name: 'Forums', value: 'http://' + data.raw.rules.weburl, inline: true },
+      { name: 'Website', value: websiteUrl, inline: true },
       { name: 'Version', value: `${data.raw.rules.version}`, inline: true },
       { name: 'Players', value: `${players.length - 1}/${data.maxplayers}`, inline: true }
     )
     .setTimestamp();
 
-  if (output.length < 1024 && players[1] && players[1].length) {
-    if (players[1][1])
-      serverEmbed.addFields({ name: 'Players List', value: '```' + output + '```' });
-  }
+  if (output.length < 1000 && players[1]?.length && players[1][1])
+    serverEmbed.addFields({ name: 'Players List', value: '```' + output + '```' });
   return serverEmbed;
 }
 
