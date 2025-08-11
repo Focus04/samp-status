@@ -80,7 +80,7 @@ export default {
           const newMsg = await channel.send({ embeds: [serverEmbed] });
           interval.message = newMsg.id;
         } catch (err) {
-          console.log(`Error updating message in channel ${interval.channel} in guild ${guild.id}!`);
+          console.log(`Error: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`);
         }
 
         client.guildConfigs.set(guild.id, { server, interval });
