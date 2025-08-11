@@ -1,0 +1,14 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "config": {
+      "startCmd": "npm start"
+    }
+  },
+  "deploy": {
+    "restartPolicy": {
+      "type": "always",
+      "maxRetries": 5
+    }
+  }
+}

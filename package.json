@@ -3,6 +3,9 @@
   "version": "3.1.0",
   "description": "Discord bot to send information about any SA:MP server.",
   "main": "index.js",
+  "scripts": {
+    "start": "pm2-runtime start ecosystem.config.js"
+  },
   "author": "focus2004",
   "license": "ISC",
   "engines": {
@@ -19,6 +22,7 @@
     "gamedig": "gamedig/node-gamedig",
     "keyv": "^4.5.4",
     "moment": "^2.30.1",
+    "pm2": "^6.0.8",
     "table": "^6.8.1"
   }
 }
