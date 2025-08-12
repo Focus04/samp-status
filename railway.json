@@ -1,9 +1,6 @@
 {
   "build": {
-    "builder": "nixpacks",
-    "config": {
-      "startCmd": "npm start"
-    }
+    "builder": "nixpacks"
   },
   "deploy": {
     "restartPolicy": {

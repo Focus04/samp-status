@@ -2,7 +2,7 @@ import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
 import { getUptime, formatUrl } from './getUptime.js';
-import { sendWarningLog } from '../utils/sendWarningLog.js'
+import { sendWarningLog } from '../utils/sendError.js'
 
 const tableConfig = {
   border: getBorderCharacters('void'),

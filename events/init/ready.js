@@ -2,11 +2,11 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
-import { sendInfoLog, sendWarningLog } from '../../utils/sendWarningLog.js';
+import { sendInfoLog, sendWarningLog } from '../../utils/sendError.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
 
-const commands = index;
+const commands = index.commands;
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
