@@ -43,4 +43,4 @@ async function loadEvents() {
   await client.login(process.env.token);
 }) ();
 
-export default commands;
+export default { client, commands };

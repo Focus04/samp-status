@@ -2,6 +2,7 @@ import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
 import { getUptime, formatUrl } from './getUptime.js';
+import { sendWarningLog } from '../utils/sendWarningLog.js'
 
 const tableConfig = {
   border: getBorderCharacters('void'),
@@ -18,7 +19,7 @@ const cQuery = async (server) => {
     host: server.ip,
     port: server.port,
     maxAttempts: 3,
-  }).catch((err) => console.log(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
+  }).catch((err) => sendWarningLog(`Error: Failed c query at ${server.ip}:${server.port} (3 attempts)!`));
 
   const players = [['Name', 'Score']];
   if (data?.players?.[0]) {
@@ -35,7 +36,7 @@ const dQuery = async (server) => {
     host: server.ip,
     port: server.port,
     maxAttempts: 3,
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)!`));
+  }).catch((err) => sendWarningLog(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)!`));
 
   const players = [['ID', 'Name', 'Score', 'Ping']];
   if (data?.players?.[0]) {
@@ -88,7 +89,7 @@ export async function getPlayerCount(server) {
     host: server.ip,
     port: server.port,
     maxAttempts: 3,
-  }).catch((err) => console.log(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
+  }).catch((err) => sendWarningLog(`Error: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
 
   if (!data) {
     return {
