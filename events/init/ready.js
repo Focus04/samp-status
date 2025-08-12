@@ -2,7 +2,6 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
-import { sendInfoLog, sendWarningLog } from '../../utils/sendError.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
 
@@ -15,14 +14,14 @@ const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 export default {
   name: 'ready',
   execute: async (client) => {
-    sendInfoLog('I am live on Railway!');
+    console.log('I am live on Railway!');
     client.user.setActivity('SA:MP');
 
     // Register commands in all guilds
     client.guilds.cache.forEach((guild) => {
       client.application.commands
         .set(commands, guild.id)
-        .catch((err) => sendWarningLog(`Error: Could not create commands on guild ${guild.id}!`));
+        .catch((err) => console.log(`WARNING: Could not create commands on guild ${guild.id}!`));
     });
 
     // Cache guild configs
@@ -60,7 +59,7 @@ export default {
 
         const channel = await client.channels
           .fetch(interval.channel)
-          .catch((err) => sendWarningLog(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
+          .catch((err) => console.log(`WARNING: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
         if (!channel) return;
 
         const color = getRoleColor(guild);
@@ -81,7 +80,7 @@ export default {
           const newMsg = await channel.send({ embeds: [serverEmbed] });
           interval.message = newMsg.id;
         } catch (err) {
-          sendWarningLog(`Error: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`);
+          console.log(`WARNING: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`);
         }
 
         client.guildConfigs.set(guild.id, { server, interval });
@@ -117,7 +116,7 @@ export default {
 
         const channel = await client.channels
           .fetch(interval.channel)
-          .catch((err) => console.log(`Error: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
+          .catch((err) => console.log(`WARNING: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
         if (!channel) return;
 
         const color = getRoleColor(guild);
@@ -128,7 +127,7 @@ export default {
           data.msg = msg.id;
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
         } catch (err) {
-          sendWarningLog(`Error: Could not send message in channel ${interval.channel} in guild ${guild.id}!`);
+          console.log(`WARNING: Could not send message in channel ${interval.channel} in guild ${guild.id}!`);
         }
       }));
 
