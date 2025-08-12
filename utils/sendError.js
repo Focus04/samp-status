@@ -1,5 +1,5 @@
 import { logsChId } from '../config.json' assert { type: 'json' };
-import index from '../index';
+import index from '../index.js';
 
 export function sendWarningLog(msg) {
   index.client.channels.cache.get(logsChId).send('⚠️ ' + msg);
