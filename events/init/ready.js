@@ -68,17 +68,16 @@ export default {
 
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
 
-        try {
-          const oldMsg = await channel.messages.fetch(interval.message);
-          if (oldMsg) await oldMsg.edit({ embeds: [serverEmbed] });
-          else {
-            const newMsg = await channel.send({ embeds: [serverEmbed] });
-            interval.message = newMsg.id;
-            client.guildConfigs.set(guild.id, { server, interval });
-            await intervals.set(guild.id, interval);
-          }
-        } catch {
-          console.log(`WARNING: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`);
+        const oldMsg = await channel.messages
+          .fetch(interval.message)
+          .catch(() => console.log(`WARNING: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`));
+        if (oldMsg?.embeds) await oldMsg.edit({ embeds: [serverEmbed] });
+        else {
+          console.log()
+          const newMsg = await channel.send({ embeds: [serverEmbed] });
+          interval.message = newMsg.id;
+          client.guildConfigs.set(guild.id, { server, interval });
+          await intervals.set(guild.id, interval);
         }
       }));
     }, 60000);
