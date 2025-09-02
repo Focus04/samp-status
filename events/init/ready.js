@@ -50,13 +50,11 @@ export default {
         if (!chartData) return;
 
         const info = await getPlayerCount(server);
-        if (info.playerCount > chartData.maxPlayersToday) {
-          chartData.maxPlayersToday = info.playerCount;
-        }
+        if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
-
+        
         const channel = await client.channels
           .fetch(interval.channel)
           .catch((err) => console.log(`WARNING: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
@@ -65,26 +63,23 @@ export default {
         const color = getRoleColor(guild);
         const serverEmbed = await getStatus(server, color);
 
-        if (!serverEmbed.data?.fields) {
-          onlineStats.downtime += 1;
-        } else {
-          onlineStats.uptime += 1;
-        }
+        if (!serverEmbed.data?.fields) onlineStats.downtime += 1;
+        else onlineStats.uptime += 1;
 
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
 
         try {
-          const oldMsg = await channel.messages.fetch(interval.message).catch(() => null);
-          if (oldMsg) await oldMsg.delete();
-
-          const newMsg = await channel.send({ embeds: [serverEmbed] });
-          interval.message = newMsg.id;
-        } catch (err) {
+          const oldMsg = await channel.messages.fetch(interval.message);
+          if (oldMsg) await oldMsg.edit({ embeds: [serverEmbed] });
+          else {
+            const newMsg = await channel.send({ embeds: [serverEmbed] });
+            interval.message = newMsg.id;
+            client.guildConfigs.set(guild.id, { server, interval });
+            await intervals.set(guild.id, interval);
+          }
+        } catch {
           console.log(`WARNING: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`);
         }
-
-        client.guildConfigs.set(guild.id, { server, interval });
-        await intervals.set(guild.id, interval);
       }));
     }, 60000);
 
