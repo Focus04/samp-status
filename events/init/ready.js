@@ -70,11 +70,13 @@ export default {
 
         const oldMsg = await channel.messages
           .fetch(interval.message)
-          .catch(() => console.log(`WARNING: Cannot update message in channel ${interval.channel} in guild ${guild.id}!`));
+          .catch(() => console.log(`WARNING: Cannot edit message in channel ${interval.channel} in guild ${guild.id}!`));
         if (oldMsg?.embeds) await oldMsg.edit({ embeds: [serverEmbed] });
         else {
           console.log()
-          const newMsg = await channel.send({ embeds: [serverEmbed] });
+          const newMsg = await channel
+            .send({ embeds: [serverEmbed] })
+            .catch(() => console.log(`WARNING: Cannot send message in channel ${interval.channel} in guild ${guild.id}!`));
           interval.message = newMsg.id;
           client.guildConfigs.set(guild.id, { server, interval });
           await intervals.set(guild.id, interval);
