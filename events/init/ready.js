@@ -77,9 +77,11 @@ export default {
           const newMsg = await channel
             .send({ embeds: [serverEmbed] })
             .catch(() => console.log(`WARNING: Cannot send message in channel ${interval.channel} in guild ${guild.id}!`));
-          interval.message = newMsg.id;
-          client.guildConfigs.set(guild.id, { server, interval });
-          await intervals.set(guild.id, interval);
+          if (newMsg) {
+            interval.message = newMsg.id;
+            client.guildConfigs.set(guild.id, { server, interval });
+            await intervals.set(guild.id, interval);
+          }
         }
       }));
     }, 60000);
