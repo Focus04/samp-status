@@ -54,7 +54,7 @@ export default {
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
-        
+
         const channel = await client.channels
           .fetch(interval.channel)
           .catch((err) => console.log(`WARNING: Could not fetch channel ${interval.channel} in guild ${guild.id}!`));
@@ -68,20 +68,18 @@ export default {
 
         await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
 
-        const oldMsg = await channel.messages
-          .fetch(interval.message)
-          .catch(() => console.log(`WARNING: Could not edit message in channel ${interval.channel} in guild ${guild.id}!`));
-        if (oldMsg?.embeds) await oldMsg.edit({ embeds: [serverEmbed] });
-        else {
-          const newMsg = await channel
-            .send({ embeds: [serverEmbed] })
-            .catch(() => console.log(`WARNING: Could not send message in channel ${interval.channel} in guild ${guild.id}!`));
-          if (newMsg) {
-            interval.message = newMsg.id;
-            client.guildConfigs.set(guild.id, { server, interval });
-            await intervals.set(guild.id, interval);
-          }
+        try {
+          const oldMsg = await channel.messages.fetch(interval.message);
+          if (oldMsg) await oldMsg.delete();
+
+          const newMsg = await channel.send({ embeds: [serverEmbed] });
+          interval.message = newMsg.id;
+        } catch {
+          console.log(`WARNING: Could not update message in channel ${interval.channel} in guild ${guild.id}!`);
         }
+
+        client.guildConfigs.set(guild.id, { server, interval });
+        await intervals.set(guild.id, interval);
       }));
     }, 60000);
 
