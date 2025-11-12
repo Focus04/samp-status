@@ -40,7 +40,7 @@ export default {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
 
-        const { interval = {}, server = {} } = guildConfigs;
+        let { interval = {}, server = {} } = guildConfigs;
         if (!interval?.enabled || Date.now() < interval.next) return;
 
         interval.next = Date.now() + 180000;
@@ -53,6 +53,7 @@ export default {
         if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
         chartData.name = info.name;
         chartData.maxPlayers = info.maxPlayers;
+        server.name = info.name;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
 
         const channel = await client.channels
@@ -80,6 +81,7 @@ export default {
 
         client.guildConfigs.set(guild.id, { server, interval });
         await intervals.set(guild.id, interval);
+        await servers.set(guild.id, server);
       }));
     }, 60000);
 
