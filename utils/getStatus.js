@@ -2,6 +2,7 @@ import { EmbedBuilder } from 'discord.js';
 import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
 import { getUptime, formatUrl } from './getUptime.js';
+import { getPartnerServers } from './getPartnerServers.js';
 
 const tableConfig = {
   border: getBorderCharacters('void'),
@@ -79,6 +80,7 @@ export async function getStatus(server, color) {
   if (output.length < 1000 && players[1]?.length && players[1][1]) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
+  serverEmbed.addFields({ name: 'Partner Servers', value: `\`\`\`${getPartnerServers()}\`\`\`` })
   return serverEmbed;
 }
 

@@ -10,12 +10,16 @@ const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
+const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
 export default {
   name: 'ready',
   execute: async (client) => {
     console.log('I am live on Railway!');
     client.user.setActivity('SA:MP');
+
+    await subscriptions.set('subscribedServers', []);
+    console.log('Added Subscribed Servers DB entry');
 
     // Register commands in all guilds
     client.guilds.cache.forEach((guild) => {

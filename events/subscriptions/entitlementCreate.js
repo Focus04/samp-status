@@ -11,6 +11,6 @@ export default {
 
     let { server = {} } = guildConfigs;
     subscribedServers.push(server);
-    await subscriptions.set('subscribedServers', []);
+    await subscriptions.set('subscribedServers', subscribedServers);
   }
 }
