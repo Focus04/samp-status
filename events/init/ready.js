@@ -11,6 +11,7 @@ const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
+const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
 export default {
   name: 'ready',
@@ -41,7 +42,7 @@ export default {
       if (!partnerServers.length)
         return client.user.setActivity('SAMP');
       client.user.setActivity(partnerServers[(index++) % partnerServers.length].name);
-      
+
       await Promise.all(client.guilds.cache.map(async (guild) => {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
