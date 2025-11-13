@@ -7,7 +7,7 @@ export async function getPartnerServers() {
   const partnerServers = await subscriptions.get('subscribedServers');
 
   if (!partnerServers[0]) serializedPartnerServers = 'Coming soon...'
-  else serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}`).join('\n');
+  else serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}:${server.port}`).join('\n');
 
   return serializedPartnerServers;
 }
