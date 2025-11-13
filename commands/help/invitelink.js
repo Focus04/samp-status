@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, MessageFlags } from 'discord.js';
 import config from '../../config.json' assert { type: 'json' };
 
 export default {
@@ -7,6 +7,6 @@ export default {
     .setDescription('Sends the invite link for the bot.'),
   execute: (interaction) => {
     const { botInviteLink, discordInviteLink } = config;
-    interaction.reply({ content: `Bot invite: ${botInviteLink}\nDiscord invite: ${discordInviteLink}`, ephemeral: true });
+    interaction.reply({ content: `Bot invite: ${botInviteLink}\nDiscord invite: ${discordInviteLink}`, flags: MessageFlags.Ephemeral });
   }
 }

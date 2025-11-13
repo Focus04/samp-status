@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
 import Keyv from 'keyv';
 
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
@@ -11,7 +11,7 @@ export default {
   async execute(interaction) {
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
-      return interaction.reply({ content: 'No interval configured for this server', ephemeral: true });
+      return interaction.reply({ content: 'No interval configured for this server', flags: MessageFlags.Ephemeral });
     }
 
     interval.enabled = !interval.enabled;
@@ -25,7 +25,7 @@ export default {
 
     interaction.reply({
       content: interval.enabled ? '✅ Status updates enabled' : '❌ Status updates disabled',
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
   },
 };

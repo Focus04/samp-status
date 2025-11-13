@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js';
 import { getUptime } from '../../utils/getUptime.js';
 import Keyv from 'keyv';
 
@@ -14,7 +14,7 @@ export default {
 
     if (!interval) {
       return interaction.editReply({
-        content: 'You must set an interval first using /setinterval', ephemeral: true
+        content: 'You must set an interval first using /setinterval', flags: MessageFlags.Ephemeral
       });
     }
 

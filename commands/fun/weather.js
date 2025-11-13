@@ -1,4 +1,4 @@
-import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { EmbedBuilder, SlashCommandBuilder, MessageFlags } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
 const WEATHER_ICONS = {
@@ -36,7 +36,7 @@ export default {
     const data = await response.json();
 
     if (data.message === 'city not found') {
-      return interaction.reply({ content: `Couldn't find any data information for \`${location}\``, ephemeral: true });
+      return interaction.reply({ content: `Couldn't find any data information for \`${location}\``, flags: MessageFlags.Ephemeral });
     }
 
     const icon = WEATHER_ICONS[data.weather[0].icon];

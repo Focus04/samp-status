@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
 import { GameDig } from 'gamedig';
 import Keyv from 'keyv';
 import { updatePartnerServers } from '../../utils/getPartnerServers.js'
@@ -29,7 +29,7 @@ export default {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const ip = interaction.options.getString('ip');
     const port = interaction.options.getString('port');

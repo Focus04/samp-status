@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, MessageFlags } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import Keyv from 'keyv';
@@ -16,7 +16,7 @@ export default {
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
       return interaction.editReply({
-        content: 'You must set an interval to view statistics. Set one using /setinterval', ephemeral: true,
+        content: 'You must set an interval to view statistics. Set one using /setinterval', flags: MessageFlags.Ephemeral,
       });
     }
 
@@ -25,7 +25,7 @@ export default {
 
     if (!data?.days?.length) {
       return interaction.editReply({
-        content: 'No data has been collected yet. Check again tomorrow.', ephemeral: true,
+        content: 'No data has been collected yet. Check again tomorrow.', flags: MessageFlags.Ephemeral,
       });
     }
 

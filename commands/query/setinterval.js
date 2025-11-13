@@ -1,8 +1,4 @@
-import {
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-  ChannelType,
-} from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, ChannelType, MessageFlags } from 'discord.js';
 import Keyv from 'keyv';
 
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
@@ -21,7 +17,7 @@ export default {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const channel = interaction.options.getChannel('channel-name');
     const server = await servers.get(interaction.guildId);

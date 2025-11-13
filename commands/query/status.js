@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, MessageFlags } from 'discord.js';
 import { getStatus } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
@@ -12,7 +12,7 @@ export default {
 
     if (!server) {
       return interaction.editReply({
-        content: 'This server isn\'t linked to any game server. Use /setguildserver to set one up.', ephemeral: true
+        content: 'This server isn\'t linked to any game server. Use /setguildserver to set one up.', flags: MessageFlags.Ephemeral
       });
     }
 

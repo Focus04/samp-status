@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, MessageFlags } from 'discord.js';
 import config from '../../config.json' assert { type: 'json' };
 
 export default {
@@ -25,7 +25,7 @@ export default {
 
     interaction.reply({
       content: `Your suggestion has been successfully submitted to our server and is now awaiting a review from the developer's side. You can join our Discord server anytime using this link: ${discordInviteLink}`,
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
   },
 };

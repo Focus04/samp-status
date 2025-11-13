@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 
 export default {
@@ -15,7 +15,7 @@ export default {
     const data = await response.json();
 
     if (!data.list[0]?.definition) {
-      return interaction.reply({ content: `Couldn't find any results for \`${term}\``, ephemeral: true });
+      return interaction.reply({ content: `Couldn't find any results for \`${term}\``, flags: MessageFlags.Ephemeral });
     }
 
     const cleanText = (text) => text.replace(/[[\]]/g, '');
