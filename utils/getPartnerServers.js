@@ -9,7 +9,7 @@ export async function getPartnerServers() {
   const { storeLink } = config;
 
   serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}:${server.port}`).join('\n');
-  serializedPartnerServers += `[Become a partner now](${storeLink})`
+  serializedPartnerServers += `\n[Become a partner now](${storeLink})`
 
   return serializedPartnerServers;
 }
