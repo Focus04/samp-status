@@ -19,7 +19,7 @@ export default {
     .setDescription('Displays a list of all available commands along with their usage'),
   async execute(interaction) {
     const color = getRoleColor(interaction.guild);
-    const { botInviteLink, StoreLink, discordInviteLink, githubRepo } = config;
+    const { botInviteLink, storeLink, discordInviteLink, githubRepo } = config;
 
     const commandCategories = {
       '🎮 Server Query Commands': './commands/query',
@@ -48,7 +48,7 @@ export default {
     const links = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel('✅ Become a partner now')
-        .setURL(StoreLink)
+        .setURL(storeLink)
         .setStyle(ButtonStyle.Link),
     );
 
