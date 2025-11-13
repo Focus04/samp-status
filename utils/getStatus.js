@@ -96,7 +96,7 @@ export async function getPlayerCount(server) {
   if (!data) {
     return {
       playerCount: -1,
-      name: 'the server',
+      name: 'SAMP Server',
       maxPlayers: 50,
     };
   }

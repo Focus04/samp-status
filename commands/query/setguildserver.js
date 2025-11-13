@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import { GameDig } from 'gamedig';
 import Keyv from 'keyv';
+import { updatePartnerServers } from '../../utils/getPartnerServers.js'
 
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 
@@ -47,12 +48,14 @@ export default {
       });
     }
 
-    const server = { ip, port, game };
+    const server = { ip, port, game, name: 'SAMP Server' };
     await servers.set(interaction.guildId, server);
 
     const config = interaction.client.guildConfigs.get(interaction.guildId) || {};
     config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
+
+    await updatePartnerServers(interaction.guildId, server);
 
     await interaction.editReply({
       content: `You can now use /status to view information about ${ip}:${port}`,

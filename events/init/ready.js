@@ -2,6 +2,7 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
+import { updatePartnerServers } from '../../utils/getPartnerServers.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
 
@@ -10,7 +11,6 @@ const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
-const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
 export default {
   name: 'ready',
@@ -82,7 +82,7 @@ export default {
 
         client.guildConfigs.set(guild.id, { server, interval });
         await intervals.set(guild.id, interval);
-        await servers.set(guild.id, server);
+        await updatePartnerServers(guild.id, server);
       }));
     }, 60000);
 

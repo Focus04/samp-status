@@ -13,3 +13,14 @@ export async function getPartnerServers() {
 
   return serializedPartnerServers;
 }
+
+export async function updatePartnerServers(guildId, server) {
+  const partnerServers = await subscriptions.get('subscribedServers');
+  const found = partnerServers.filter((partnerServer) => partnerServer.id === guildId);
+  if (!found) return;
+
+  server.id = guildId;
+  const index = partnerServers.indexOf(found);
+  partnerServers[index] = server;
+  await subscriptions.set('subscribedServers', partnerServers);
+}

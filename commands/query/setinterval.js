@@ -47,7 +47,7 @@ export default {
 
     const serverData = await maxPlayers.get(`${server.ip}:${server.port}`) || {
       maxPlayersToday: -1,
-      name: 'the server',
+      name: 'SAMP Server',
       maxPlayers: 50,
       days: [],
     };
