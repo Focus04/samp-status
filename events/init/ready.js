@@ -39,10 +39,10 @@ export default {
     // Status update interval (1 minute)
     setInterval(async () => {
       const partnerServers = await subscriptions.get('subscribedServers');
-      if (!partnerServers.length) client.user.setActivity('SAMP', { type: ActivityType.Playing });
+      if (!partnerServers.length) client.user.setActivity('SAMP', { type: ActivityType.Watching });
       else {
         let activityName = partnerServers[(index++) % partnerServers.length].name;
-        client.user.setActivity(activityName, { type: ActivityType.Playing });
+        client.user.setActivity(activityName, { type: ActivityType.Watching });
       }
 
       await Promise.all(client.guilds.cache.map(async (guild) => {
