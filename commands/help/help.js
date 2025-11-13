@@ -19,7 +19,7 @@ export default {
     .setDescription('Displays a list of all available commands along with their usage'),
   async execute(interaction) {
     const color = getRoleColor(interaction.guild);
-    const { botInviteLink, StoreLink, discordInviteLink } = config;
+    const { botInviteLink, StoreLink, discordInviteLink, githubRepo } = config;
 
     const commandCategories = {
       '🎮 Server Query Commands': './commands/query',
@@ -42,7 +42,7 @@ export default {
 
     helpEmbed.addFields({
       name: 'Useful links',
-      value: `[Add SAMP Status](${botInviteLink})  [Support Server](${discordInviteLink})`
+      value: `[Add SAMP Status](${botInviteLink}) [Support Server](${discordInviteLink}) [GitHub](${githubRepo})`
     });
 
     const links = new ActionRowBuilder().addComponents(
