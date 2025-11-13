@@ -18,9 +18,6 @@ export default {
     console.log('I am live on Railway!');
     client.user.setActivity('SA:MP');
 
-    await subscriptions.set('subscribedServers', []);
-    console.log('Added Subscribed Servers DB entry');
-
     // Register commands in all guilds
     client.guilds.cache.forEach((guild) => {
       client.application.commands

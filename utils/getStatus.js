@@ -74,13 +74,13 @@ export async function getStatus(server, color) {
       { name: 'Website', value: websiteUrl, inline: true },
       { name: 'Version', value: `${data.raw?.rules?.version}`, inline: true },
       { name: 'Players', value: `${players.length - 1}/${data.maxplayers}`, inline: true },
-    )
+  )
     .setTimestamp();
 
   if (output.length < 1000 && players[1]?.length && players[1][1]) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
-  serverEmbed.addFields({ name: 'Partner Servers', value: `\`\`\`${getPartnerServers()}\`\`\`` })
+  serverEmbed.addFields({ name: 'Partner Servers', value: getPartnerServers() });
   return serverEmbed;
 }
 
