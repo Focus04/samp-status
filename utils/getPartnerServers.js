@@ -8,8 +8,8 @@ export async function getPartnerServers() {
   const partnerServers = await subscriptions.get('subscribedServers');
   const { storeLink } = config;
 
-  if (!partnerServers[0]) serializedPartnerServers = `[Become a partner now](${storeLink})`
-  else serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}:${server.port}`).join('\n');
+  serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}:${server.port}`).join('\n');
+  serializedPartnerServers += `[Become a partner now](${storeLink})`
 
   return serializedPartnerServers;
 }

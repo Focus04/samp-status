@@ -56,6 +56,7 @@ export default {
         chartData.maxPlayers = info.maxPlayers;
         server.name = info.name;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
+        await updatePartnerServers(guild.id, server);
 
         const channel = await client.channels
           .fetch(interval.channel)
@@ -82,7 +83,6 @@ export default {
 
         client.guildConfigs.set(guild.id, { server, interval });
         await intervals.set(guild.id, interval);
-        await updatePartnerServers(guild.id, server);
       }));
     }, 60000);
 
