@@ -1,4 +1,4 @@
-import { Collection } from 'discord.js';
+import { ActivityType, Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
@@ -39,10 +39,10 @@ export default {
     // Status update interval (1 minute)
     setInterval(async () => {
       const partnerServers = await subscriptions.get('subscribedServers');
-      if (!partnerServers.length) client.user.setPresence({ activities: [{ name: 'SAMP' }] });
+      if (!partnerServers.length) client.user.setActivity('SAMP', { type: ActivityType.Playing });
       else {
         let activityName = partnerServers[(index++) % partnerServers.length].name;
-        client.user.setPresence({ activities: [{ name: activityName }] });
+        client.user.setActivity(activityName, { type: ActivityType.Playing });
       }
 
       await Promise.all(client.guilds.cache.map(async (guild) => {
