@@ -5,7 +5,7 @@ const subscriptions = new Keyv(process.env.database, { collection: 'subscription
 export default {
   name: 'entitlementCreate',
   execute: async (entitlement) => {
-    const guildConfigs = client.guildConfigs.get(guild.id);
+    const guildConfigs = client.guildConfigs.get(entitlement.guildId);
     if (!guildConfigs) return;
     let { server = {} } = guildConfigs;
 

@@ -41,13 +41,13 @@ export default {
     }
 
     helpEmbed.addFields({
-      name: 'Useful links',
+      name: '🔗 Useful links',
       value: `[Add SAMP Status](${botInviteLink}) [Support Server](${discordInviteLink}) [GitHub](${githubRepo})`
     });
 
     const links = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setLabel('Become a partner now')
+        .setLabel('✅ Become a partner now')
         .setURL(StoreLink)
         .setStyle(ButtonStyle.Link),
     );

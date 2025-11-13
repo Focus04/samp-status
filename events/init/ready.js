@@ -35,6 +35,14 @@ export default {
       client.guildConfigs.set(guild.id, { server, interval });
     }));
 
+    const guildConfigs = client.guildConfigs.get('729313166835712033');
+    if (!guildConfigs) return;
+    let { server = {} } = guildConfigs;
+
+    let subscribedServers = await subscriptions.get('subscribedServers');
+    subscribedServers.push(server);
+    await subscriptions.set('subscribedServers', subscribedServers);
+
     // Status update interval (1 minute)
     setInterval(async () => {
       await Promise.all(client.guilds.cache.map(async (guild) => {
