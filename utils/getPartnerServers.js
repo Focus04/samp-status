@@ -17,10 +17,10 @@ export async function getPartnerServers() {
 export async function updatePartnerServers(guildId, server) {
   const partnerServers = await subscriptions.get('subscribedServers');
   const found = partnerServers.filter((partnerServer) => partnerServer.id === guildId);
-  if (!found) return;
+  if (!found[0]) return;
 
   server.id = guildId;
-  const index = partnerServers.indexOf(found);
+  const index = partnerServers.indexOf(found[0]);
   partnerServers[index] = server;
   await subscriptions.set('subscribedServers', partnerServers);
 }
