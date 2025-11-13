@@ -42,7 +42,7 @@ export default {
 
     helpEmbed.addFields({
       name: '🔗 Useful links',
-      value: `[Add SAMP Status](${botInviteLink}) [Support Server](${discordInviteLink}) [GitHub](${githubRepo})`
+      value: `[Add SAMP Status](${botInviteLink}) | [Support Server](${discordInviteLink}) | [GitHub](${githubRepo})`
     });
 
     const links = new ActionRowBuilder().addComponents(
