@@ -2,7 +2,7 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
-import { updatePartnerServers } from '../../utils/getPartnerServers.js';
+import { updatePartnerServers, setBotActivity } from '../../utils/getPartnerServers.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
 
@@ -16,7 +16,7 @@ export default {
   name: 'ready',
   execute: async (client) => {
     console.log('I am live on Railway!');
-    client.user.setActivity('SA:MP');
+    let index = 0;
 
     // Register commands in all guilds
     client.guilds.cache.forEach((guild) => {
@@ -37,6 +37,8 @@ export default {
 
     // Status update interval (1 minute)
     setInterval(async () => {
+      setBotActivity(index++);
+
       await Promise.all(client.guilds.cache.map(async (guild) => {
         const guildConfigs = client.guildConfigs.get(guild.id);
         if (!guildConfigs) return;
