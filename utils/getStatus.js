@@ -62,6 +62,7 @@ export async function getStatus(server, color) {
   const uptime = await getUptime(server);
   const websiteUrl = formatUrl(data.raw?.rules?.weburl);
   const output = table(players, tableConfig);
+  const partnerServers = await getPartnerServers();
 
   const serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
@@ -80,7 +81,7 @@ export async function getStatus(server, color) {
   if (output.length < 1000 && players[1]?.length && players[1][1]) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
-  serverEmbed.addFields({ name: 'Partner Servers', value: getPartnerServers() });
+  serverEmbed.addFields({ name: 'Partner Servers', value: partnerServers });
   return serverEmbed;
 }
 
