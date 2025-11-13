@@ -42,12 +42,12 @@ export default {
 
     helpEmbed.addFields({
       name: 'Useful links',
-      value: `[Add SAMP Status to your server](${botInviteLink})\n[Support Server](${discordInviteLink})`
+      value: `[Add SAMP Status](${botInviteLink})  [Support Server](${discordInviteLink})`
     });
 
     const links = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setLabel('Become a partner')
+        .setLabel('Become a partner now')
         .setURL(StoreLink)
         .setStyle(ButtonStyle.Link),
     );
