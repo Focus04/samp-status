@@ -24,11 +24,3 @@ export async function updatePartnerServers(guildId, server) {
   partnerServers[index] = server;
   await subscriptions.set('subscribedServers', partnerServers);
 }
-
-export async function setBotActivity(index) {
-  const partnerServers = await subscriptions.get('subscribedServers');
-  if (!partnerServers.length)
-    return client.user.setActivity('SAMP');
-
-  client.user.setActivity(partnerServers[index % partnerServers.length].name);
-}
