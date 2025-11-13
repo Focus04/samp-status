@@ -8,6 +8,7 @@ export default {
     const guildConfigs = client.guildConfigs.get(entitlement.guildId);
     if (!guildConfigs) return;
     let { server = {} } = guildConfigs;
+    server.id = entitlement.guildId;
 
     let subscribedServers = await subscriptions.get('subscribedServers');
     subscribedServers.push(server);
