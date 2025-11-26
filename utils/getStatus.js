@@ -66,7 +66,7 @@ export async function getStatus(server, color) {
   
   const subscribedServers = index.client.guildConfigs.get('subscribedServers');
   subscribedServers.forEach((server) => {
-    updatedServer = index.client.guildConfigs.get(server.id);
+    const updatedServer = index.client.guildConfigs.get(server.id);
     server.name = updatedServer.name;
   });
   index.client.guildConfigs.set('subscribedServers', subscribedServers);
