@@ -37,7 +37,7 @@ export default {
     let data;
 
     try {
-      data = GameDig.query({
+      data = await GameDig.query({
         type: game,
         host: ip,
         port: parseInt(port, 10),
@@ -56,6 +56,7 @@ export default {
     config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
 
+    console.log(data)
     console.log(server);
     await updatePartnerServers(interaction.guildId, server);
 
