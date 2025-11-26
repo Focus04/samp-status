@@ -56,6 +56,7 @@ export default {
     config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
 
+    console.log(server);
     await updatePartnerServers(interaction.guildId, server);
 
     await interaction.editReply({
