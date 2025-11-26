@@ -2,7 +2,6 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
-import { updatePartnerServers } from '../../utils/getPartnerServers.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
 
@@ -61,7 +60,6 @@ export default {
         chartData.maxPlayers = info.maxPlayers;
         server.name = info.name;
         await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
-        await updatePartnerServers(guild.id, server);
 
         const channel = await client.channels
           .fetch(interval.channel)

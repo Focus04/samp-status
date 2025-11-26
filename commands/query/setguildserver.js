@@ -34,9 +34,10 @@ export default {
     const ip = interaction.options.getString('ip');
     const port = interaction.options.getString('port');
     const game = interaction.options.getString('game');
+    let data;
 
     try {
-      GameDig.query({
+      data = GameDig.query({
         type: game,
         host: ip,
         port: parseInt(port, 10),
@@ -48,7 +49,7 @@ export default {
       });
     }
 
-    const server = { ip, port, game, name: 'SAMP Server' };
+    const server = { ip, port, game, name: data.name };
     await servers.set(interaction.guildId, server);
 
     const config = interaction.client.guildConfigs.get(interaction.guildId) || {};
