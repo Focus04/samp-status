@@ -63,7 +63,14 @@ export async function getStatus(server, color) {
   const uptime = await getUptime(server);
   const websiteUrl = formatUrl(data.raw?.rules?.weburl);
   const output = table(players, tableConfig);
-  const partnerServers = index.client.guildConfigs.get('subscribedServers');
+  
+  const subscribedServers = index.client.guildConfigs.get('subscribedServers');
+  subscribedServers.forEach((server) => {
+    updatedServer = index.client.guildConfigs.get(server.id);
+    server.name = updatedServer.name;
+  });
+  index.client.guildConfigs.set('subscribedServers', subscribedServers);
+
   const serializedPartnerServers = getPartnerServers(partnerServers);
 
   const serverEmbed = new EmbedBuilder()
