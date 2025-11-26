@@ -71,7 +71,7 @@ export async function getStatus(server, color) {
   });
   index.client.guildConfigs.set('subscribedServers', subscribedServers);
 
-  const serializedPartnerServers = getPartnerServers(partnerServers);
+  const serializedPartnerServers = getPartnerServers(subscribedServers);
 
   const serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
