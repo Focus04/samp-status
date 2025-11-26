@@ -65,12 +65,6 @@ export async function getStatus(server, color) {
   const output = table(players, tableConfig);
   
   const subscribedServers = index.client.guildConfigs.get('subscribedServers');
-  subscribedServers.forEach((server) => {
-    const updatedServer = index.client.guildConfigs.get(server.id);
-    server.name = updatedServer.name;
-  });
-  index.client.guildConfigs.set('subscribedServers', subscribedServers);
-
   const serializedPartnerServers = getPartnerServers(subscribedServers);
 
   const serverEmbed = new EmbedBuilder()
