@@ -12,6 +12,7 @@ export default {
 
     let subscribedServers = await subscriptions.get('subscribedServers');
     subscribedServers.push(server);
+    entitlement.client.guildConfigs.set('subscribedServers', subscribedServers);
     await subscriptions.set('subscribedServers', subscribedServers);
 
     const channel = await entitlement.client.channels

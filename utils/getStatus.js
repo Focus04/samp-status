@@ -3,6 +3,7 @@ import { getBorderCharacters, table } from 'table';
 import { GameDig } from 'gamedig';
 import { getUptime, formatUrl } from './getUptime.js';
 import { getPartnerServers } from './getPartnerServers.js';
+import index from '../index.js';
 
 const tableConfig = {
   border: getBorderCharacters('void'),
@@ -62,7 +63,8 @@ export async function getStatus(server, color) {
   const uptime = await getUptime(server);
   const websiteUrl = formatUrl(data.raw?.rules?.weburl);
   const output = table(players, tableConfig);
-  const partnerServers = await getPartnerServers();
+  const partnerServers = index.client.guildConfigs.get('subscribedServers', subscribedServers);
+  const serializedPartnerServers = getPartnerServers(partnerServers);
 
   const serverEmbed = new EmbedBuilder()
     .setColor(color.hex)
@@ -81,7 +83,7 @@ export async function getStatus(server, color) {
   if (output.length < 1000 && players[1]?.length && players[1][1]) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
-  serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: partnerServers });
+  serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: serializedPartnerServers });
   return serverEmbed;
 }
 

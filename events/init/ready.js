@@ -28,11 +28,13 @@ export default {
     // Cache guild configs
     client.guildConfigs = new Collection();
     await Promise.all(client.guilds.cache.map(async (guild) => {
-      const [server, interval] = await Promise.all([
+      const [server, interval, subscription] = await Promise.all([
         servers.get(guild.id),
         intervals.get(guild.id),
+        subscriptions.get('subscribedServers')
       ]);
       client.guildConfigs.set(guild.id, { server, interval });
+      client.guildConfigs.set('subscribedServers', subscription);
     }));
 
     // Status update interval (1 minute)

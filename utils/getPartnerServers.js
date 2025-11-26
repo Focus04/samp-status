@@ -3,9 +3,8 @@ import config from '../config.json' assert { type: 'json' };
 
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
-export async function getPartnerServers() {
-  let serializedPartnerServers = ''
-  const partnerServers = await subscriptions.get('subscribedServers');
+export function getPartnerServers(partnerServers) {
+  let serializedPartnerServers = '';
   const { storeLink } = config;
 
   serializedPartnerServers = partnerServers.map((server) => `${server.name}: ${server.ip}:${server.port}`).join('\n');
