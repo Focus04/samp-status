@@ -34,13 +34,13 @@ export default {
         intervals.get(guild.id)
       ]);
       await client.guildConfigs.set(guild.id, { server, interval });
-
     }));
     console.log('Cached guild servers and intervals from the database!');
 
     const subscription = await subscriptions.get('subscribedServers');
-    client.guildConfigs.set('subscribedServers', subscription);
+    await client.guildConfigs.set('subscribedServers', subscription);
     console.log('Cached partner servers from the database!');
+    console.log(subscription)
 
     // Status Update Interval (1 minute)
     setInterval(async () => {
