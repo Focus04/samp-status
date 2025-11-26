@@ -30,15 +30,17 @@ export default {
     await Promise.all(client.guilds.cache.map(async (guild) => {
       const [server, interval, subscription] = await Promise.all([
         servers.get(guild.id),
-        intervals.get(guild.id),
-        subscriptions.get('subscribedServers')
+        intervals.get(guild.id)
       ]);
       await client.guildConfigs.set(guild.id, { server, interval });
-      console.log('Cached guild servers and intervals from the database!');
-      client.guildConfigs.set('subscribedServers', subscription);
-      console.log('Cached partner servers from the database!');
-      console.log(subscription)
+
     }));
+    console.log('Cached guild servers and intervals from the database!');
+
+    const subscription = await subscriptions.get('subscribedServers');
+    client.guildConfigs.set('subscribedServers', subscription);
+    console.log('Cached partner servers from the database!');
+    console.log(subscription)
 
     // Status update interval (1 minute)
     setInterval(async () => {
