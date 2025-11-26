@@ -56,7 +56,6 @@ export default {
     config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
 
-    console.log(data)
     console.log(server);
     await updatePartnerServers(interaction.guildId, server);
 
