@@ -6,7 +6,10 @@ import dns from 'node:dns';
 dns.setDefaultResultOrder('ipv4first');
 
 config();
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds],
+  rest: { timeout: 30000 }
+});
 
 const commands = [];
 client.commands = new Collection();
