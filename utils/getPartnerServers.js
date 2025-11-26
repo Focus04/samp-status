@@ -22,7 +22,6 @@ export async function updatePartnerServers(guildId, server) {
   server.id = guildId;
   const idx = partnerServers.indexOf(found[0]);
   partnerServers[idx] = server;
-  console.log(partnerServers);
   await subscriptions.set('subscribedServers', partnerServers);
-  index.client.guildConfigs.set('subscribedServers', subscribedServers);
+  index.client.guildConfigs.set('subscribedServers', partnerServers);
 }
