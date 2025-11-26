@@ -33,13 +33,16 @@ export default {
         intervals.get(guild.id),
         subscriptions.get('subscribedServers')
       ]);
-      client.guildConfigs.set(guild.id, { server, interval });
+      await client.guildConfigs.set(guild.id, { server, interval });
+      console.log('Cached guild servers and intervals from the database!');
       client.guildConfigs.set('subscribedServers', subscription);
+      console.log('Cached partner servers from the database!');
+      console.log(subscription)
     }));
 
     // Status update interval (1 minute)
     setInterval(async () => {
-      const partnerServers = await subscriptions.get('subscribedServers');
+      const partnerServers = client.guildConfigs.get('subscribedServers');
       if (!partnerServers.length) client.user.setActivity('SAMP');
       else client.user.setActivity(partnerServers[(index++) % partnerServers.length].name);
 
