@@ -1,5 +1,6 @@
 import Keyv from 'keyv';
 import config from '../config.json' assert { type: 'json' };
+import index from '../index.js';
 
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
@@ -19,7 +20,8 @@ export async function updatePartnerServers(guildId, server) {
   if (!found[0]) return;
 
   server.id = guildId;
-  const index = partnerServers.indexOf(found[0]);
-  partnerServers[index] = server;
+  const idx = partnerServers.indexOf(found[0]);
+  partnerServers[idx] = server;
   await subscriptions.set('subscribedServers', partnerServers);
+  index.client.guildConfigs.set('subscribedServers', subscribedServers);
 }

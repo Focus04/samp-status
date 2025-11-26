@@ -28,7 +28,7 @@ export default {
     // Cache guild configs
     client.guildConfigs = new Collection();
     await Promise.all(client.guilds.cache.map(async (guild) => {
-      const [server, interval, subscription] = await Promise.all([
+      const [server, interval] = await Promise.all([
         servers.get(guild.id),
         intervals.get(guild.id)
       ]);
