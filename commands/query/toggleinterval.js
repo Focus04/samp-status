@@ -11,7 +11,10 @@ export default {
   async execute(interaction) {
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
-      return interaction.reply({ content: 'No interval configured for this server', flags: MessageFlags.Ephemeral });
+      return interaction.reply({
+        content: 'No interval configured for this server',
+        flags: MessageFlags.Ephemeral
+      });
     }
 
     interval.enabled = !interval.enabled;

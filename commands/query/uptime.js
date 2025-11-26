@@ -14,7 +14,8 @@ export default {
 
     if (!interval) {
       return interaction.editReply({
-        content: 'You must set an interval first using /setinterval', flags: MessageFlags.Ephemeral
+        content: 'You must set an interval first using /setinterval',
+        flags: MessageFlags.Ephemeral
       });
     }
 

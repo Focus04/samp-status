@@ -12,12 +12,15 @@ export default {
 
     if (!server) {
       return interaction.editReply({
-        content: 'This server isn\'t linked to any game server. Use /setguildserver to set one up.', flags: MessageFlags.Ephemeral
+        content: 'This server isn\'t linked to any game server. Use /setguildserver to set one up.',
+        flags: MessageFlags.Ephemeral
       });
     }
 
     const color = getRoleColor(interaction.guild);
     const serverEmbed = await getStatus(server, color);
-    await interaction.editReply({ embeds: [serverEmbed] });
+    await interaction
+      .editReply({ embeds: [serverEmbed] })
+      .catch((err) => console.log(`WARNING: Connection timed out trying to get status of ${server.ip}:${server.port}.`));
   },
 };

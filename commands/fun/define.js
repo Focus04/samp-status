@@ -15,7 +15,10 @@ export default {
     const data = await response.json();
 
     if (!data.list[0]?.definition) {
-      return interaction.reply({ content: `Couldn't find any results for \`${term}\``, flags: MessageFlags.Ephemeral });
+      return interaction.reply({
+        content: `Couldn't find any results for \`${term}\``,
+        flags: MessageFlags.Ephemeral
+      });
     }
 
     const cleanText = (text) => text.replace(/[[\]]/g, '');

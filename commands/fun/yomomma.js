@@ -13,6 +13,8 @@ export default {
     const member = interaction.options.getMember('user');
     const response = await fetch('https://www.yomama-jokes.com/api/v1/jokes/random/');
     const data = await response.json();
-    interaction.reply({ content: `Hey ${member}, ${data.joke}` });
+    interaction.reply({
+      content: `Hey ${member}, ${data.joke}`
+    });
   }
 }

@@ -41,12 +41,12 @@ export default {
         type: game,
         host: ip,
         port: parseInt(port, 10),
-        maxAttempts: 5,
+        maxAttempts: 3,
       });
     } catch {
-      return interaction.editReply({
-        content: `Couldn't connect to server at ${ip}:${port}`,
-      });
+      return interaction
+        .editReply({ content: `Couldn't connect to server at ${ip}:${port}`, })
+        .catch((err) => console.log(`WARNING: Connection timed out trying to get status of ${server.ip}:${server.port}.`));
     }
 
     const server = { ip, port, game, name: data.name };
@@ -55,12 +55,10 @@ export default {
     const config = interaction.client.guildConfigs.get(interaction.guildId) || {};
     config.server = server;
     interaction.client.guildConfigs.set(interaction.guildId, config);
-
-    console.log(server);
     await updatePartnerServers(interaction.guildId, server);
 
-    await interaction.editReply({
-      content: `You can now use /status to view information about ${ip}:${port}`,
-    });
+    await interaction
+      .editReply({ content: `You can now use /status to view information about ${ip}:${port}`, })
+      .catch((err) => console.log(`WARNING: Connection timed out trying to get status of ${server.ip}:${server.port}.`));
   },
 };

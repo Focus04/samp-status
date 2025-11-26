@@ -16,7 +16,8 @@ export default {
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {
       return interaction.editReply({
-        content: 'You must set an interval to view statistics. Set one using /setinterval', flags: MessageFlags.Ephemeral,
+        content: 'You must set an interval to view statistics. Set one using /setinterval',
+        flags: MessageFlags.Ephemeral,
       });
     }
 
@@ -25,7 +26,8 @@ export default {
 
     if (!data?.days?.length) {
       return interaction.editReply({
-        content: 'No data has been collected yet. Check again tomorrow.', flags: MessageFlags.Ephemeral,
+        content: 'No data has been collected yet. Check again tomorrow.',
+        flags: MessageFlags.Ephemeral,
       });
     }
 

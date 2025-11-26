@@ -24,7 +24,7 @@ export default {
       });
 
     interaction.reply({
-      content: `Your suggestion has been successfully submitted to our server and is now awaiting a review from the developer's side. You can join our Discord server anytime using this link: ${discordInviteLink}`,
+      content: `Your suggestion has been successfully submitted to our server and is now awaiting a review. You can join our Discord server anytime using this link: ${discordInviteLink}`,
       flags: MessageFlags.Ephemeral,
     });
   },

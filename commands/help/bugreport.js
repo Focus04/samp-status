@@ -24,7 +24,7 @@ export default {
       });
 
     await interaction.reply({
-      content: `Your bug has been successfully submitted to our server and is now awaiting review from the developer's side. You can join our Discord server anytime using this link: ${discordInviteLink}`,
+      content: `Your bug has been successfully submitted to our server and is now awaiting review. You can join our Discord server anytime using this link: ${discordInviteLink}`,
       flags: MessageFlags.Ephemeral,
     });
   },
