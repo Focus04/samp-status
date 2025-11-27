@@ -6,12 +6,25 @@ import index from '../../index.js';
 import Keyv from 'keyv';
 
 const commands = index.commands;
-
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' });
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
+
+const BATCH_SIZE = 20;
+const BATCH_DELAY_MS = 1000;
+const LOOP_DELAY_MS = 60000;
+
+const chunkArray = (array, size) => {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += size) {
+    chunks.push(array.slice(i, i + size));
+  }
+  return chunks;
+};
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
   name: 'ready',
@@ -19,30 +32,37 @@ export default {
     console.log('I am live on Railway!');
     let index = 0;
 
-    // Register commands in all guilds
-    client.guilds.cache.forEach((guild) => {
-      client.application.commands
-        .set(commands, guild.id)
-        .catch((err) => console.log(`WARNING: Could not create commands on guild ${guild.id}!`));
-    });
+    const guildList = Array.from(client.guilds.cache.values());
+    const batches = chunkArray(guildList, BATCH_SIZE);
 
-    // Cache guild configs
+    for (const batch of batches) {
+      await Promise.all(batch.map(async (guild) => {
+        await client.application.commands
+          .set(commands, guild.id)
+          .catch((err) => console.log(`WARNING: Could not create commands on guild ${guild.id}!`));
+      }));
+      await sleep(BATCH_DELAY_MS);
+    }
+    console.log('Commands registered!');
+
     client.guildConfigs = new Collection();
-    await Promise.all(client.guilds.cache.map(async (guild) => {
-      const [server, interval] = await Promise.all([
-        servers.get(guild.id),
-        intervals.get(guild.id)
-      ]);
-      await client.guildConfigs.set(guild.id, { server, interval });
-    }));
-    console.log('Cached guild servers and intervals from the database!');
+    for (const batch of batches) {
+      await Promise.all(batch.map(async (guild) => {
+        const [server, interval] = await Promise.all([
+          servers.get(guild.id),
+          intervals.get(guild.id)
+        ]);
+        client.guildConfigs.set(guild.id, { server, interval });
+      }));
+      await sleep(200);
+    }
+    console.log('Cached guild configs!');
 
     const subscription = await subscriptions.get('subscribedServers');
-    await client.guildConfigs.set('subscribedServers', subscription);
-    console.log('Cached partner servers from the database!');
+    client.guildConfigs.set('subscribedServers', subscription);
+    console.log('Cached partner servers!');
 
-    // Status Update Interval (1 minute)
-    setInterval(async () => {
+    const runUpdateLoop = async () => {
       const partnerServers = client.guildConfigs.get('subscribedServers');
       if (!partnerServers?.length) {
         client.user.setActivity('SAMP');
@@ -50,115 +70,141 @@ export default {
         client.user.setActivity(partnerServers[(index++) % partnerServers.length].name);
       }
 
-      // Sequential Processing
-      for (const [guildId, guild] of client.guilds.cache) {
-        const guildConfigs = client.guildConfigs.get(guildId);
-        if (!guildConfigs) continue;
+      const currentGuilds = Array.from(client.guilds.cache.values());
+      const currentBatches = chunkArray(currentGuilds, BATCH_SIZE);
 
-        let { interval = {}, server = {} } = guildConfigs;
-        if (!interval?.enabled || Date.now() < interval.next) continue;
+      for (const batch of currentBatches) {
+        await Promise.all(batch.map(async (guild) => {
+          const guildConfigs = client.guildConfigs.get(guild.id);
+          if (!guildConfigs) return;
 
-        interval.next = Date.now() + 180000;
+          let { interval = {}, server = {} } = guildConfigs;
+          if (!interval?.enabled || Date.now() < interval.next) return;
 
-        let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
-        const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
+          interval.next = Date.now() + 180000;
 
-        if (!chartData) continue;
+          let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
+          const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
 
-        const info = await getPlayerCount(server);
-        if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
-        chartData.name = info.name;
-        chartData.maxPlayers = info.maxPlayers;
-        server.name = info.name;
+          if (!chartData) return;
 
-        await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
+          const info = await getPlayerCount(server);
+          if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
+          chartData.name = info.name;
+          chartData.maxPlayers = info.maxPlayers;
+          server.name = info.name;
 
-        const channel = await client.channels.fetch(interval.channel).catch(() => null);
-        if (!channel) continue;
+          await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
 
-        const color = getRoleColor(guild);
-        const serverEmbed = await getStatus(server, color);
+          const channel = await client.channels.fetch(interval.channel).catch(() => null);
+          if (!channel) return;
 
-        if (!serverEmbed.data?.fields) onlineStats.downtime += 1;
-        else onlineStats.uptime += 1;
+          const color = getRoleColor(guild);
+          const serverEmbed = await getStatus(server, color);
 
-        await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
+          if (!serverEmbed.data?.fields) onlineStats.downtime += 1;
+          else onlineStats.uptime += 1;
 
-        try {
-          const newMsg = await channel.send({ embeds: [serverEmbed] });
+          await uptimes.set(`${server.ip}:${server.port}`, onlineStats);
 
-          if (interval.message) {
-            try {
-              const oldMsg = await channel.messages.fetch(interval.message).catch(() => null);
-              if (oldMsg) await oldMsg.delete();
-            } catch (err) {
-              console.log(`WARNING: Could not delete message in ${interval.channel} in guild ${guildId}`);
+          try {
+            const newMsg = await channel.send({ embeds: [serverEmbed] });
+
+            if (interval.message) {
+              try {
+                const oldMsg = await channel.messages.fetch(interval.message).catch(() => null);
+                if (oldMsg) await oldMsg.delete();
+              } catch (err) {
+                console.log(`WARNING: Could not delete message in ${interval.channel} in guild ${guild.id}`);
+              }
             }
+            interval.message = newMsg.id;
+          } catch (err) {
+            console.log(`WARNING: Could not send status update in channel ${interval.channel} in guild ${guild.id}`);
+            return;
           }
-          interval.message = newMsg.id;
-        } catch (err) {
-          console.log(`WARNING: Could not send status update in channel ${interval.channel} in guild ${guildId}`);
-          continue;
-        }
 
-        client.guildConfigs.set(guildId, { server, interval });
-        await intervals.set(guildId, interval);
+          client.guildConfigs.set(guild.id, { server, interval });
+          await intervals.set(guild.id, interval);
+        }));
+
+        await sleep(BATCH_DELAY_MS);
       }
-    }, 60000);
 
-    // Daily Stats Interval (1 hour)
-    setInterval(async () => {
+      setTimeout(runUpdateLoop, LOOP_DELAY_MS);
+    };
+
+    runUpdateLoop();
+
+    const runDailyStatsLoop = async () => {
       const nextCheck = await maxPlayers.get('next') || Date.now();
-      if (Date.now() < nextCheck) return;
+
+      if (Date.now() < nextCheck) {
+        setTimeout(runDailyStatsLoop, 3600000);
+        return;
+      }
 
       await maxPlayers.set('next', Date.now() + 86400000);
 
-      for (const [guildId, guild] of client.guilds.cache) {
-        const guildConfig = client.guildConfigs.get(guildId) || {};
-        const { interval = {}, server = {} } = guildConfig;
-        if (!interval?.enabled) continue;
+      const currentGuilds = Array.from(client.guilds.cache.values());
+      const currentBatches = chunkArray(currentGuilds, BATCH_SIZE);
 
-        const data = await maxPlayers.get(`${server.ip}:${server.port}`);
-        if (!data) continue;
+      for (const batch of currentBatches) {
+        await Promise.all(batch.map(async (guild) => {
+          const guildConfig = client.guildConfigs.get(guild.id) || {};
+          const { interval = {}, server = {} } = guildConfig;
+          if (!interval?.enabled) return;
 
-        const chartData = {
-          value: data.maxPlayersToday,
-          date: Date.now(),
-        };
+          const data = await maxPlayers.get(`${server.ip}:${server.port}`);
+          if (!data) return;
 
-        if (!data.days) data.days = [];
-        if (chartData.value >= 0) data.days.push(chartData);
-        if (data.days.length > 30) data.days.shift();
+          const chartData = {
+            value: data.maxPlayersToday,
+            date: Date.now(),
+          };
 
-        await maxPlayers.set(`${server.ip}:${server.port}`, data);
+          if (!data.days) data.days = [];
+          if (chartData.value >= 0) data.days.push(chartData);
+          if (data.days.length > 30) data.days.shift();
 
-        const channel = await client.channels.fetch(interval.channel).catch(() => null);
-        if (!channel) continue;
-
-        const color = getRoleColor(guild);
-        const chart = await getChart(data, color);
-
-        try {
-          const msg = await channel.send({ files: [chart] });
-          data.msg = msg.id;
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
-        } catch (err) {
-          console.log(`WARNING: Could not send daily chart in channel ${interval.channel} in guild ${guildId}!`);
-        }
+
+          const channel = await client.channels.fetch(interval.channel).catch(() => null);
+          if (!channel) return;
+
+          const color = getRoleColor(guild);
+          const chart = await getChart(data, color);
+
+          try {
+            const msg = await channel.send({ files: [chart] });
+            data.msg = msg.id;
+            await maxPlayers.set(`${server.ip}:${server.port}`, data);
+          } catch (err) {
+            console.log(`WARNING: Could not send daily chart in channel ${interval.channel} in guild ${guild.id}!`);
+          }
+        }));
+
+        await sleep(BATCH_DELAY_MS);
       }
 
       setTimeout(async () => {
-        for (const [guildId, guild] of client.guilds.cache) {
-          const guildConfig = client.guildConfigs.get(guildId) || {};
-          const { interval = {}, server = {} } = guildConfig;
-          if (!interval) continue;
+        for (const batch of currentBatches) {
+          await Promise.all(batch.map(async (guild) => {
+            const guildConfig = client.guildConfigs.get(guild.id) || {};
+            const { interval = {}, server = {} } = guildConfig;
+            if (!interval) return;
 
-          const data = await maxPlayers.get(`${server.ip}:${server.port}`) || {};
-          data.maxPlayersToday = -1;
-          await maxPlayers.set(`${server.ip}:${server.port}`, data);
+            const data = await maxPlayers.get(`${server.ip}:${server.port}`) || {};
+            data.maxPlayersToday = -1;
+            await maxPlayers.set(`${server.ip}:${server.port}`, data);
+          }));
+          await sleep(200);
         }
       }, 120000);
 
-    }, 3600000);
+      setTimeout(runDailyStatsLoop, 3600000);
+    };
+
+    runDailyStatsLoop();
   },
 };
