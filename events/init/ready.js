@@ -12,9 +12,8 @@ const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' })
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
-const BATCH_SIZE = 20;
+const BATCH_SIZE = 50;
 const BATCH_DELAY_MS = 1000;
-const LOOP_DELAY_MS = 60000;
 
 const chunkArray = (array, size) => {
   const chunks = [];
@@ -35,14 +34,11 @@ export default {
     const guildList = Array.from(client.guilds.cache.values());
     const batches = chunkArray(guildList, BATCH_SIZE);
 
-    for (const batch of batches) {
-      await Promise.all(batch.map(async (guild) => {
-        await client.application.commands
-          .set(commands, guild.id)
-          .catch((err) => console.log(`WARNING: Could not create commands on guild ${guild.id}!`));
-      }));
-      await sleep(BATCH_DELAY_MS);
-    }
+    client.guilds.cache.forEach((guild) => {
+      client.application.commands
+        .set(commands, guild.id)
+        .catch((err) => console.log(`WARNING: Could not create commands on guild ${guild.id}!`));
+    });
     console.log('Commands registered!');
 
     client.guildConfigs = new Collection();
@@ -131,7 +127,7 @@ export default {
         await sleep(BATCH_DELAY_MS);
       }
 
-      setTimeout(runUpdateLoop, LOOP_DELAY_MS);
+      setTimeout(runUpdateLoop, 60000);
     };
 
     runUpdateLoop();
