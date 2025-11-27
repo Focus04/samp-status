@@ -84,7 +84,7 @@ export async function getStatus(server, color) {
   if (output.length < 1000 && players[1]?.length && players[1][1]) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
-  serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: serializedPartnerServers });
+  serverEmbed.addFields({ name: 'Discover Partner Servers', value: serializedPartnerServers });
   return serverEmbed;
 }
 
