@@ -12,8 +12,8 @@ const maxPlayers = new Keyv(process.env.database, { collection: 'max-members' })
 const uptimes = new Keyv(process.env.database, { collection: 'uptime' });
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
-const BATCH_SIZE = 100;
-const BATCH_DELAY_MS = 50;
+const BATCH_SIZE = 200;
+const BATCH_DELAY_MS = 500;
 
 const chunkArray = (array, size) => {
   const chunks = [];

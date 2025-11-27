@@ -8,7 +8,7 @@ export function getPartnerServers(partnerServers) {
   let serializedPartnerServers = '';
   const { storeLink } = config;
 
-  serializedPartnerServers = partnerServers.map((server) => `✓${server.name}\n  ⤷ ${server.ip}:${server.port}`).join('\n');
+  serializedPartnerServers = partnerServers.map((server) => `${server.name}\n⤷ ${server.ip}:${server.port}`).join('\n');
   serializedPartnerServers += `\n[Become a partner now](${storeLink})`
 
   return serializedPartnerServers;
