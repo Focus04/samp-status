@@ -9,7 +9,10 @@ export default {
     .setName('uptime')
     .setDescription('Shows the server uptime percentage'),
   async execute(interaction) {
-    await interaction.deferReply();
+    await interaction.deferReply().catch((err) => {
+      console.log('WARNING: Interaction expired before deferring.');
+      return;
+    });
     const interval = await intervals.get(interaction.guildId);
 
     if (!interval) {

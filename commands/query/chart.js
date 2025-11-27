@@ -11,7 +11,10 @@ export default {
     .setName('chart')
     .setDescription('Sends a chart displaying server statistics for each day'),
   async execute(interaction) {
-    await interaction.deferReply();
+    await interaction.deferReply().catch((err) => {
+      console.log('WARNING: Interaction expired before deferring.');
+      return;
+    });
 
     const interval = await intervals.get(interaction.guildId);
     if (!interval) {

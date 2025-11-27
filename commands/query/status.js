@@ -7,7 +7,10 @@ export default {
     .setName('status')
     .setDescription('Shows live information about your favorite community'),
   async execute(interaction) {
-    await interaction.deferReply();
+    await interaction.deferReply().catch((err) => {
+      console.log('WARNING: Interaction expired before deferring.');
+      return;
+    });
     const { server } = interaction.client.guildConfigs.get(interaction.guildId) || {};
 
     if (!server) {

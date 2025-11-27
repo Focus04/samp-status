@@ -29,7 +29,10 @@ export default {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
-    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch((err) => {
+      console.log('WARNING: Interaction expired before deferring.');
+      return;
+    });
 
     const ip = interaction.options.getString('ip');
     const port = interaction.options.getString('port');
