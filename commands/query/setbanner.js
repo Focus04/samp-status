@@ -52,10 +52,11 @@ export default {
     }
 
     server.banner = url;
-    let guildConfig = interaction.client.guildConfigs.get(interaction.guildId);
-    guildConfig.server.banner = url;
-    interaction.client.guildConfigs.set(interaction.guildId, guildConfig);
     await servers.set(interaction.guildId, server);
+
+    const guildConfig = interaction.client.guildConfigs.get(interaction.guildId) || {};
+    guildConfig.server = server;
+    interaction.client.guildConfigs.set(interaction.guildId, guildConfig);
 
     await interaction.editReply({
       content: `Successfully set banner url to ${url}`
