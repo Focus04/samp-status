@@ -23,7 +23,7 @@ export default {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
-    const url = interaction.client.guildConfigs.get(interaction.guildId);
+    const url = interaction.options.getString('url');
     await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch((err) => {
       console.log('WARNING: Interaction expired before deferring.');
       return;
