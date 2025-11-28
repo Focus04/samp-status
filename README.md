@@ -6,6 +6,8 @@
 - `/setguildserver` Sets a per guild game server to receive updates on.
 - `/status` Tells you live information about your favourite community!
 - `/setinterval` Sets a channel for status messages to be sent in.
+- `/setbanner` Sets a banner for all status messages.
+- `/removebanner` Removes the banner from status messages.
 - `/uptime` Sends the server's uptime percent.
 - `/chart` Sends a chart displaying server statistics for each day.
 - `/stats` Tells you how many players are online across all servers.
