@@ -29,9 +29,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export default {
   name: 'ready',
   execute: async (client) => {
-    console.log('I am live on Railway!');
     let index = 0;
-
     const guildList = Array.from(client.guilds.cache.values());
     const batches = chunkArray(guildList, BATCH_SIZE);
 
