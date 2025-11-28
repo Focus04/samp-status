@@ -55,7 +55,7 @@ export default {
       new URL(url);
     } catch {
       return interaction.editReply({
-        content: 'This isn\'t a valid URL. Please use this format: https://i.imgur.com/AfFp7pu.png'
+        content: 'This isn\'t a valid URL. Please use this format: `https://i.imgur.com/AfFp7pu.png`.'
       });
     }
 
