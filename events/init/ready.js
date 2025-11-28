@@ -2,9 +2,9 @@ import { Collection } from 'discord.js';
 import { getChart } from '../../utils/getChart.js';
 import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
+import { isServerPartner } from '../../utils/getPartnerServers.js'
 import index from '../../index.js';
 import Keyv from 'keyv';
-import chart from '../../commands/query/chart.js';
 
 const commands = index.commands;
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
@@ -75,7 +75,8 @@ export default {
           let { interval = {}, server = {} } = guildConfigs;
           if (!interval?.enabled || Date.now() < interval.next) return;
 
-          interval.next = Date.now() + 180000;
+          if (!isServerPartner(guild.id)) interval.next = Date.now() + 180000;
+          else interval.next = Date.now() + 60000;
 
           let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
           let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);

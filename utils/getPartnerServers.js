@@ -4,6 +4,13 @@ import index from '../index.js';
 
 const subscriptions = new Keyv(process.env.database, { collection: 'subscriptions' });
 
+export function isServerPartner(guildId) {
+  const partnerServers = index.client.guildConfigs.get('subscribedServers');
+  const found = partnerServers.filter((partnerServer) => partnerServer.id === guildId);
+  if (found[0]) return true;
+  else return false;
+}
+
 export function getPartnerServers(partnerServers) {
   let serializedPartnerServers = '';
   const { storeLink } = config;
