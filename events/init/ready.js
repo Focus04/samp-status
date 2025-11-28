@@ -73,6 +73,8 @@ export default {
 
           let { interval = {}, server = {} } = guildConfigs;
           if (!interval?.enabled || Date.now() < interval.next) return;
+          
+          if (guild.id === '729315570054594632') console.log('Found server 729315570054594632');
 
           interval.next = Date.now() + 180000;
 

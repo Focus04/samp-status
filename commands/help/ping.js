@@ -7,12 +7,12 @@ export default {
   execute: async (interaction) => {
     const replyMessage = await interaction.reply({
       content: '📡 Pinging...',
-      fetchReply: true
+      withResponse: true
     });
     const botLatency = replyMessage.createdTimestamp - interaction.createdTimestamp;
     const apiLatency = interaction.client.ws.ping;
     interaction
-      .editReply({ content: `📡 Bot Latency: ${botLatency} ms\n💓 Discord API Latency: ${apiLatency}` })
+      .editReply({ content: `📡 Bot Latency: ${botLatency} ms\n💓 Discord API Latency: ${apiLatency} ms` })
       .catch((err) => console.log(`WARNING: Connection timed out trying to get ping.`));
   }
 }
