@@ -85,7 +85,7 @@ export async function getStatus(server, color) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
 
-  if (server.banner.length) {
+  if (server.banner) {
     serverEmbed.setFooter({ iconURL: server.banner });
   }
 
