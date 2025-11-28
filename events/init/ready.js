@@ -58,9 +58,6 @@ export default {
     client.guildConfigs.set('subscribedServers', subscription);
     console.log('Cached partner servers!');
 
-    let test = client.guildConfigs.get('729315570054594632');
-    console.log(test.server);
-
     const runUpdateLoop = async () => {
       const partnerServers = client.guildConfigs.get('subscribedServers');
       if (!partnerServers?.length) client.user.setActivity('SAMP');

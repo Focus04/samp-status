@@ -5,7 +5,7 @@ export default {
     .setName('ping')
     .setDescription(`Displays the bot's current latency in ms.`),
   execute: async (interaction) => {
-    const replyMessage = interaction.reply({
+    const replyMessage = await interaction.reply({
       content: '📡 Pinging...',
       fetchReply: true
     });
@@ -13,6 +13,6 @@ export default {
     const apiLatency = interaction.client.ws.ping;
     interaction
       .editReply({ content: `📡 Bot Latency: ${botLatency} ms\n💓 Discord API Latency: ${apiLatency}` })
-      .catch((err) => console.log(`WARNING: Connection timed out trying to get status of ${server.ip}:${server.port}.`));
+      .catch((err) => console.log(`WARNING: Connection timed out trying to get ping.`));
   }
 }
