@@ -16,11 +16,6 @@ export default {
   data: new SlashCommandBuilder()
     .setName('setbanner')
     .setDescription('Sets a banner for all status messages')
-    .addStringOption((option) => option
-      .setName('url')
-      .setDescription('The URL of the banner (e.g https://i.imgur.com/AfFp7pu.png)')
-      .setRequired(true)
-    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const url = interaction.options.getString('url');
@@ -40,26 +35,18 @@ export default {
     );
     if (!isServerPartner(interaction.guildId)) {
       return interaction.editReply({
-        content: 'This server isn\'t partnered yet. Become a partner gain access to this command.',
+        content: 'This server isn\'t partnered yet. Become a partner to gain access to this command.',
         components: [links]
       });
     }
 
-    if (!server) {
+    if (!server?.banner) {
       return interaction.editReply({
-        content: 'This server doesn\'t have a game server linked yet. Use /setguildserver to set one up.'
+        content: 'This server doesn\'t have a banner set yet. Use /setbanner to set one up.'
       });
     }
 
-    try {
-      new URL(url);
-    } catch {
-      return interaction.editReply({
-        content: 'This isn\'t a valid URL. Please use this format: `https://i.imgur.com/AfFp7pu.png`.'
-      });
-    }
-
-    server.banner = url;
+    server.banner = '';
     await servers.set(interaction.guildId, server);
 
     const guildConfig = interaction.client.guildConfigs.get(interaction.guildId) || {};
@@ -67,7 +54,7 @@ export default {
     interaction.client.guildConfigs.set(interaction.guildId, guildConfig);
 
     await interaction.editReply({
-      content: `Successfully set banner url to ${url}.`
+      content: `Successfully removed server banner.`
     });
   }
 }
