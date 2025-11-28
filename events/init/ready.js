@@ -78,14 +78,9 @@ export default {
           interval.next = Date.now() + 180000;
 
           let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
-          const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
+          let chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
 
-          if (!chartData) chartData = {
-            maxPlayersToday: -1,
-            name: 'SAMP Server',
-            maxPlayers: 50,
-            days: [],
-          };
+          if (!chartData) chartData = { maxPlayersToday: -1, days: [] };
 
           const info = await getPlayerCount(server);
           if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
