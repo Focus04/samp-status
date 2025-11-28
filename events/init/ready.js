@@ -75,7 +75,7 @@ export default {
           let { interval = {}, server = {} } = guildConfigs;
           if (!interval?.enabled || Date.now() < interval.next) return;
 
-          if (!isServerPartner(guild.id)) interval.next = Date.now() + 150000;
+          if (!isServerPartner(guild.id)) interval.next = Date.now() + 300000;
           else interval.next = Date.now();
 
           let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };

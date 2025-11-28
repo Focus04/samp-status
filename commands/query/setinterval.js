@@ -53,7 +53,7 @@ export default {
     await maxPlayers.set(`${server.ip}:${server.port}`, serverData);
 
     await interaction.editReply({
-      content: `Successfully set status updates in ${channel.toString()}`,
+      content: `Successfully set status updates in ${channel.toString()}`
     });
   },
 };
