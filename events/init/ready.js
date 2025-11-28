@@ -4,6 +4,7 @@ import { getStatus, getPlayerCount } from '../../utils/getStatus.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import index from '../../index.js';
 import Keyv from 'keyv';
+import chart from '../../commands/query/chart.js';
 
 const commands = index.commands;
 const intervals = new Keyv(process.env.database, { collection: 'intervals' });
@@ -79,7 +80,12 @@ export default {
           let onlineStats = await uptimes.get(`${server.ip}:${server.port}`) || { uptime: 0, downtime: 0 };
           const chartData = await maxPlayers.get(`${server.ip}:${server.port}`);
 
-          if (!chartData) return;
+          if (!chartData) chartData = {
+            maxPlayersToday: -1,
+            name: 'SAMP Server',
+            maxPlayers: 50,
+            days: [],
+          };
 
           const info = await getPlayerCount(server);
           if (info.playerCount > chartData.maxPlayersToday) chartData.maxPlayersToday = info.playerCount;
