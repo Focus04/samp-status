@@ -91,7 +91,7 @@ export default {
 
           const channel = await client.channels
             .fetch(interval.channel)
-            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}`));
+            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}!`));
           if (!channel) return;
 
           const color = getRoleColor(guild);
@@ -109,15 +109,15 @@ export default {
               try {
                 const oldMsg = await channel.messages
                   .fetch(interval.message)
-                  .catch(() => console.log(`WARNING: Could not fetch message ${interval.message} from channel ${interval.channel}`));
+                  .catch(() => console.log(`WARNING: Could not fetch message ${interval.message} from channel ${interval.channel}!`));
                 if (oldMsg) await oldMsg.delete();
               } catch (err) {
-                console.log(`WARNING: Could not delete message in ${interval.channel} in guild ${guild.id}`);
+                console.log(`WARNING: Could not delete message in ${interval.channel} in guild ${guild.id}!`);
               }
             }
             interval.message = newMsg.id;
           } catch (err) {
-            console.log(`WARNING: Could not send status update in channel ${interval.channel} in guild ${guild.id}`);
+            console.log(`WARNING: Could not send status update in channel ${interval.channel} in guild ${guild.id}!`);
             return;
           }
 
@@ -168,7 +168,7 @@ export default {
 
           const channel = await client.channels
             .fetch(interval.channel)
-            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}`));
+            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}!`));
           if (!channel) return;
 
           const color = getRoleColor(guild);

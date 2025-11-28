@@ -86,7 +86,9 @@ export async function getStatus(server, color) {
   }
 
   if (server.banner?.length) {
-    serverEmbed.setFooter({ text: '✅ This server is partnered', iconURL: server.banner });
+    serverEmbed
+      .setFooter({ text: '✅ This server is partnered', iconURL: server.banner })
+      .catch((err) => console.log(`WARNING: Invalid footer banner url at ${server.ip}:${server.port}!`));
   }
 
   serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: serializedPartnerServers });
@@ -99,7 +101,7 @@ export async function getPlayerCount(server) {
     host: server.ip,
     port: server.port,
     maxAttempts: 3,
-  }).catch((err) => console.log(`WARNING: Failed d query at ${server.ip}:${server.port} (3 attempts)`));
+  }).catch((err) => console.log(`WARNING: Failed d query at ${server.ip}:${server.port} (3 attempts)!`));
 
   if (!data) {
     return {
