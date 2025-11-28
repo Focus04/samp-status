@@ -3,7 +3,8 @@ import {
   PermissionFlagsBits,
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle
+  ButtonStyle,
+  MessageFlags
 } from 'discord.js';
 import Keyv from 'keyv';
 import { isServerPartner } from '../../utils/getPartnerServers.js';
