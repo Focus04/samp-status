@@ -33,7 +33,7 @@ export default {
 
     if (!server) {
       return interaction.editReply({
-        content: 'This server doesn\'t have a game server linked yet. Use /setguildserver to set one up.',
+        content: 'This server doesn\'t have a game server linked yet. Use /setguildserver to set one up.'
       });
     }
 
@@ -48,6 +48,14 @@ export default {
       return interaction.editReply({
         content: 'This server isn\'t partnered yet. Become a partner ',
         components: [links]
+      });
+    }
+
+    try {
+      new URL(url);
+    } catch {
+      return interaction.editReply({
+        content: 'This isn\'t a valid URL. Please use this format: https://i.imgur.com/AfFp7pu.png'
       });
     }
 
