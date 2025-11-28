@@ -89,10 +89,10 @@ export default {
 
           await maxPlayers.set(`${server.ip}:${server.port}`, chartData);
 
-          const channel = await client.channels.fetch(interval.channel).catch(() => null);
+          const channel = await client.channels
+            .fetch(interval.channel)
+            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}`));
           if (!channel) return;
-
-          if (channel.id === '787639648075513877') console.log('Found server 729315570054594632');
 
           const color = getRoleColor(guild);
           const serverEmbed = await getStatus(server, color);
@@ -107,7 +107,9 @@ export default {
 
             if (interval.message) {
               try {
-                const oldMsg = await channel.messages.fetch(interval.message).catch(() => null);
+                const oldMsg = await channel.messages
+                  .fetch(interval.message)
+                  .catch(() => console.log(`WARNING: Could not fetch message ${interval.message} from channel ${interval.channel}`));
                 if (oldMsg) await oldMsg.delete();
               } catch (err) {
                 console.log(`WARNING: Could not delete message in ${interval.channel} in guild ${guild.id}`);
@@ -164,7 +166,9 @@ export default {
 
           await maxPlayers.set(`${server.ip}:${server.port}`, data);
 
-          const channel = await client.channels.fetch(interval.channel).catch(() => null);
+          const channel = await client.channels
+            .fetch(interval.channel)
+            .catch(() => console.log(`WARNING: Could not fetch channel ${interval.channel} from guild ${guild.id}`));
           if (!channel) return;
 
           const color = getRoleColor(guild);
