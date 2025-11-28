@@ -8,7 +8,7 @@ import {
 } from 'discord.js';
 import Keyv from 'keyv';
 import { isServerPartner } from '../../utils/getPartnerServers.js';
-import config from '../../config.json' assert { type: 'json' };;
+import config from '../../config.json' assert { type: 'json' };
 
 const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 
