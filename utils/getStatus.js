@@ -85,9 +85,7 @@ export async function getStatus(server, color) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
 
-  if (server.banner?.length) {
-    serverEmbed.setFooter({ text: '✅ This server is partnered', iconURL: server.banner });
-  }
+  if (server.banner?.length) serverEmbed.setThumbnail(server.banner);
 
   serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: serializedPartnerServers });
   return serverEmbed;
