@@ -86,7 +86,7 @@ export async function getStatus(server, color) {
   }
 
   if (server.banner) {
-    serverEmbed.setFooter({ iconURL: server.banner });
+    serverEmbed.setFooter({ text: '', iconURL: server.banner });
   }
 
   serverEmbed.addFields({ name: '✅ Discover Partner Servers', value: serializedPartnerServers });
