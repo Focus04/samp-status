@@ -85,7 +85,7 @@ export async function getStatus(server, color) {
     serverEmbed.addFields({ name: 'Players List', value: `\`\`\`${output}\`\`\`` });
   }
 
-  if (server.banner) {
+  if (server.banner?.length) {
     serverEmbed.setFooter({ text: '✅ This server is partnered', iconURL: server.banner });
   }
 
