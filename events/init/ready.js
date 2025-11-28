@@ -53,6 +53,8 @@ export default {
       await sleep(200);
     }
     console.log('Cached guild configs!');
+    let test = client.guildConfigs.get('729315570054594632');
+    console.log(test.interval);
 
     const subscription = await subscriptions.get('subscribedServers');
     client.guildConfigs.set('subscribedServers', subscription);
