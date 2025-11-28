@@ -14,8 +14,8 @@ const servers = new Keyv(process.env.database, { collection: 'samp-servers' });
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('setbanner')
-    .setDescription('Sets a banner for all status messages')
+    .setName('removebanner')
+    .setDescription('Removes the server banner')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
     const url = interaction.options.getString('url');
