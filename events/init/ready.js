@@ -50,23 +50,21 @@ export default {
         ]);
         client.guildConfigs.set(guild.id, { server, interval });
       }));
-      await sleep(200);
+      await sleep(BATCH_DELAY_MS);
     }
     console.log('Cached guild configs!');
-    let test = client.guildConfigs.get('729315570054594632');
-    console.log(test.interval);
 
     const subscription = await subscriptions.get('subscribedServers');
     client.guildConfigs.set('subscribedServers', subscription);
     console.log('Cached partner servers!');
 
+    let test = client.guildConfigs.get('729315570054594632');
+    console.log(test.server);
+
     const runUpdateLoop = async () => {
       const partnerServers = client.guildConfigs.get('subscribedServers');
-      if (!partnerServers?.length) {
-        client.user.setActivity('SAMP');
-      } else {
-        client.user.setActivity(partnerServers[(index++) % partnerServers.length].name);
-      }
+      if (!partnerServers?.length) client.user.setActivity('SAMP');
+      else client.user.setActivity(partnerServers[(index++) % partnerServers.length].name);
 
       const currentGuilds = Array.from(client.guilds.cache.values());
       const currentBatches = chunkArray(currentGuilds, BATCH_SIZE);
@@ -196,7 +194,7 @@ export default {
             data.maxPlayersToday = -1;
             await maxPlayers.set(`${server.ip}:${server.port}`, data);
           }));
-          await sleep(200);
+          await sleep(BATCH_DELAY_MS);
         }
       }, 120000);
 

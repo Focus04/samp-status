@@ -5,6 +5,14 @@ export default {
     .setName('ping')
     .setDescription(`Displays the bot's current latency in ms.`),
   execute: async (interaction) => {
-    interaction.reply(`Response Latency: ${interaction.client.ws.ping} ms`);
+    const replyMessage = interaction.reply({
+      content: '📡 Pinging...',
+      fetchReply: true
+    });
+    const botLatency = replyMessage.createdTimestamp - interaction.createdTimestamp;
+    const apiLatency = interaction.client.ws.ping;
+    interaction
+      .editReply({ content: `📡 Bot Latency: ${botLatency} ms\n💓 Discord API Latency: ${apiLatency}` })
+      .catch((err) => console.log(`WARNING: Connection timed out trying to get status of ${server.ip}:${server.port}.`));
   }
 }
