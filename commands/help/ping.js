@@ -9,7 +9,7 @@ export default {
       content: '📡 Pinging...',
       withResponse: true
     });
-    const botLatency = replyMessage.createdTimestamp - interaction.createdTimestamp;
+    const botLatency = replyMessage.resource.createdTimestamp - interaction.createdTimestamp;
     const apiLatency = interaction.client.ws.ping;
     interaction
       .editReply({ content: `📡 Bot Latency: ${botLatency} ms\n💓 Discord API Latency: ${apiLatency} ms` })

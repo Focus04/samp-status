@@ -73,8 +73,6 @@ export default {
 
           let { interval = {}, server = {} } = guildConfigs;
           if (!interval?.enabled || Date.now() < interval.next) return;
-          
-          if (guild.id === '729315570054594632') console.log('Found server 729315570054594632');
 
           interval.next = Date.now() + 180000;
 
@@ -93,6 +91,8 @@ export default {
 
           const channel = await client.channels.fetch(interval.channel).catch(() => null);
           if (!channel) return;
+
+          if (channel.id === '787639648075513877') console.log('Found server 729315570054594632');
 
           const color = getRoleColor(guild);
           const serverEmbed = await getStatus(server, color);
