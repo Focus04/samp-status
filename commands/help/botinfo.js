@@ -1,6 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
-import { client } from '../../index.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -19,7 +18,7 @@ export default {
       .setTitle('Bot Information')
       .addFields(
         { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
-        { name: 'Unique Active Users Count', value: client.users.cache.size.toString() },
+        { name: 'Unique Active Users Count', value: interaction.client.users.cache.size.toString() },
       )
       .setTimestamp();
 
