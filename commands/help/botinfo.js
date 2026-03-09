@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
+import { client } from '../../index.js';
 
 export default {
   data: new SlashCommandBuilder()
