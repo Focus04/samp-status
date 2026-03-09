@@ -40,8 +40,10 @@ async function loadEvents() {
   }));
 }
 
-await loadCommands();
-await loadEvents();
-await client.login(process.env.token);
+(async function startBot() {
+  await loadCommands();
+  await loadEvents();
+  await client.login(process.env.token);
+}) ()
 
 export default { client, commands };
