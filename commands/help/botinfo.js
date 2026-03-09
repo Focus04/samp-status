@@ -18,7 +18,7 @@ export default {
       .setTitle('Bot Information')
       .addFields(
         { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
-        { name: 'Members Across All Servers', value: memberCount.toString() },
+        { name: 'Unique Active Users Count', value: client.users.cache.size.toString() },
       )
       .setTimestamp();
 

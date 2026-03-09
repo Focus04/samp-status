@@ -1,9 +1,6 @@
 import { config } from 'dotenv';
 import { readdir } from 'fs/promises';
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
-import dns from 'node:dns';
-
-dns.setDefaultResultOrder('ipv4first');
 
 config();
 const client = new Client({
@@ -43,10 +40,8 @@ async function loadEvents() {
   }));
 }
 
-(async function initialize() {
-  await loadCommands();
-  await loadEvents();
-  await client.login(process.env.token);
-}) ();
+await loadCommands();
+await loadEvents();
+await client.login(process.env.token);
 
 export default { client, commands };
