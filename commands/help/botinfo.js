@@ -17,7 +17,7 @@ export default {
       .setColor(color.hex)
       .setTitle('Bot Information')
       .addFields(
-        { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
+        { name: 'Server Count', value: memberCount.toString() },
         { name: 'Unique Active Users Count', value: interaction.client.users.cache.size.toString() },
       )
       .setTimestamp();
