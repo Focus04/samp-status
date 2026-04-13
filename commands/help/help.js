@@ -9,8 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const getCommandNames = (dir) => {
-  readdirSync(dir).map((file) => `> \`/${file.slice(0, file.lastIndexOf('.'))}\``).join('\n');
-}
+  const files = readdirSync(dir);
+  return files.map((file) => `> \`/${file.slice(0, file.lastIndexOf('.'))}\``).join('\n');
+};
 
 export default {
   data: new SlashCommandBuilder()
@@ -31,7 +32,7 @@ export default {
       .setColor(color.hex)
       .setAuthor({ name: `${interaction.client.user.username} | Help Menu` })
       .setDescription('Explore all available commands below. Type `/` in the chat to see their specific options and arguments!')
-      .setTimestamp()
+      .setTimestamp();
 
     for (const [name, path] of Object.entries(commandCategories)) {
       helpEmbed.addFields({
