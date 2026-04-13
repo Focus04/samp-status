@@ -1,4 +1,5 @@
 import { readdirSync } from 'fs';
+import { join } from 'path';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import config from '../../config.json' assert { type: 'json' };
@@ -17,9 +18,9 @@ export default {
     const { botInviteLink, storeLink, discordInviteLink, githubRepo } = config;
 
     const commandCategories = {
-      '🎮 Server Query': '../query',
-      '🎈 Fun': '../fun',
-      '💡 Help': '../help',
+      '🎮 Server Query': join(__dirname, '../query'),
+      '🎈 Fun': join(__dirname, '../fun'),
+      '💡 Help': join(__dirname, '../help'),
     };
 
     const helpEmbed = new EmbedBuilder()
@@ -44,7 +45,7 @@ export default {
     const linksRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel('Become a partner now')
-        .setEmoji('🤝')
+        .setEmoji('✅')
         .setURL(storeLink)
         .setStyle(ButtonStyle.Link),
     );
