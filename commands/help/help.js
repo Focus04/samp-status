@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 const getCommandNames = (dir) => {
   const files = readdirSync(dir);
-  return files.map((file) => `> /${file.slice(0, file.lastIndexOf('.'))}`).join('\n');
+  return files.map((file) => `> \`/${file.slice(0, file.lastIndexOf('.'))}\``).join('\n');
 };
 
 export default {
@@ -30,7 +30,7 @@ export default {
 
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setTitle({ name: `Slash Commands` })
+      .setTitle(`Slash Commands`)
       .setDescription('Explore all available commands below. Type `/` in the chat to see their specific options and arguments!')
       .setTimestamp();
 
