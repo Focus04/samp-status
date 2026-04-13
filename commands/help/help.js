@@ -1,8 +1,12 @@
 import { readdirSync } from 'fs';
-import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, } from 'discord.js';
 import { getRoleColor } from '../../utils/getRoleColor.js';
 import config from '../../config.json' assert { type: 'json' };
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const getCommandNames = (dir) => {
   readdirSync(dir).map((file) => `> \`/${file.slice(0, file.lastIndexOf('.'))}\``).join('\n');
@@ -32,7 +36,7 @@ export default {
     for (const [name, path] of Object.entries(commandCategories)) {
       helpEmbed.addFields({
         name,
-        value: getCommandNames(path) || '> *No commands found*',
+        value: getCommandNames(path),
         inline: true,
       });
     }
