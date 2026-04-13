@@ -17,7 +17,7 @@ export default {
       .setColor(color.hex)
       .setTitle('Bot Information')
       .addFields(
-        { name: 'Server Count', value: memberCount.toString() },
+        { name: 'Server Count', value: interaction.client.guilds.cache.size.toString() },
         { name: 'Members across all servers', value: memberCount.toString() },
       )
       .setTimestamp();
