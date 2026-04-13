@@ -11,7 +11,7 @@ const client = new Client({
 const commands = [];
 client.commands = new Collection();
 
-async function loadCommands() {
+const loadCommands = async () => {
   const commandFolders = await readdir('./commands');
 
   await Promise.all(commandFolders.map(async (folder) => {
@@ -27,7 +27,7 @@ async function loadCommands() {
   }));
 }
 
-async function loadEvents() {
+const loadEvents = async () => {
   const eventFolders = await readdir('./events');
 
   await Promise.all(eventFolders.map(async (folder) => {
@@ -40,7 +40,7 @@ async function loadEvents() {
   }));
 }
 
-(async function startBot() {
+(async () => {
   await loadCommands();
   await loadEvents();
   await client.login(process.env.token);
