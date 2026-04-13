@@ -30,7 +30,7 @@ export default {
 
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setAuthor({ name: `${interaction.client.user.username} | Help Menu` })
+      .setAuthor({ name: `Slash Commands` })
       .setDescription('Explore all available commands below. Type `/` in the chat to see their specific options and arguments!')
       .setTimestamp();
 
