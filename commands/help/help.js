@@ -17,19 +17,15 @@ export default {
     const { botInviteLink, storeLink, discordInviteLink, githubRepo } = config;
 
     const commandCategories = {
-      '🎮 Server Query': './commands/query',
-      '🎈 Fun': './commands/fun',
-      '💡 Help': './commands/help',
+      '🎮 Server Query': '../query',
+      '🎈 Fun': '../fun',
+      '💡 Help': '../help',
     };
 
     const helpEmbed = new EmbedBuilder()
       .setColor(color.hex)
-      .setAuthor({
-        name: `${interaction.client.user.username} | Help Menu`,
-        iconURL: interaction.client.user.displayAvatarURL()
-      })
+      .setAuthor({ name: `${interaction.client.user.username} | Help Menu` })
       .setDescription('Explore all available commands below. Type `/` in the chat to see their specific options and arguments!')
-      .setThumbnail(interaction.client.user.displayAvatarURL())
       .setTimestamp()
 
     for (const [name, path] of Object.entries(commandCategories)) {
