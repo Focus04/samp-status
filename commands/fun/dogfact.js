@@ -6,9 +6,9 @@ export default {
     .setDescription(`Sends a lovely dog fact.`),
   async execute(interaction) {
     let response = await fetch('https://dog-api.kinduff.com/api/facts');
-    let data = await response.json();
+    const data = await response.json();
     interaction.reply({
-      content: '🐶' + data.facts[0]
+      content: '🐶' + data.data[0].attributes.body
     });
   }
 }
