@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 const getCommandNames = (dir) => {
   const files = readdirSync(dir);
-  return files.map((file) => `> \`/${file.slice(0, file.lastIndexOf('.'))}\``).join('\n');
+  return files.map((file) => `> /${file.slice(0, file.lastIndexOf('.'))}`).join('\n');
 };
 
 export default {
