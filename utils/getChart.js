@@ -11,6 +11,9 @@ export async function getChart(data, color) {
     dates.push(moment(day.date - 40000000).format('D.M'));
   });
 
+  const maxDataValue = Math.max(...players);
+  const dynamicYMax = maxDataValue > 0 ? Math.ceil(maxDataValue * 1.2) : 10
+
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
     height: 720,
