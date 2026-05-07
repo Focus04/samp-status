@@ -14,7 +14,7 @@ export async function getChart(data, color) {
   const canvas = new ChartJSNodeCanvas({
     width: 1280,
     height: 720,
-    backgroundColour: 'white',
+    backgroundColour: '#2b2d31',
   });
 
   const config = {
@@ -22,12 +22,14 @@ export async function getChart(data, color) {
     data: {
       labels: dates,
       datasets: [{
-        label: 'players',
+        label: 'Players',
         data: players,
         backgroundColor: color.rgba,
         borderColor: color.rgb,
-        pointRadius: 5,
-        tension: 0.5,
+        pointRadius: 2,
+        pointBackgroundColor: color.rgb,
+        borderWidth: 4,
+        tension: 0.4,
         fill: {
           target: 'origin',
           below: color.rgba,
@@ -39,47 +41,51 @@ export async function getChart(data, color) {
         title: {
           display: true,
           text: `Most players per day on ${data.name}`,
-          font: { size: 27 },
+          color: '#ffffff',
+          font: { size: 28, weight: 'bold' },
+          padding: { bottom: 20 },
         },
         legend: {
           align: 'end',
           labels: {
-            color: color.rgb,
+            color: '#dcddde',
             usePointStyle: true,
-            boxHeight: 8,
-            font: { size: 17 },
+            boxHeight: 10,
+            font: { size: 16 },
           },
         },
       },
-      elements: {
-        line: {
-          borderWidth: 5,
-        },
-      },
+      layout: { padding: 30 },
       scales: {
         x: {
           grid: {
             display: false,
-            drawBorder: false,
           },
           ticks: {
-            font: { size: 17 },
+            color: '#b5bac1',
+            font: { size: 16 },
+            maxRotation: 45,
+            minRotation: 45,
           },
         },
         y: {
           min: 0,
-          max: data.maxPlayers,
+          suggestedMax: dynamicYMax,
           grid: {
-            borderDash: [10],
-            lineWidth: 3,
+            color: 'rgba(255, 255, 255, 0.05)',
+            lineWidth: 1,
             drawBorder: false,
           },
+          border: {
+            display: false,
+          },
           ticks: {
-            font: { size: 17 },
+            color: '#b5bac1',
+            font: { size: 16 },
+            stepSize: Math.ceil(dynamicYMax / 5),
           },
         },
       },
-      layout: { padding: 20 },
     },
   };
 
